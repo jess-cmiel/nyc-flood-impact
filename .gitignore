@@ -1,0 +1,31 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Large / regenerable local caches
+/data/raw/
+/data/processed/
+/outputs/
+/data/forecasts/earth2_precip_*.nc
+/data/raw/rainfall/mrms_qpe_01h/
+/data/raw/rainfall/mrms_event/
+/data/raw/infrastructure/
+
+# Keep demo map deliverables + clipped Ida forcing
+/figures/*
+!/figures/ida_v0_event_map.html
+!/figures/IDA_V0_DEMO_README.md
+!/figures/ida_v0_assets/
+!/figures/ida_v0_assets/**
+!/data/forecasts/
+!/data/forecasts/.gitkeep
+!/data/forecasts/nyc_precip_ida_20210901T12.nc
+
+# Editor
+.vscode/
+.DS_Store
+*.swp

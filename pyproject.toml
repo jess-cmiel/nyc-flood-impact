@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nyc-flood-impact"
+version = "0.1.0"
+description = "NYC flood-impact prototype powered by Earth2Studio forecasts (Ida case study)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Jessica Cmiel" }]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.0",
+  "xarray>=2024.1",
+  "netCDF4>=1.6",
+  "scipy>=1.11",
+  "scikit-learn>=1.4",
+  "matplotlib>=3.8",
+  "seaborn>=0.13",
+  "rasterio>=1.3",
+  "pyproj>=3.5",
+  "shapely>=2.0",
+  "geopandas>=0.14",
+  "requests>=2.31",
+  "folium>=0.14",
+  "joblib>=1.3",
+  "Pillow>=10.0",
+]
+
+[project.optional-dependencies]
+# Earth2Studio is a dependency/framework — install separately (see README).
+# Forecast script needs a working earth2studio + GPU torch environment.
+earth2 = []
+swmm = ["pyswmm>=2.1"]
+test = ["pytest>=8"]
+
+[project.urls]
+Repository = "https://github.com/jess-cmiel/nyc-flood-impact"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
