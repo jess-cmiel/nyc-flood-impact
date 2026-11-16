@@ -123,10 +123,44 @@
         id === "stations:gtfs:F22" ||
         id.indexOf("BK-") === 0 ||
         id.indexOf("Q-") === 0 ||
-        id.indexOf("floodnet:") === 0
+        id.indexOf("floodnet:") === 0 ||
+        id.indexOf("stations:") === 0 ||
+        id.indexOf("road:") === 0 ||
+        id.indexOf("facilities:") === 0
       );
     }
-    return !!findHotspot(STATE.scene, id);
+    if (findHotspot(STATE.scene, id)) return true;
+    // Shortlist / FloodNet select may pass ids not yet in the scene index —
+    // still allow open when the caller supplies lat/lon on the hint object.
+    return (
+      id.indexOf("BK-") === 0 ||
+      id.indexOf("Q-") === 0 ||
+      id.indexOf("floodnet:") === 0 ||
+      id.indexOf("stations:") === 0 ||
+      id.indexOf("road:") === 0 ||
+      id.indexOf("facilities:") === 0
+    );
+  }
+
+  function coordsFromHint(hint) {
+    if (!hint || typeof hint !== "object") return null;
+    let lon = hint.lon != null ? Number(hint.lon) : null;
+    let lat = hint.lat != null ? Number(hint.lat) : null;
+    if ((lon == null || lat == null) && Array.isArray(hint.coordinates) && hint.coordinates.length >= 2) {
+      lon = Number(hint.coordinates[0]);
+      lat = Number(hint.coordinates[1]);
+    }
+    if (
+      (lon == null || lat == null) &&
+      hint.geometry &&
+      Array.isArray(hint.geometry.coordinates) &&
+      hint.geometry.coordinates.length >= 2
+    ) {
+      lon = Number(hint.geometry.coordinates[0]);
+      lat = Number(hint.geometry.coordinates[1]);
+    }
+    if (lon == null || lat == null || !Number.isFinite(lon) || !Number.isFinite(lat)) return null;
+    return { lon: lon, lat: lat };
   }
 
   function setPanelOpen(open) {
@@ -315,39 +349,66 @@
     };
   }
 
+  function resolveCameraMethod(opts) {
+    const raw = opts && opts.method != null ? String(opts.method) : "flyTo";
+    if (raw === "ease" || raw === "easeTo") return "easeTo";
+    if (raw === "jump" || raw === "jumpTo") return "jumpTo";
+    return "flyTo";
+  }
+
   function flyCamera(hotspot, opts) {
     const map = STATE.map;
     if (!map || !hotspot) return;
     const cam = cameraFromHotspot(hotspot);
     const animate = !opts || opts.animate !== false;
     const duration = opts && opts.duration != null ? opts.duration : FLY_MS;
-    const method = opts && opts.method === "ease" ? "easeTo" : "flyTo";
-    const payload = {
+    const method = resolveCameraMethod(opts);
+    const jump = {
       center: cam.center,
       zoom: cam.zoom,
       pitch: cam.pitch,
       bearing: cam.bearing,
-      duration: animate ? duration : 0,
-      essential: true,
-      curve: 1.35,
-      speed: 0.9,
     };
     try {
-      if (!animate || duration <= 0) {
-        map.jumpTo({
-          center: cam.center,
-          zoom: cam.zoom,
-          pitch: cam.pitch,
-          bearing: cam.bearing,
-        });
-      } else if (method === "easeTo") {
-        map.easeTo(payload);
-      } else {
-        map.flyTo(payload);
+      if (typeof map.stop === "function") map.stop();
+      if (!animate || duration <= 0 || method === "jumpTo") {
+        map.jumpTo(jump);
+        return;
       }
+      if (method === "easeTo") {
+        map.easeTo(Object.assign({}, jump, { duration: duration, essential: true }));
+        return;
+      }
+      map.flyTo(
+        Object.assign({}, jump, {
+          duration: duration,
+          essential: true,
+          curve: 1.35,
+          speed: 0.9,
+        })
+      );
     } catch (err) {
       console.warn("camera move", err);
+      try {
+        map.jumpTo(jump);
+      } catch (err2) {
+        console.warn("camera jump", err2);
+      }
     }
+  }
+
+  /** Resize then fly/ease so MapLibre does not cancel the camera move. */
+  function scheduleCameraMove(hotspot, opts) {
+    if (!STATE.map || !hotspot) return;
+    const run = () => {
+      if (!STATE.map) return;
+      try {
+        STATE.map.resize();
+      } catch (err) {}
+      // Second frame: layout settled after resize / panel unhide.
+      requestAnimationFrame(() => flyCamera(hotspot, opts));
+    };
+    requestAnimationFrame(run);
   }
 
   function applyAtmosphere(map, scene) {
@@ -634,50 +695,73 @@
     const status = $("sv3dStatus");
     const id = resolveHotspotId(hotspotHint);
     if (!id) return;
+    opts = opts || {};
 
     const alreadyOpen = STATE.open;
     const sameHotspot = alreadyOpen && STATE.hotspotId === id;
+    const forceFly = opts.forceFly !== false; // default: always move camera on select/open
     setPanelOpen(true);
     if (status) {
-      status.textContent = sameHotspot
-        ? "Scrub the Decision Desk timeline — 3D depth follows HAND lead frames."
-        : alreadyOpen
+      status.textContent =
+        alreadyOpen && !sameHotspot
           ? "Flying to hotspot…"
-          : "Loading 3D scene…";
+          : alreadyOpen && sameHotspot && forceFly
+            ? "Re-centering hotspot…"
+            : sameHotspot
+              ? "Scrub the Decision Desk timeline — 3D depth follows HAND lead frames."
+              : "Loading 3D scene…";
     }
     STATE.loading = true;
 
     try {
       const scene = await ensureScene();
       let hotspot = findHotspot(scene, id);
-      if (!hotspot && hotspotHint && typeof hotspotHint === "object") {
+      const hintCoords = coordsFromHint(hotspotHint);
+      if (!hotspot && hotspotHint && typeof hotspotHint === "object" && hintCoords) {
         hotspot = {
           id: id,
+          kind: hotspotHint.kind || (hotspotHint.sensor_id ? "floodnet_post" : "shortlist_station"),
           name: hotspotHint.name || hotspotHint.sensor_name || id,
-          label: hotspotHint.name || hotspotHint.sensor_name || id,
-          lon: hotspotHint.lon,
-          lat: hotspotHint.lat,
+          label: hotspotHint.label || hotspotHint.name || hotspotHint.sensor_name || id,
+          lon: hintCoords.lon,
+          lat: hintCoords.lat,
+          floodnet_obs_peak_cm:
+            hotspotHint.floodnet_obs_peak_cm != null
+              ? hotspotHint.floodnet_obs_peak_cm
+              : hotspotHint.obs_peak_m != null
+                ? Number(hotspotHint.obs_peak_m) * 100
+                : null,
           depth_series_leads_h:
             hotspotHint.depth_series_leads_h ||
             (scene.timeline && scene.timeline.leads_h) ||
             [],
           depth_series_cm: hotspotHint.depth_series_cm || [],
           camera: {
-            center: [hotspotHint.lon, hotspotHint.lat],
+            center: [hintCoords.lon, hintCoords.lat],
             zoom: 17.2,
             pitch: 60,
             bearing: -20,
           },
-          buildings: null,
-          depth_polygon: null,
-          honesty: scene.honesty,
+          buildings: hotspotHint.buildings || null,
+          depth_polygon: hotspotHint.depth_polygon || null,
+          honesty: hotspotHint.honesty || scene.honesty,
         };
+      }
+      // Scene hotspot with stale/missing coords — prefer live select hint.
+      if (hotspot && hintCoords && (hotspot.lon == null || hotspot.lat == null)) {
+        hotspot = Object.assign({}, hotspot, {
+          lon: hintCoords.lon,
+          lat: hintCoords.lat,
+          camera: Object.assign({}, hotspot.camera || {}, {
+            center: [hintCoords.lon, hintCoords.lat],
+          }),
+        });
       }
       if (!hotspot || hotspot.lon == null || hotspot.lat == null) {
         throw new Error("No 3D scene for " + id);
       }
 
-      const switchingHotspot = STATE.hotspotId && STATE.hotspotId !== hotspot.id;
+      const switchingHotspot = !!(STATE.hotspotId && STATE.hotspotId !== hotspot.id);
       STATE.hotspotId = hotspot.id;
       STATE.hotspot = hotspot;
       setChrome(hotspot);
@@ -688,7 +772,7 @@
       });
 
       await ensureMap(hotspot, {
-        animate: opts && opts.animate === false ? false : true,
+        animate: opts.animate === false ? false : true,
         flyMs: switchingHotspot || alreadyOpen ? FLY_MS : OPEN_EASE_MS,
       });
 
@@ -696,28 +780,20 @@
         await loadHotspotLayers(hotspot);
       }
 
-      requestAnimationFrame(() => {
-        if (!STATE.map) return;
-        STATE.map.resize();
-        const animate = !(opts && opts.animate === false);
-        if (sameHotspot && alreadyOpen) {
-          // Already framed — keep camera; depth sync still runs.
-          return;
-        }
-        if (switchingHotspot && alreadyOpen) {
-          flyCamera(hotspot, {
-            animate: animate,
-            duration: FLY_MS,
-            method: "flyTo",
-          });
-        } else {
-          flyCamera(hotspot, {
-            animate: animate,
-            duration: OPEN_EASE_MS,
-            method: "easeTo",
-          });
-        }
-      });
+      const animate = opts.animate !== false;
+      const shouldMove = forceFly || !sameHotspot || !alreadyOpen;
+      if (shouldMove) {
+        const useFly = switchingHotspot || alreadyOpen || opts.method === "flyTo";
+        scheduleCameraMove(hotspot, {
+          animate: animate,
+          duration: useFly ? FLY_MS : OPEN_EASE_MS,
+          method: useFly ? "flyTo" : "easeTo",
+        });
+      } else if (STATE.map) {
+        try {
+          STATE.map.resize();
+        } catch (err) {}
+      }
 
       syncToLead(currentLeadHours());
       startWaterPulse();
@@ -801,14 +877,20 @@
     syncToLead: syncToLead,
     maybeOfferButton: maybeOfferButton,
     canOpenId: canOpenId,
-    flyToHotspot: function (hint) {
+    flyToHotspot: function (hint, opts) {
       const id = resolveHotspotId(hint);
       if (!id) return;
-      if (STATE.open) openStreetView3d(id, { animate: true });
-      else if (typeof global.setViewMode === "function") {
-        global.__streetViewOpenHint = id;
+      const openOpts = Object.assign({ animate: true, forceFly: true, method: "flyTo" }, opts || {});
+      // Prefer the full hint object so lat/lon survive when id is not in 3d_scene.json.
+      const payload = hint && typeof hint === "object" ? hint : id;
+      if (STATE.open || (global.document && document.body.classList.contains("view-3d"))) {
+        openStreetView3d(payload, openOpts);
+      } else if (typeof global.setViewMode === "function") {
+        global.__streetViewOpenHint = payload;
         global.setViewMode("3d");
-      } else openStreetView3d(id);
+      } else {
+        openStreetView3d(payload, openOpts);
+      }
     },
     state: STATE,
   };

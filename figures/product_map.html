@@ -484,18 +484,30 @@ body.has-selection .timeline-hud {
 .street-view-3d .sv-stats .sv-stat-band b {
   padding:1px 6px; border-radius:999px; background:rgba(66,146,198,.25);
 }
-/* Timeline + view toggle stay above 3D so lead scrub still drives HAND extrusion */
+/* Timeline above 3D so lead scrub still drives HAND extrusion */
 body.street-view-open .timeline-hud { z-index:1300; }
-body.street-view-open .view-mode-toggle { z-index:1310; }
 body.street-view-open .kbd-hint,
 body.street-view-open .pane-label,
 body.street-view-open .map-key-float,
 body.street-view-open .sfincs-peer-banner { display:none !important; }
+/* 2D|3D toggle must stay ALWAYS visible above HUD / inspector / 3D panel */
 .view-mode-toggle {
-  position:absolute; z-index:660; top:10px; right:10px;
+  position:absolute; z-index:1400; top:10px; right:10px;
   display:inline-flex; gap:0; border-radius:var(--radius);
-  border:1px solid rgba(255,255,255,.12); background:rgba(18,20,24,.9);
+  border:1px solid rgba(255,255,255,.12); background:rgba(18,20,24,.92);
   backdrop-filter:blur(6px); overflow:hidden;
+  pointer-events:auto;
+  box-shadow:0 4px 14px rgba(0,0,0,.28);
+}
+body.has-selection .view-mode-toggle {
+  right:calc(var(--dock-w) + 10px);
+}
+body.street-view-open .view-mode-toggle,
+body.view-3d .view-mode-toggle {
+  z-index:1400; right:10px;
+}
+@media (max-width:980px) {
+  body.has-selection .view-mode-toggle { right:10px; }
 }
 .view-mode-toggle button {
   border:0; background:transparent; color:#9aa3ae; cursor:pointer;
@@ -522,11 +534,10 @@ body.view-3d .compare-toggle { pointer-events:none; opacity:.45; }
   border:1px dashed var(--line); border-radius:var(--radius); background:rgba(255,255,255,.55);
 }
 .empty.loading { animation:pulseLoad 1.2s ease-in-out infinite; border-style:solid; }
+/* Soft-edge alpha lives in the PNGs — do not CSS-mask (that clipped georef corners). */
 .leaflet-image-layer.precip-radar,
 .leaflet-image-layer.depth-radar,
 .leaflet-image-layer.susc-radar {
-  -webkit-mask-image: radial-gradient(ellipse 96% 92% at 50% 50%, #000 68%, transparent 100%);
-  mask-image: radial-gradient(ellipse 96% 92% at 50% 50%, #000 68%, transparent 100%);
   image-rendering: auto;
   filter: saturate(1.02) contrast(1.02);
   transition:opacity .2s ease;
@@ -1289,10 +1300,20 @@ function normalizeLeafletBounds(raw) {
   if (!raw) return null;
   if (Array.isArray(raw) && raw.length === 2 && Array.isArray(raw[0]) && Array.isArray(raw[1])) {
     const a = raw[0], b = raw[1];
-    // Already [[lat,lon],[lat,lon]]
     if (a.length >= 2 && b.length >= 2) {
-      const south = Math.min(a[0], b[0]), north = Math.max(a[0], b[0]);
-      const west = Math.min(a[1], b[1]), east = Math.max(a[1], b[1]);
+      const a0 = Number(a[0]), a1 = Number(a[1]), b0 = Number(b[0]), b1 = Number(b[1]);
+      if (![a0, a1, b0, b1].every(Number.isFinite)) return null;
+      // Detect lon-lat corner pairs (GeoJSON-style) vs lat-lon (Leaflet).
+      const lonLatOrder =
+        Math.abs(a0) > 90 || Math.abs(b0) > 90 ||
+        (a0 < -30 && a1 > 0 && a1 < 80 && b0 < -30 && b1 > 0 && b1 < 80);
+      if (lonLatOrder) {
+        const west = Math.min(a0, b0), east = Math.max(a0, b0);
+        const south = Math.min(a1, b1), north = Math.max(a1, b1);
+        return [[south, west], [north, east]];
+      }
+      const south = Math.min(a0, b0), north = Math.max(a0, b0);
+      const west = Math.min(a1, b1), east = Math.max(a1, b1);
       return [[south, west], [north, east]];
     }
   }
@@ -1316,11 +1337,14 @@ function dataDomainBounds() {
     || normalizeLeafletBounds(manifest.inundation && manifest.inundation.bounds)
     || normalizeLeafletBounds(manifest.inundation_citywide && manifest.inundation_citywide.bounds);
   if (fromMeta) return fromMeta;
+  // Hard fallback matches layer_bounds.json metro DEM/MRMS domain.
   const b = (EXTENTS.metro || EXTENTS.citywide).bounds;
   return [[b.ymin, b.xmin],[b.ymax, b.xmax]];
 }
 function fitMapFrame() {
   mapLeft.fitBounds(currentBounds(), { padding: [28, 28], maxZoom: 11, animate: false });
+  // Re-assert overlay georef after view fit — never stretch to the map frame.
+  reassertOverlayBounds();
 }
 function precipOpacity() { return (+document.getElementById("opPrecip").value) / 100; }
 function suscOpacity() { return (+document.getElementById("opSusc").value) / 100; }
@@ -1403,18 +1427,31 @@ function depthSetForPath(pathId) {
 }
 
 function overlayBoundsPreferMetro(explicit) {
+  const domain = dataDomainBounds();
   const n = normalizeLeafletBounds(explicit);
-  if (n) return n;
-  return dataDomainBounds();
+  if (!n) return domain;
+  // Reject divergent / swapped bounds — precip, depth, and compare must share metro.
+  const [[ds, dw], [dn, de]] = domain;
+  const [[s, w], [north, e]] = n;
+  const spanOk =
+    Math.abs((north - s) - (dn - ds)) < 0.05 &&
+    Math.abs((e - w) - (de - dw)) < 0.05 &&
+    Math.abs(s - ds) < 0.05 &&
+    Math.abs(w - dw) < 0.05;
+  return spanOk ? n : domain;
 }
 /** Prefer metro PNG when storm_total lists both citywide + metro (same georef domain). */
 function stormTotalPng(ds) {
   if (!ds || !ds.storm_total) return null;
   const st = ds.storm_total;
   if (typeof st === "string") return st;
-  return st.metro_png || st.png || null;
+  // Prefer metro_png; also skip legacy filenames that say citywide when metro exists.
+  if (st.metro_png) return st.metro_png;
+  if (st.png && /citywide/i.test(st.png) && st.metro_png) return st.metro_png;
+  return st.png || null;
 }
 function sharedOverlayBounds(pathObj, ds) {
+  // Single georef for precip / depth / compare: metro data domain.
   const lb = manifest.layer_bounds || {};
   return overlayBoundsPreferMetro(
     (ds && ds.bounds)
@@ -1423,6 +1460,19 @@ function sharedOverlayBounds(pathObj, ds) {
     || lb.precip
     || lb.data_domain_bounds
   );
+}
+function reassertOverlayBounds() {
+  const b = activeOverlayBounds || dataDomainBounds();
+  if (!b) return;
+  const apply = (layer) => {
+    if (!layer || typeof layer.setBounds !== "function") return;
+    try { layer.setBounds(b); } catch (err) {}
+  };
+  e2Layers.forEach(apply);
+  suscLayers.forEach(apply);
+  depthLayers.forEach(apply);
+  [e2Total, depthTotal, activeE2, activeSusc, activeDepth, fadeE2, fadeSusc, fadeDepth,
+   compareLeftLayer, compareRightLayer].forEach(apply);
 }
 
 function nearestDepthIndex(leadHours) {
@@ -1486,12 +1536,12 @@ function rebuildPathLayers() {
   renderTimelineTicks();
   suscFrames = activePath.susceptibility?.frames || [];
   const ds = depthSetForPath(activePath.id);
-  const overlayBounds = sharedOverlayBounds(activePath, ds);
+  // One metro LatLngBounds for precip + depth + susc + compare (no stretch-to-view).
+  const overlayBounds = sharedOverlayBounds(activePath, ds) || dataDomainBounds();
   activeOverlayBounds = overlayBounds;
   const precipBounds = overlayBounds;
-  const suscBounds = overlayBoundsPreferMetro(
-    (activePath.susceptibility && activePath.susceptibility.bounds) || overlayBounds
-  );
+  const suscBounds = overlayBounds;
+  const depthBounds = overlayBounds;
   e2Layers = frames.map(f => L.imageOverlay(assets + f.png, precipBounds, {
     opacity: 0, interactive:false, pane:"rasterPane", className:"precip-radar"
   }));
@@ -1506,7 +1556,6 @@ function rebuildPathLayers() {
         opacity: precipOpacity(), pane:"rasterPane", interactive:false, className:"precip-radar"
       })
     : null;
-  const depthBounds = overlayBounds;
   depthCumFrames = (ds && ds.cumulative_frames) ? ds.cumulative_frames.slice() : [];
   depthLayers = depthCumFrames.map(fr => L.imageOverlay(assets + fr.png, depthBounds, {
     opacity: 0, interactive:false, pane:"depthPane", className:"depth-radar"
@@ -1553,6 +1602,7 @@ function rebuildPathLayers() {
   }
   syncTimeWindowLabel();
   populateCompareLeadSelects();
+  reassertOverlayBounds();
   // Prefer bilinear-ish for MRMS awareness; keep Earth2 pixelated if selected
   const nearest = !(
     activePath.ida_primary_viz
@@ -2025,11 +2075,12 @@ function selectAsset(id) {
     try {
       window.selectedId = selectedId;
       window.StreetView3D.maybeOfferButton(id);
-      // Keep 2D default; when already in 3D (or opening), fly/ease camera to selection.
-      if (viewMode === "3d" && window.StreetView3D.canOpenId(id)) {
-        window.StreetView3D.open(id, { animate: true });
+      // When 3D is open (or body.view-3d), fly/ease camera to the selected shortlist hotspot.
+      const svOpen = !!(window.StreetView3D.state && window.StreetView3D.state.open);
+      if ((viewMode === "3d" || svOpen) && a.lat != null && a.lon != null) {
+        window.StreetView3D.flyToHotspot(a, { animate: true, forceFly: true, method: "flyTo" });
       }
-    } catch (err) {}
+    } catch (err) { console.warn("3D flyTo shortlist", err); }
   }
   requestAnimationFrame(() => {
     try { mapLeft.invalidateSize({ animate: false }); } catch (err) {}
@@ -2416,7 +2467,9 @@ function applyCompareLayers() {
   if (bSel) bSel.value = String(compareRightLead);
   const ds = depthSetForPath(activePath.id);
   const depthBounds = activeOverlayBounds
-    || sharedOverlayBounds(activePath, ds);
+    || sharedOverlayBounds(activePath, ds)
+    || dataDomainBounds();
+  activeOverlayBounds = depthBounds;
   // Same lead assets as the normal depth timeline (depthCumFrames), never a mismatched total.
   const leftPng = exactDepthPngForLead(compareLeftLead) || stormTotalPng(ds);
   const rightPng = exactDepthPngForLead(compareRightLead) || stormTotalPng(ds);
@@ -2426,13 +2479,20 @@ function applyCompareLayers() {
   });
   if (leftPng) {
     compareLeftLayer = mk(leftPng).addTo(mapLeft);
-    compareLeftLayer.once("load", () => refreshCompareClip());
+    compareLeftLayer.once("load", () => {
+      try { compareLeftLayer.setBounds(depthBounds); } catch (err) {}
+      refreshCompareClip();
+    });
   }
   if (rightPng) {
     compareRightLayer = mk(rightPng).addTo(mapLeft);
-    compareRightLayer.once("load", () => refreshCompareClip());
+    compareRightLayer.once("load", () => {
+      try { compareRightLayer.setBounds(depthBounds); } catch (err) {}
+      refreshCompareClip();
+    });
   }
   syncCompareChips();
+  reassertOverlayBounds();
   requestAnimationFrame(() => {
     refreshCompareClip();
     requestAnimationFrame(() => refreshCompareClip());
@@ -2556,10 +2616,21 @@ function defaultHotspotIdFor3d() {
   const hint = window.__streetViewOpenHint;
   if (hint) {
     window.__streetViewOpenHint = null;
-    if (!window.StreetView3D || window.StreetView3D.canOpenId(hint)) return hint;
+    return hint;
   }
-  if (selectedId && window.StreetView3D && window.StreetView3D.canOpenId(selectedId)) return selectedId;
-  if (selectedFloodnetId && window.StreetView3D && window.StreetView3D.canOpenId(selectedFloodnetId)) {
+  if (selectedId && desk) {
+    const a = (desk.assets || []).find(x => x.id === selectedId);
+    if (a && a.lat != null && a.lon != null) return a;
+  }
+  if (selectedFloodnetId) {
+    const st = (floodnetStations || []).find(s => s.sensor_id === selectedFloodnetId);
+    if (st && st.lat != null && st.lon != null) {
+      return Object.assign({}, st, {
+        id: selectedFloodnetId,
+        sensor_id: selectedFloodnetId,
+        kind: "floodnet_post",
+      });
+    }
     return selectedFloodnetId;
   }
   // Smith–9 GTFS F22 is the demo hotspot when nothing is selected yet.
@@ -2596,7 +2667,8 @@ function setViewMode(mode) {
     const hid = defaultHotspotIdFor3d();
     if (window.StreetView3D) {
       try {
-        window.StreetView3D.open(hid);
+        // Opening 3D for the selected hotspot — ease in (flyToHotspot uses fly when already open).
+        window.StreetView3D.open(hid, { animate: true, forceFly: true, method: "easeTo" });
       } catch (err) {
         console.warn("3D open failed", err);
         viewMode = "2d";
@@ -3068,6 +3140,7 @@ function selectFloodnetStation(sensorId) {
   document.querySelectorAll("#floodnetList .asset-row").forEach(btn => {
     btn.classList.toggle("selected", btn.dataset.id === sensorId);
   });
+  let stationHint = { id: sensorId, sensor_id: sensorId };
   if (floodnetLayer) {
     floodnetLayer.eachLayer(layer => {
       const p = layer.feature && layer.feature.properties;
@@ -3075,15 +3148,34 @@ function selectFloodnetStation(sensorId) {
       const ll = layer.getLatLng();
       mapLeft.flyTo(ll, Math.max(mapLeft.getZoom(), 14), { duration: 0.65 });
       layer.openPopup();
+      stationHint = Object.assign({}, p, {
+        id: sensorId,
+        sensor_id: sensorId,
+        lon: ll.lng,
+        lat: ll.lat,
+        kind: "floodnet_post",
+      });
     });
+  } else {
+    const st = (floodnetStations || []).find(s => s.sensor_id === sensorId);
+    if (st) {
+      stationHint = Object.assign({}, st, {
+        id: sensorId,
+        sensor_id: sensorId,
+        lon: st.lon,
+        lat: st.lat,
+        kind: "floodnet_post",
+      });
+    }
   }
   if (window.StreetView3D) {
     try {
       window.StreetView3D.maybeOfferButton(sensorId);
-      if (viewMode === "3d" && window.StreetView3D.canOpenId(sensorId)) {
-        window.StreetView3D.open(sensorId, { animate: true });
+      const svOpen = !!(window.StreetView3D.state && window.StreetView3D.state.open);
+      if ((viewMode === "3d" || svOpen) && stationHint.lat != null && stationHint.lon != null) {
+        window.StreetView3D.flyToHotspot(stationHint, { animate: true, forceFly: true, method: "flyTo" });
       }
-    } catch (err) {}
+    } catch (err) { console.warn("3D flyTo FloodNet", err); }
   }
 }
 
