@@ -1106,7 +1106,7 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
       <div>
         <div class="sv-kicker">Street-level · research 3D</div>
         <h2 id="sv3dTitle">—</h2>
-        <div class="sv-sub" id="sv3dSub">HAND/MRMS lead frames · not photogrammetry</div>
+        <div class="sv-sub" id="sv3dSub">HAND curb/street · lead frames · not photogrammetry</div>
       </div>
       <button type="button" class="sv-close" id="sv3dClose" aria-label="Close 3D street view">×</button>
     </div>
@@ -1124,12 +1124,12 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
             <span class="sv-hud-band" id="sv3dHudBand">&lt;3 cm</span>
           </div>
           <div class="sv-hud-ramp" title="HAND cm risk ramp"><span id="sv3dRampFill"></span></div>
-          <div class="sv-hud-note">Street ponding = research HAND rings · not hydraulic free surface</div>
+          <div class="sv-hud-note">Curb/street HAND · road buffers − footprints · not hydraulic free surface</div>
         </div>
       </div>
     </div>
     <div class="sv-foot">
-      <div id="sv3dHonesty">Research HAND cm screening in extruded context — NOT street-truth photogrammetry. FloodNet metres stay separate. SFINCS optional Advanced.</div>
+      <div id="sv3dHonesty">Research HAND cm curb/street screening (road buffers − footprints) — NOT street-truth photogrammetry. FloodNet metres stay separate. SFINCS optional Advanced.</div>
       <div class="sv-status" id="sv3dStatus">Lazy-loads 3d_scene.json on open. Select a hotspot to fly the camera.</div>
     </div>
   </div>

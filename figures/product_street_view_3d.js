@@ -3,9 +3,10 @@
  * Research HAND/MRMS lead-frame screening — NOT photogrammetry street-truth.
  * Lazy-loads product_assets/3d_scene.json (+ per-hotspot GeoJSON) on first open.
  *
- * - Concentric HAND ponding rings (core/mid/fringe) extruded + risk color ramp
- * - Lead scrub animates water height/opacity
+ * - Curb/street HAND flood: road buffers − building footprints (core/mid/fringe bands)
+ * - Lead scrub animates water height/opacity + risk color ramp
  * - Shortlist / FloodNet select fly/ease the camera when already in 3D (or on open)
+ * - Leaflet 2D path unchanged when 3D is closed
  */
 (function (global) {
   "use strict";
@@ -27,7 +28,8 @@
   };
 
   const DEFAULT_STYLE = "https://tiles.openfreemap.org/styles/liberty";
-  const RING_SCALES = { core: 1.0, mid: 0.62, fringe: 0.28 };
+  // Street-center / lane / curb height scales (matches build_3d_scene_assets.py).
+  const RING_SCALES = { core: 1.0, mid: 0.65, fringe: 0.32 };
   const FLY_MS = 1400;
   const OPEN_EASE_MS = 950;
 
@@ -215,9 +217,10 @@
     if (!map) return;
     const color = depthColor(cm);
     const wet = cm >= 0.45;
-    const fringeOp = wet ? Math.min(0.42, 0.12 + cm / 40) : 0.04;
-    const midOp = wet ? Math.min(0.62, 0.2 + cm / 32) : 0.06;
-    const coreOp = wet ? Math.min(0.86, 0.32 + cm / 22) : 0.08;
+    // Curb (fringe) lighter / shallower; street center (core) deepest.
+    const fringeOp = wet ? Math.min(0.48, 0.14 + cm / 38) : 0.04;
+    const midOp = wet ? Math.min(0.68, 0.22 + cm / 30) : 0.06;
+    const coreOp = wet ? Math.min(0.9, 0.36 + cm / 20) : 0.08;
 
     const paint = [
       ["sv-depth-fringe", RING_SCALES.fringe, fringeOp, color],
@@ -231,14 +234,22 @@
       map.setPaintProperty(id, "fill-extrusion-opacity", opacity);
     });
 
-    // Flat street sheen under the extruded water (reads as ponding on pavement).
+    // Flat pavement sheen on curb band — wet street reading without adding height.
     if (map.getLayer("sv-depth-sheen")) {
       map.setPaintProperty(
         "sv-depth-sheen",
         "fill-opacity",
-        wet ? Math.min(0.55, 0.18 + cm / 26) : 0.04
+        wet ? Math.min(0.58, 0.2 + cm / 24) : 0.04
       );
       map.setPaintProperty("sv-depth-sheen", "fill-color", color);
+    }
+    if (map.getLayer("sv-roads-line")) {
+      map.setPaintProperty(
+        "sv-roads-line",
+        "line-opacity",
+        wet ? Math.min(0.85, 0.35 + cm / 28) : 0.2
+      );
+      map.setPaintProperty("sv-roads-line", "line-color", wet ? color : "#94a3b8");
     }
   }
 
@@ -539,6 +550,8 @@
       "sv-depth-mid",
       "sv-depth-fringe",
       "sv-depth-sheen",
+      "sv-roads-line",
+      "sv-roads-casing",
       "sv-buildings-extrusion",
       "sv-buildings-outline",
       "sv-pin",
@@ -546,18 +559,33 @@
     ].forEach((id) => {
       if (map.getLayer(id)) map.removeLayer(id);
     });
-    ["sv-depth", "sv-buildings", "sv-pin"].forEach((id) => {
+    ["sv-depth", "sv-buildings", "sv-roads", "sv-pin"].forEach((id) => {
       if (map.getSource(id)) map.removeSource(id);
     });
 
-    const [bRes, dRes] = await Promise.all([
+    const fetches = [
       fetch(base + hotspot.buildings, { cache: "no-cache" }),
       fetch(base + hotspot.depth_polygon, { cache: "no-cache" }),
-    ]);
+    ];
+    if (hotspot.roads) {
+      fetches.push(fetch(base + hotspot.roads, { cache: "no-cache" }));
+    }
+    const results = await Promise.all(fetches);
+    const bRes = results[0];
+    const dRes = results[1];
+    const rRes = results[2] || null;
     if (!bRes.ok) throw new Error("buildings geojson " + bRes.status);
     if (!dRes.ok) throw new Error("depth geojson " + dRes.status);
     const buildings = await bRes.json();
     const depth = await dRes.json();
+    let roads = null;
+    if (rRes && rRes.ok) {
+      try {
+        roads = await rRes.json();
+      } catch (err) {
+        roads = null;
+      }
+    }
 
     map.addSource("sv-buildings", { type: "geojson", data: buildings });
     map.addLayer({
@@ -590,7 +618,7 @@
 
     map.addSource("sv-depth", { type: "geojson", data: depth });
 
-    // Street sheen — flat fill of outermost ring for pavement wetness.
+    // Curb sheen — flat fill of outermost street band (pavement wetness).
     map.addLayer({
       id: "sv-depth-sheen",
       type: "fill",
@@ -602,7 +630,7 @@
       },
     });
 
-    // Fringe → mid → core so taller water draws on top.
+    // Curb → lane → street-center so taller water draws on top.
     ["fringe", "mid", "core"].forEach((ring) => {
       map.addLayer({
         id: "sv-depth-" + ring,
@@ -628,6 +656,39 @@
       if (map.getLayer("sv-depth-mid")) map.removeLayer("sv-depth-mid");
       if (map.getLayer("sv-depth-fringe")) map.removeLayer("sv-depth-fringe");
       if (map.getLayer("sv-depth-sheen")) map.removeLayer("sv-depth-sheen");
+    }
+
+    // Road centreline cue under/over water so curb flood reads as street, not a disc.
+    if (roads && (roads.features || []).length) {
+      map.addSource("sv-roads", { type: "geojson", data: roads });
+      map.addLayer({
+        id: "sv-roads-casing",
+        type: "line",
+        source: "sv-roads",
+        paint: {
+          "line-color": "#0f172a",
+          "line-width": 3.2,
+          "line-opacity": 0.35,
+        },
+        layout: {
+          "line-cap": "round",
+          "line-join": "round",
+        },
+      });
+      map.addLayer({
+        id: "sv-roads-line",
+        type: "line",
+        source: "sv-roads",
+        paint: {
+          "line-color": "#94a3b8",
+          "line-width": 1.4,
+          "line-opacity": 0.55,
+        },
+        layout: {
+          "line-cap": "round",
+          "line-join": "round",
+        },
+      });
     }
 
     map.addSource("sv-pin", {
@@ -682,10 +743,26 @@
       sub.textContent = kind + fn;
     }
     if (honesty) {
+      const fm = hotspot.flood_model || (STATE.scene && STATE.scene.flood_model) || {};
+      const modelNote =
+        fm.kind || fm.model
+          ? " Curb/street = road buffer − footprints × HAND lead."
+          : "";
       honesty.textContent =
-        hotspot.honesty ||
-        (STATE.scene && STATE.scene.honesty) ||
-        "Research HAND cm · not photogrammetry street-truth.";
+        (hotspot.honesty ||
+          (STATE.scene && STATE.scene.honesty) ||
+          "Research HAND cm · not photogrammetry street-truth.") + modelNote;
+    }
+    const hudNote = document.querySelector("#streetView3d .sv-hud-note");
+    if (hudNote) {
+      const src =
+        hotspot.flood_model && hotspot.flood_model.road_source
+          ? hotspot.flood_model.road_source
+          : "road buffers";
+      hudNote.textContent =
+        "Curb/street HAND · " +
+        src.replace(/_/g, " ") +
+        " − footprints · not hydraulic free surface";
     }
   }
 
@@ -762,6 +839,18 @@
       }
 
       const switchingHotspot = !!(STATE.hotspotId && STATE.hotspotId !== hotspot.id);
+      // Prefer scene index roads / flood_model (street flood centreline + honesty).
+      if (STATE.scene) {
+        const indexed = findHotspot(STATE.scene, hotspot.id);
+        if (indexed) {
+          if (!hotspot.roads && indexed.roads) hotspot.roads = indexed.roads;
+          if (!hotspot.buildings && indexed.buildings) hotspot.buildings = indexed.buildings;
+          if (!hotspot.depth_polygon && indexed.depth_polygon) {
+            hotspot.depth_polygon = indexed.depth_polygon;
+          }
+          if (indexed.flood_model) hotspot.flood_model = indexed.flood_model;
+        }
+      }
       STATE.hotspotId = hotspot.id;
       STATE.hotspot = hotspot;
       setChrome(hotspot);
@@ -800,7 +889,7 @@
       updateLabelMarker();
       if (status) {
         status.textContent =
-          "Scrub timeline for HAND water · select shortlist/FloodNet to fly the camera.";
+          "Scrub timeline for curb/street HAND water · select shortlist/FloodNet to flyTo.";
       }
     } catch (err) {
       console.error(err);

@@ -1,9 +1,19 @@
 {
   "product": "decision_desk_street_view_3d",
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "engine": "maplibre_gl",
   "inspired_by_pattern": "street-level 3D hotspot drill-down from 2D map (research UI pattern)",
-  "honesty": "Research HAND/MRMS lead-frame screening in MapLibre 3D. NOT photogrammetry street-truth. NOT official guidance. HAND cm \u2260 FloodNet sensor metres. SFINCS remains optional Advanced / non-peer.",
+  "flood_model": {
+    "kind": "hand_lead_x_road_buffer_minus_buildings",
+    "description": "At each hotspot, buffer nearby LION wet-edge (or synthetic) road segments into curb/lane/center bands, subtract building footprints, and extrude by Decision Desk HAND lead cm. Not a 2D SWE free surface.",
+    "inputs": [
+      "corridor_wet_edges.geojson (LION \u00d7 HAND)",
+      "building_footprints_sample.geojson (or synthetic blocks)",
+      "decision_desk HAND depth_series_cm by lead"
+    ],
+    "honesty": "Research curb/street screening geometry \u2014 NOT photogrammetry, NOT hydraulic routing, NOT NWS."
+  },
+  "honesty": "Research HAND/MRMS lead-frame screening in MapLibre 3D curb/street buffers. NOT photogrammetry street-truth. NOT official guidance. HAND cm \u2260 FloodNet sensor metres. SFINCS remains optional Advanced / non-peer.",
   "official_nws": false,
   "decision_grade": false,
   "photogrammetry": false,
@@ -107,7 +117,20 @@
       },
       "buildings": "3d_scenes/smith9_buildings.geojson",
       "depth_polygon": "3d_scenes/smith9_depth.geojson",
-      "honesty": "HAND cm research screening at station pin \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product."
+      "roads": "3d_scenes/smith9_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "lion_wet_edges",
+        "n_road_segments": 70,
+        "n_buildings_subtracted": 90,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
     },
     {
       "id": "BK-9th-st-smith-st-0etvg0",
@@ -161,7 +184,20 @@
       },
       "buildings": "3d_scenes/bk-9th-st-smith-st-0etvg0_buildings.geojson",
       "depth_polygon": "3d_scenes/bk-9th-st-smith-st-0etvg0_depth.geojson",
-      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+      "roads": "3d_scenes/bk-9th-st-smith-st-0etvg0_roads.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D curb/street water follows HAND/MRMS lead-frame cm along road buffers \u2212 footprints \u2014 not the same scale, not photogrammetry.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "lion_wet_edges",
+        "n_road_segments": 70,
+        "n_buildings_subtracted": 90,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
     },
     {
       "id": "BK-carroll-st-4th-av-0ery00",
@@ -215,7 +251,20 @@
       },
       "buildings": "3d_scenes/bk-carroll-st-4th-av-0ery00_buildings.geojson",
       "depth_polygon": "3d_scenes/bk-carroll-st-4th-av-0ery00_depth.geojson",
-      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+      "roads": "3d_scenes/bk-carroll-st-4th-av-0ery00_roads.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D curb/street water follows HAND/MRMS lead-frame cm along road buffers \u2212 footprints \u2014 not the same scale, not photogrammetry.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 53,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
     },
     {
       "id": "BK-hoyt-st-5th-st-007sk0",
@@ -269,7 +318,20 @@
       },
       "buildings": "3d_scenes/bk-hoyt-st-5th-st-007sk0_buildings.geojson",
       "depth_polygon": "3d_scenes/bk-hoyt-st-5th-st-007sk0_depth.geojson",
-      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+      "roads": "3d_scenes/bk-hoyt-st-5th-st-007sk0_roads.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D curb/street water follows HAND/MRMS lead-frame cm along road buffers \u2212 footprints \u2014 not the same scale, not photogrammetry.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "lion_wet_edges",
+        "n_road_segments": 78,
+        "n_buildings_subtracted": 90,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
     },
     {
       "id": "Q-russell-st-2-07zt40",
@@ -323,12 +385,26 @@
       },
       "buildings": "3d_scenes/q-russell-st-2-07zt40_buildings.geojson",
       "depth_polygon": "3d_scenes/q-russell-st-2-07zt40_depth.geojson",
-      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+      "roads": "3d_scenes/q-russell-st-2-07zt40_roads.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D curb/street water follows HAND/MRMS lead-frame cm along road buffers \u2212 footprints \u2014 not the same scale, not photogrammetry.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
     }
   ],
   "open_from": [
     "shortlist click (Smith\u20139)",
     "FloodNet Ida post click / list select",
-    "inspector Street view 3D button"
+    "inspector Street view 3D button",
+    "2D|3D toggle \u2192 3D (flyTo selected hotspot)"
   ]
 }
