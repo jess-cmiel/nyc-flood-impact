@@ -30,25 +30,29 @@ jobs:
           from pathlib import Path
           assets = Path("figures/product_assets")
           bad = []
-          for p in assets.glob("*.geojson"):
-              if p.name.startswith("."):
+          # Live tree only (explicitly skip quarantine/ and any nested archive)
+          for p in assets.rglob("*.geojson"):
+              if "quarantine" in p.parts:
                   continue
-              if "quarantine" in str(p):
+              if any(part.startswith(".") for part in p.parts):
                   continue
               try:
                   g = json.loads(p.read_text())
               except Exception as e:
-                  bad.append(f"{p.name}: unreadable {e}")
+                  bad.append(f"{p.relative_to(assets)}: unreadable {e}")
                   continue
               feats = g.get("features")
               if isinstance(feats, list) and len(feats) == 0:
-                  bad.append(f"{p.name}: empty FeatureCollection (quarantine or delete)")
-          # catch_basins specifically must not live empty in product_assets root
+                  bad.append(f"{p.relative_to(assets)}: empty FeatureCollection (move to quarantine/ or delete)")
           live = assets / "catch_basins.geojson"
           if live.exists():
               g = json.loads(live.read_text())
               if not g.get("features"):
                   bad.append("catch_basins.geojson empty in live tree")
+          vendor_leaflet = Path("figures/vendor/leaflet/1.9.4/leaflet.js")
+          vendor_fonts = Path("figures/vendor/fonts/fonts.css")
+          if not vendor_leaflet.exists() or not vendor_fonts.exists():
+              bad.append("figures/vendor missing Leaflet/fonts — run scripts/vendor_static_assets.py")
           if bad:
               raise SystemExit("Empty-layer guard failed:\\n- " + "\\n- ".join(bad))
           print("empty-layer guard ok")

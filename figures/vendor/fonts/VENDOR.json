@@ -1,0 +1,91 @@
+{
+  "css_url": "https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap",
+  "files": {
+    "woff2/_Xms-HUzqDCFdgfMm4S9DQ.woff2": {
+      "url": "https://fonts.gstatic.com/s/figtree/v9/_Xms-HUzqDCFdgfMm4S9DQ.woff2",
+      "sha256": "4ba7d3d096695818fe0686be4f1e82c6b05134e18a22260336130335027462dd",
+      "bytes": 20156
+    },
+    "woff2/_Xms-HUzqDCFdgfMm4q9DbZs.woff2": {
+      "url": "https://fonts.gstatic.com/s/figtree/v9/_Xms-HUzqDCFdgfMm4q9DbZs.woff2",
+      "sha256": "bf7828e2c258cffcfa50a048ee388a36b95bc16b452e8d36fa797635dbe15965",
+      "bytes": 10280
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3twJwl1FgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3twJwl1FgtIU.woff2",
+      "sha256": "3febe5c7f22e4b07b4552738673c3dbe8bced2dc5f48b866edf7ccd9552d109a",
+      "bytes": 6972
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3twJwl5FgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3twJwl5FgtIU.woff2",
+      "sha256": "18f641271b1393a07e1cc09e3528b1abcf4eb7294b454c8a3561d1455abb12c6",
+      "bytes": 13400
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3twJwl9FgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3twJwl9FgtIU.woff2",
+      "sha256": "c634bd5a48b1b2891f1ceab494f4322229ca28a36ff2e49e75e88f0defb902be",
+      "bytes": 6012
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3twJwlBFgg.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3twJwlBFgg.woff2",
+      "sha256": "6e618344335cc436ffd25deba4f4cb5a60ca6c3a4832e67f236ca43922f74eea",
+      "bytes": 14904
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3twJwlRFgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3twJwlRFgtIU.woff2",
+      "sha256": "ef2d8c602770429638da4674c489da3375542ec5c9b856d0623060025831b59c",
+      "bytes": 8456
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3twJwupkp-8tFQ.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3twJwupkp-8tFQ.woff2",
+      "sha256": "a0e4fc6b0fbad87effb4dcf57955b5b5112ab7c7c07c3722d47cb50b4f8f32ef",
+      "bytes": 5348
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl1FgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl1FgtIU.woff2",
+      "sha256": "83109cdd4f8665b475dfc11d61bd44da328bf7e6eab3d3953d39c49b1b9f6015",
+      "bytes": 7692
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl5FgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl5FgtIU.woff2",
+      "sha256": "9203938fd230cf46d99e63f962b78fcdbe42dddf0937b64c69cb2c693916dc10",
+      "bytes": 14320
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl9FgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3vAOwl9FgtIU.woff2",
+      "sha256": "858d2e209a29fc620bf146a897a76d48bb16ba77804da03029fc21ad0d385912",
+      "bytes": 6984
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlBFgg.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlBFgg.woff2",
+      "sha256": "cecb8f0bc58b996a828bc0a23e2814e4acec33f0f531adf565c0248e242061e1",
+      "bytes": 15588
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlRFgtIU.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlRFgtIU.woff2",
+      "sha256": "8789b11d9afc3f686c023ed7ff411f7f3bc838be0b0933685cfb278313cf7e78",
+      "bytes": 9380
+    },
+    "woff2/-F6qfjptAgt5VM-kVkqdyU8n3vAOwupkp-8tFQ.woff2": {
+      "url": "https://fonts.gstatic.com/s/ibmplexmono/v23/-F6qfjptAgt5VM-kVkqdyU8n3vAOwupkp-8tFQ.woff2",
+      "sha256": "5cd1570b419f46b36069f21c1bab17f4db08c25f174dcf3f0f15e9b82e4f2488",
+      "bytes": 6100
+    },
+    "woff2/8vIH7w4qzmVxm25L9Hz_.woff2": {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm25L9Hz_.woff2",
+      "sha256": "83885b130cf2a67bc2fd6175d6f3c2875833552c1762b5943b51335038ae01f2",
+      "bytes": 14724
+    },
+    "woff2/8vIH7w4qzmVxm2BL9A.woff2": {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2",
+      "sha256": "68b623f0e45b905041b2edb9b2e4f563a505f13db1cd06b5f1946eb2e1f47048",
+      "bytes": 34608
+    },
+    "woff2/8vIH7w4qzmVxm2NL9Hz_.woff2": {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2NL9Hz_.woff2",
+      "sha256": "b9ade823e28b34c3a9c038ae698e659f64b66dabeed6c979e0bc347bfcc891a7",
+      "bytes": 11200
+    }
+  },
+  "n_faces": 17
+}

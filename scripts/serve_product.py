@@ -30,11 +30,18 @@ def main() -> None:
         raise SystemExit(f"missing product_map.html under {root}")
     if not (root / "product_assets").is_dir():
         raise SystemExit(f"missing product_assets/ under {root}")
+    vendor_js = root / "vendor" / "leaflet" / "1.9.4" / "leaflet.js"
+    vendor_fonts = root / "vendor" / "fonts" / "fonts.css"
+    if not vendor_js.exists() or not vendor_fonts.exists():
+        raise SystemExit(
+            "missing figures/vendor (Leaflet/fonts). Run: python scripts/vendor_static_assets.py"
+        )
 
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(root))
     with socketserver.TCPServer(("127.0.0.1", args.port), handler) as httpd:
         print(f"Serving {root}")
         print(f"Open http://127.0.0.1:{args.port}/product_map.html")
+        print("Offline chrome: vendor/ Leaflet+fonts · paper basemap (uncheck Online streets if offline)")
         httpd.serve_forever()
 
 

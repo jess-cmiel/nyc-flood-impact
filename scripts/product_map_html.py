@@ -32,10 +32,8 @@ def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Asset Decision Desk · Ida research replay</title>
 <meta name="description" content="Research Asset Decision Desk for Hurricane Ida. Ranked wet assets from metro pysheds × MRMS. NOT official NWS. NOT decision-grade.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<link rel="stylesheet" href="vendor/leaflet/1.9.4/leaflet.css">
 <style>
 :root {{
   --ink:#06131a; --ink-soft:#17303c; --muted:#5f7584; --paper:#e8f0f3;
@@ -242,7 +240,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     radial-gradient(ellipse 80% 60% at 50% 40%, rgba(8,59,72,.08), transparent 70%),
     #0a1a22;
 }}
-.map-el {{ position:absolute; inset:0; }}
+.map-el {{ position:absolute; inset:0; background:#d5e4ea; }}
 .pane-label {{
   position:absolute; z-index:1000; top:14px; left:54px; padding:7px 12px; border-radius:8px;
   background:rgba(7,20,28,.78); color:#dff2f4; border:1px solid rgba(255,255,255,.08);
@@ -515,7 +513,9 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       <div class="storm-toggles">
         <label class="layer-btn"><input id="lyDepthTot" type="checkbox" checked>Depth</label>
         <label class="layer-btn"><input id="lyE2" type="checkbox" checked>Precip</label>
+        <label class="layer-btn"><input id="lyStreets" type="checkbox" checked>Online streets</label>
       </div>
+      <p class="drawer-note">Streets need network. Paper basemap + vendored Leaflet/fonts work offline for fixtures.</p>
       <div class="opacity-row"><span>Precip</span><input id="opPrecip" type="range" min="10" max="92" value="52"><span id="opPrecipVal">52%</span></div>
       <div class="opacity-row"><span>Depth</span><input id="opDepth" type="range" min="15" max="92" value="74"><span id="opDepthVal">74%</span></div>
       <div class="legend-swatch precip" title="Precip"></div>
@@ -674,7 +674,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   </div>
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="vendor/leaflet/1.9.4/leaflet.js"></script>
 <script>
 const EVENTS = {json.dumps(EVENTS)};
 const EXTENTS = {json.dumps(EXTENTS)};
@@ -705,9 +705,32 @@ mapLeft.createPane("suscPane"); mapLeft.getPane("suscPane").style.zIndex = 450;
 mapLeft.createPane("vectorPane"); mapLeft.getPane("vectorPane").style.zIndex = 650;
 mapLeft.createPane("pointPane"); mapLeft.getPane("pointPane").style.zIndex = 670;
 mapLeft.createPane("selectPane"); mapLeft.getPane("selectPane").style.zIndex = 700;
-L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{{z}}/{{y}}/{{x}}", {{
-  maxZoom: 19, attribution: "Tiles © Esri"
-}}).addTo(mapLeft);
+// Offline-safe paper basemap (no CDN tiles required for fixture demo).
+const PaperBasemap = L.GridLayer.extend({{
+  createTile: function () {{
+    const tile = document.createElement("canvas");
+    tile.width = tile.height = 256;
+    const ctx = tile.getContext("2d");
+    ctx.fillStyle = "#d5e4ea";
+    ctx.fillRect(0, 0, 256, 256);
+    ctx.strokeStyle = "rgba(8,40,52,.04)";
+    for (let i = 0; i < 256; i += 32) {{
+      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 256); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(256, i); ctx.stroke();
+    }}
+    return tile;
+  }}
+}});
+const paperBasemap = new PaperBasemap({{ attribution: "Local paper basemap · offline fixtures" }});
+paperBasemap.addTo(mapLeft);
+const streetsBasemap = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{{z}}/{{y}}/{{x}}",
+  {{ maxZoom: 19, attribution: "Tiles © Esri · optional online", opacity: 0.92 }}
+);
+// Online streets are optional; default on only when the browser reports online.
+if (typeof navigator === "undefined" || navigator.onLine !== false) {{
+  streetsBasemap.addTo(mapLeft);
+}}
 
 const DEMO_SHORTLIST = {demo_ids_json};
 const DEMO_SHORTLIST_PATH = {shortlist_path_json};
@@ -2208,6 +2231,22 @@ document.getElementById("opDepth").oninput = () => {{
   if (activeDepth) activeDepth.setOpacity(effectiveDepthOpacity());
   else if (depthTotal) depthTotal.setOpacity(effectiveDepthOpacity());
 }};
+document.getElementById("lyStreets").onchange = () => {{
+  const on = document.getElementById("lyStreets").checked;
+  if (on) {{
+    if (!mapLeft.hasLayer(streetsBasemap)) streetsBasemap.addTo(mapLeft);
+  }} else if (mapLeft.hasLayer(streetsBasemap)) {{
+    mapLeft.removeLayer(streetsBasemap);
+  }}
+}};
+// Sync streets checkbox with actual online default
+(function syncStreetsDefault() {{
+  const el = document.getElementById("lyStreets");
+  if (!el) return;
+  const online = typeof navigator === "undefined" || navigator.onLine !== false;
+  el.checked = online && mapLeft.hasLayer(streetsBasemap);
+  if (!online && mapLeft.hasLayer(streetsBasemap)) mapLeft.removeLayer(streetsBasemap);
+}})();
 document.getElementById("lyE2").onchange = () => setLead(leadIndex);
 document.getElementById("lySusc").onchange = () => {{
   // Dim depth under screening so the amber index reads; keep current lead.

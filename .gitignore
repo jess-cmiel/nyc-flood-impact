@@ -25,6 +25,8 @@ __pycache__/
 !/figures/PRODUCT_README.md
 !/figures/product_assets/
 !/figures/product_assets/**
+!/figures/vendor/
+!/figures/vendor/**
 !/figures/product-ui.png
 !/figures/validation-panel.png
 !/figures/hydrology-context.png

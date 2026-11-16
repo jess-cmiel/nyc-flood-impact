@@ -2,11 +2,12 @@ PYTHON ?= python3
 VENV ?= .venv
 ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
+DEMO_TAG ?= demo-ida-v1
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement relativize test ci-guard
+.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement relativize vendor test ci-guard demo-tag
 
 help:
-	@echo "Decision Desk targets: desk html access-pack relativize test map"
+	@echo "Decision Desk: desk html access-pack disagreement vendor relativize test demo-tag"
 	@echo "Legacy: validation live-ida live clean"
 	@echo "Earth2Studio is a dependency — use E2S_PYTHON for GPU forecasts."
 
@@ -30,6 +31,10 @@ access-pack:
 disagreement:
 	$(ACTIVATE) && python scripts/build_engine_disagreement.py
 
+# Vendor Leaflet + fonts for offline serve
+vendor:
+	$(ACTIVATE) && python scripts/vendor_static_assets.py
+
 # Regenerate product_map.html from current manifest
 html:
 	$(ACTIVATE) && python -c "import json,sys; from pathlib import Path; \
@@ -49,6 +54,13 @@ test:
 
 ci-guard: test
 	$(ACTIVATE) && python scripts/relativize_product_paths.py
+
+# Annotated local tag for demo pack (does not push). See docs/RELEASE.md.
+demo-tag:
+	@test -z "$$(git status --porcelain)" || (echo "Working tree dirty — commit or stash before tagging."; exit 1)
+	@git rev-parse "$(DEMO_TAG)" >/dev/null 2>&1 && (echo "Tag $(DEMO_TAG) already exists locally."; exit 1) || true
+	git tag -a "$(DEMO_TAG)" -m "Ida Decision Desk demo pack v1 (research fixtures + vendored UI)"
+	@echo "Created annotated tag $(DEMO_TAG). Publish with: git push origin $(DEMO_TAG)"
 
 # Track 3/5 product map from existing Ida assets
 map:

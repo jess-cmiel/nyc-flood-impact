@@ -2,6 +2,7 @@
 
 **Entrypoint:** `python scripts/serve_product.py` → `product_map.html` only.  
 **Shortlist SSOT:** `config/demo_shortlist.yaml`  
+**Offline:** vendored Leaflet/fonts under `figures/vendor/`; paper basemap always on; uncheck Online streets if offline.  
 **Defaults locked:** assets first · demo shortlist · FloodNet closed · access overlay off · MRMS locked · Screening closed/off · Advanced closed · Henri picker hidden.
 
 ---
