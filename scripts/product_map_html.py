@@ -476,8 +476,8 @@ body.has-selection .timeline-hud {{
 .map-legend-rows {{ display:flex; flex-direction:column; gap:5px; }}
 .map-legend-row {{ display:flex; align-items:center; gap:7px; color:var(--ink-soft); font-size:.66rem; }}
 .map-legend-row span {{ color:var(--muted); }}
-.leg-sw {{ flex:0 0 auto; width:16px; height:16px; position:relative; }}
-.leg-sw svg {{ display:block; width:16px; height:16px; }}
+.leg-sw {{ flex:0 0 auto; width:14px; height:14px; position:relative; }}
+.leg-sw svg {{ display:block; width:14px; height:14px; }}
 .access-legend {{
   margin-top:6px; padding-top:6px; border-top:1px solid var(--line-soft);
   display:flex; flex-direction:column; gap:4px;
@@ -486,42 +486,68 @@ body.has-selection .timeline-hud {{
   font:600 .56rem var(--sans); letter-spacing:.08em; text-transform:uppercase; color:#8b929c;
 }}
 .map-key-float {{
-  position:absolute; z-index:650; left:10px; bottom:84px; max-width:min(200px, calc(100% - 20px));
-  padding:8px 10px; border-radius:var(--radius); background:rgba(22,24,28,.9); color:#e4e7eb;
-  border:1px solid rgba(255,255,255,.08); font-size:.64rem; line-height:1.35;
+  position:absolute; z-index:650; left:10px; bottom:84px; max-width:min(168px, calc(100% - 20px));
+  padding:6px 8px; border-radius:var(--radius); background:rgba(18,20,24,.88); color:#e4e7eb;
+  border:1px solid rgba(255,255,255,.07); font-size:.6rem; line-height:1.3;
   transition:bottom .22s var(--ease);
+  backdrop-filter:blur(6px);
 }}
 .map-key-float.collapsed .map-key-float-body {{ display:none; }}
 .map-key-float-head {{
   display:flex; align-items:center; justify-content:space-between; gap:8px;
-  font:600 .58rem var(--sans); letter-spacing:.08em; text-transform:uppercase; color:#a8b0bc;
+  font:600 .54rem var(--sans); letter-spacing:.09em; text-transform:uppercase; color:#9aa3ae;
 }}
 .map-key-float-head button {{
-  border:0; background:rgba(255,255,255,.06); color:#d7dbe0; border-radius:2px;
-  width:20px; height:20px; cursor:pointer; font:600 .7rem var(--sans);
+  border:0; background:rgba(255,255,255,.05); color:#d7dbe0; border-radius:2px;
+  width:18px; height:18px; cursor:pointer; font:600 .65rem var(--sans);
 }}
 .map-key-float-head button:hover {{ background:rgba(255,255,255,.12); }}
-.map-key-float-body {{ margin-top:6px; display:flex; flex-direction:column; gap:5px; }}
-.map-key-float .map-legend-row {{ color:#eef0f2; }}
-.map-key-float .map-legend-row span {{ color:#a8b0bc; }}
+.map-key-float-body {{ margin-top:5px; display:flex; flex-direction:column; gap:4px; }}
+.map-key-float .map-legend-row {{ color:#e8eaed; gap:6px; font-size:.6rem; }}
+.map-key-float .map-legend-row span {{ color:#9aa3ae; }}
+.map-key-float .key-corridor {{ display:none; }}
+.map-key-float.show-corridor .key-corridor {{ display:flex; }}
 .leaflet-div-icon.access-div {{
-  background:transparent; border:0; width:22px !important; height:22px !important;
+  background:transparent; border:0; width:16px !important; height:16px !important;
 }}
 .access-marker {{
-  width:20px; height:20px; display:flex; align-items:center; justify-content:center;
-  font:600 .46rem var(--sans); letter-spacing:.03em; color:#fff;
-  border:1.5px solid; line-height:1;
+  width:14px; height:14px; display:flex; align-items:center; justify-content:center;
+  font:600 .4rem var(--sans); letter-spacing:.02em; color:#fff;
+  border:1px solid; line-height:1; opacity:.92;
 }}
-.access-marker.dot {{ border-radius:2px; background:rgba(180,83,9,.9); border-color:#7c2d12; border-style:dashed; }}
-.access-marker.dot.limited {{ background:rgba(159,18,57,.9); border-color:#7f1d1d; }}
+.access-marker.dot {{ border-radius:2px; background:rgba(154,74,18,.88); border-color:#7c2d12; border-style:dashed; }}
+.access-marker.dot.limited {{ background:rgba(136,19,55,.9); border-color:#7f1d1d; }}
 .access-marker.ev511 {{
-  clip-path:polygon(50% 6%, 94% 88%, 6% 88%); border:0; border-radius:0;
-  background:#b45309; box-shadow:none; font-size:.38rem; padding-top:6px;
+  clip-path:polygon(50% 8%, 92% 88%, 8% 88%); border:0; border-radius:0;
+  background:#9a4a12; box-shadow:none; font-size:.32rem; padding-top:4px;
 }}
-.access-marker.ev511.limited {{ background:#9f1239; }}
-.access-marker.mta {{ border-radius:50%; background:rgba(30,58,95,.92); border-color:#0f2744; border-style:solid; }}
-.access-marker.mta.limited {{ background:rgba(159,18,57,.9); border-color:#7f1d1d; border-style:dashed; }}
-.access-marker.mta.watch {{ border-style:dashed; border-color:#b45309; background:rgba(180,83,9,.88); }}
+.access-marker.ev511.limited {{ background:#881337; }}
+.access-marker.mta {{ border-radius:50%; background:rgba(30,48,72,.9); border-color:#1a2a3d; border-style:solid; }}
+.access-marker.mta.limited {{ background:rgba(136,19,55,.9); border-color:#7f1d1d; border-style:dashed; }}
+.access-marker.mta.watch {{ border-style:dashed; border-color:#9a4a12; background:rgba(154,74,18,.86); }}
+.corridor-pairs {{ display:flex; flex-direction:column; gap:5px; margin:0 0 8px; }}
+.corridor-pair {{
+  display:grid; grid-template-columns:auto 1fr auto; gap:7px; align-items:center;
+  padding:6px 7px; border-radius:var(--radius); border:1px solid var(--line-soft);
+  background:rgba(255,255,255,.65); cursor:pointer; font-size:.66rem;
+  transition:border-color .14s, background .14s;
+}}
+.corridor-pair:hover {{ border-color:rgba(20,22,26,.16); }}
+.corridor-pair input {{ margin:0; accent-color:var(--accent); }}
+.corridor-pair .pair-names {{
+  font:600 .66rem/1.25 var(--sans); color:var(--ink-soft); letter-spacing:-.01em;
+}}
+.corridor-pair .pair-status {{
+  font:600 .58rem var(--mono); white-space:nowrap;
+}}
+.corridor-pair .pair-status.cut {{ color:#9f1239; }}
+.corridor-pair .pair-status.open {{ color:#0f766e; }}
+.corridor-pair .pair-swatch {{
+  width:14px; height:3px; border-radius:1px; flex:0 0 auto;
+}}
+.corridor-pair .pair-swatch.cut {{ background:transparent; border-top:2px dashed; }}
+.corridor-pair .pair-swatch.open {{ background:currentColor; border:0; height:2.5px; }}
+.corridor-landmarks-note {{ margin:0 0 6px; font-size:.62rem; color:var(--muted); }}
 .compare-strip {{
   margin:6px 0 0; padding:6px 8px; border-radius:var(--radius);
   background:rgba(20,22,26,.03); border:1px solid var(--line-soft);
@@ -533,7 +559,7 @@ body.has-selection .timeline-hud {{
   color:var(--accent-deep); margin-bottom:3px;
 }}
 .rail-compact details.drawer > summary {{ padding-bottom:6px; }}
-.leaflet-interactive.is-hover {{ filter:brightness(1.08); }}
+.leaflet-interactive.is-hover {{ filter:brightness(1.06); }}
 .floodnet-list .asset-row {{
   text-align:left; width:100%; border:1px solid var(--line-soft); border-radius:var(--radius);
   background:#fff; padding:7px 8px; cursor:pointer; font:500 .7rem var(--sans);
@@ -676,10 +702,12 @@ body.has-selection .timeline-hud {{
       </details>
       <details class="drawer" id="corridorDetails">
         <summary>Corridor impassability (research)</summary>
-        <p class="drawer-note">LION street graph × HAND wet edges between Smith-9 · Brooklyn Hospital · Myrtle. <b>Not official DOT closures.</b></p>
-        <div id="corridorPairs" class="metric" style="flex-direction:column;align-items:stretch;gap:6px"></div>
+        <p class="drawer-note">Three landmark <b>pairs</b> as distinct paths (not one loop). LION × HAND wet edges. <b>Not official DOT closures.</b></p>
+        <p class="corridor-landmarks-note" id="corridorLandmarksNote"></p>
+        <div id="corridorPairs" class="corridor-pairs" role="group" aria-label="Corridor landmark pairs"></div>
         <label class="layer-btn"><input id="lyCorridorWet" type="checkbox">Wet road edges (≥3 cm)</label>
-        <label class="layer-btn"><input id="lyCorridorPath" type="checkbox" checked>Research path / cut</label>
+        <label class="layer-btn"><input id="lyCorridorPath" type="checkbox" checked>Show all pair paths</label>
+        <label class="layer-btn"><input id="lyCorridorLandmarks" type="checkbox" checked>Landmark endpoints</label>
         <p class="drawer-note" id="corridorHonesty"></p>
       </details>
       <details class="drawer">
@@ -793,21 +821,29 @@ body.has-selection .timeline-hud {{
   </div>
   <div class="map-key-float collapsed" id="mapKeyFloat">
     <div class="map-key-float-head">
-      <span>Map key</span>
+      <span>Key</span>
       <button type="button" id="mapKeyFloatToggle" aria-label="Expand map key" aria-expanded="false">+</button>
     </div>
     <div class="map-key-float-body">
       <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="6.5" fill="rgba(194,65,12,.12)" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="3.2 2.4"/></svg></span>
-        <span>Dashed = top hit</span>
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="3.2" fill="#9a5a2a" stroke="rgba(255,255,255,.85)" stroke-width="1"/></svg></span>
+        <span>Asset dot</span>
       </div>
       <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="5.5" fill="#c2410c" stroke="#14161a" stroke-width="1.8"/></svg></span>
-        <span>Filled = selected</span>
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.2" fill="rgba(194,65,12,.06)" stroke="#c2410c" stroke-width="1.1" stroke-dasharray="2.4 2"/></svg></span>
+        <span>Top hit</span>
       </div>
       <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><line x1="2" y1="9" x2="16" y2="9" stroke="#e8a07a" stroke-width="3" stroke-linecap="round"/><line x1="3" y1="3" x2="15" y2="15" stroke="#c2410c" stroke-width="1.2"/></svg></span>
-        <span>Line-through = selected road</span>
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.2" fill="#c2410c" stroke="#14161a" stroke-width="1.2"/></svg></span>
+        <span>Selected</span>
+      </div>
+      <div class="map-legend-row key-corridor">
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7" stroke="#0f766e" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span>Corridor open</span>
+      </div>
+      <div class="map-legend-row key-corridor">
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7" stroke="#9f1239" stroke-width="2" stroke-dasharray="2.5 2" stroke-linecap="round"/></svg></span>
+        <span>Corridor cut</span>
       </div>
     </div>
   </div>
@@ -970,7 +1006,14 @@ let floodnetLaterLayer = null;
 let accessFixture = null, accessLayer = null, accessFeedMode = "fixture";
 let archive511Layer = null, depBasinsLayer = null, buildingsLayer = null;
 let stormwaterLayer = null, lionTunLayer = null, besLayer = null;
-let corridorWetLayer = null, corridorPathLayer = null, corridorData = null;
+let corridorWetLayer = null, corridorPathLayer = null, corridorLandmarkLayer = null, corridorData = null;
+let corridorPathGeo = null;
+let corridorPairLayers = {{}}; // pairKey -> LayerGroup
+const CORRIDOR_PAIR_PALETTE = [
+  {{ cut: "#9f1239", open: "#0f766e", soft: "#7f1d1d" }},
+  {{ cut: "#b45309", open: "#0e7490", soft: "#9a3412" }},
+  {{ cut: "#7c2d12", open: "#115e59", soft: "#78350f" }},
+];
 let typeFilter = "all";
 let deskLoadedMode = "none"; // shortlist | full
 let fullDeskPromise = null;
@@ -1331,8 +1374,8 @@ function syncBriefingHover(id) {{
     if (el) el.classList.toggle("is-hover", !!id && lid === id);
     if (typeof layer.setStyle !== "function") return;
     if (layer instanceof L.CircleMarker) {{
-      const base = (lid === selectedId) ? 9 : 4.5;
-      layer.setRadius(!!id && lid === id ? base + 2.5 : base);
+      const base = (lid === selectedId) ? 7 : 3.4;
+      layer.setRadius(!!id && lid === id ? base + 1.6 : base);
     }}
   }});
 }}
@@ -1495,17 +1538,17 @@ function selectAsset(id) {{
     selectedLayer = L.layerGroup([
       L.geoJSON(geomLayer.feature, {{
         pane: "selectPane",
-        style: {{ color:"#0a1a22", weight:9, opacity:0.45, lineCap:"round", lineJoin:"round" }}
+        style: {{ color:"#14161a", weight:6.5, opacity:0.28, lineCap:"round", lineJoin:"round" }}
       }}),
       L.geoJSON(geomLayer.feature, {{
         pane: "selectPane",
-        style: {{ color:"#c2410c", weight:4.5, opacity:1, lineCap:"round", lineJoin:"round", dashArray:"8 5" }}
+        style: {{ color:"#c2410c", weight:2.8, opacity:0.95, lineCap:"round", lineJoin:"round", dashArray:"6 4" }}
       }}),
     ]).addTo(mapLeft);
   }} else {{
     selectedLayer = L.circleMarker(ll, {{
-      pane: "selectPane", radius: 9, color:"#0a1a22", weight:2,
-      fillColor:"#c2410c", fillOpacity:0.95
+      pane: "selectPane", radius: 7, color:"#14161a", weight:1.5,
+      fillColor:"#c2410c", fillOpacity:0.94
     }}).addTo(mapLeft);
   }}
   const acc = accessStatus(a);
@@ -1843,8 +1886,8 @@ function applyAutoHighlight(selectFirst) {{
   highlightLayer = L.geoJSON({{ type: "FeatureCollection", features: feats }}, {{
     pane: "selectPane",
     pointToLayer: (f, ll) => L.circleMarker(ll, {{
-      radius: 12, color: "#c2410c", weight: 2, dashArray: "4 3",
-      fillColor: "#c2410c", fillOpacity: 0.08, pane: "selectPane"
+      radius: 8.5, color: "#c2410c", weight: 1.25, dashArray: "2.5 2.2",
+      fillColor: "#c2410c", fillOpacity: 0.04, pane: "selectPane", opacity: 0.85
     }}),
     onEachFeature: (f, layer) => {{
       layer.bindTooltip("Top hit · " + (f.properties.name || ""));
@@ -1919,7 +1962,10 @@ function rebuildWetLayer() {{
       const ft = (f.properties && f.properties.facility_type) || "";
       const color = (ft === "school") ? "#94a3b8"
         : band === "hazard" ? "#8f3a3a" : band === "deep_ponding" ? "#9a5a2a" : "#7a6a2e";
-      return L.circleMarker(ll, {{ radius:4.5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.88, pane:"pointPane" }});
+      return L.circleMarker(ll, {{
+        radius: 3.4, color: "rgba(255,255,255,.92)", weight: 1,
+        fillColor: color, fillOpacity: 0.9, pane: "pointPane", opacity: 0.95
+      }});
     }},
     onEachFeature: (f, layer) => {{
       const id = f.properties && f.properties.id;
@@ -2426,27 +2472,197 @@ function corridorStatusLabel(status) {{
     cut_at_deep_ponding: "cut ≥8 cm",
     cut_at_ponding: "cut ≥3 cm",
     detour_around_deep: "detour ≥8 cm",
-    open_research: "open (research)",
-    no_network_path: "no network path",
+    open_research: "open",
+    no_network_path: "no path",
     unsnapped: "unsnapped",
   }};
   return map[status] || status || "—";
 }}
+function corridorPairKey(p) {{
+  return String(p.from_id || "") + "__" + String(p.to_id || "");
+}}
+function corridorIsCut(status) {{
+  const s = String(status || "");
+  return s.startsWith("cut_") || s === "no_network_path" || s === "unsnapped";
+}}
+function corridorPairMeta(pairKey) {{
+  const pairs = (corridorData && corridorData.pairs) || [];
+  const idx = pairs.findIndex(p => corridorPairKey(p) === pairKey);
+  if (idx < 0) return {{ index: 0, status: "open_research", pair: null }};
+  return {{ index: idx, status: pairs[idx].status, pair: pairs[idx] }};
+}}
+function corridorPathStyleFor(pairKey, feature) {{
+  const meta = corridorPairMeta(pairKey);
+  const pal = CORRIDOR_PAIR_PALETTE[meta.index % CORRIDOR_PAIR_PALETTE.length];
+  const cut = corridorIsCut(meta.status);
+  const deep = feature && feature.properties && feature.properties.impassable_deep;
+  // Distinct pair hue + open/cut language: solid open vs dashed cut.
+  return {{
+    color: cut ? (deep ? pal.cut : pal.soft) : pal.open,
+    weight: cut ? (deep ? 2.8 : 2.2) : 2.6,
+    opacity: cut ? 0.88 : 0.92,
+    dashArray: cut ? "5 4" : null,
+    lineCap: "round",
+    lineJoin: "round",
+  }};
+}}
+function syncMapKeyCorridor() {{
+  const box = document.getElementById("mapKeyFloat");
+  if (!box) return;
+  const drawer = document.getElementById("corridorDetails");
+  const pathsOn = document.getElementById("lyCorridorPath");
+  const anyPair = Object.keys(corridorPairLayers).some(k => {{
+    const ly = corridorPairLayers[k];
+    return ly && mapLeft.hasLayer(ly);
+  }});
+  const show = !!(drawer && drawer.open) || !!(pathsOn && pathsOn.checked) || anyPair;
+  box.classList.toggle("show-corridor", show);
+}}
+function clearCorridorPairLayers() {{
+  Object.keys(corridorPairLayers).forEach(k => {{
+    const ly = corridorPairLayers[k];
+    if (ly && mapLeft.hasLayer(ly)) mapLeft.removeLayer(ly);
+  }});
+  corridorPairLayers = {{}};
+  if (corridorPathLayer && mapLeft.hasLayer(corridorPathLayer)) mapLeft.removeLayer(corridorPathLayer);
+  corridorPathLayer = null;
+}}
+function rebuildCorridorPairLayers() {{
+  clearCorridorPairLayers();
+  if (!corridorPathGeo) return;
+  const feats = corridorPathGeo.features || [];
+  const byPair = {{}};
+  feats.forEach(f => {{
+    const key = (f.properties && f.properties.pair) || "_";
+    if (!byPair[key]) byPair[key] = [];
+    byPair[key].push(f);
+  }});
+  const master = document.getElementById("lyCorridorPath");
+  const masterOn = !master || master.checked;
+  Object.keys(byPair).forEach(key => {{
+    const meta = corridorPairMeta(key);
+    const label = meta.pair
+      ? ((meta.pair.from_name || "?") + " → " + (meta.pair.to_name || "?"))
+      : "research path";
+    const status = meta.status || "";
+    const group = L.layerGroup();
+    const gj = L.geoJSON({{ type: "FeatureCollection", features: byPair[key] }}, {{
+      pane: "selectPane",
+      style: f => corridorPathStyleFor(key, f),
+      onEachFeature: (f, layer) => {{
+        const p = f.properties || {{}};
+        layer.bindTooltip(
+          label + " · " + corridorStatusLabel(status) +
+          (p.name ? (" · " + p.name) : "") +
+          " · research (not DOT)"
+        );
+      }},
+    }});
+    group.addLayer(gj);
+    corridorPairLayers[key] = group;
+    const cb = document.getElementById("corridorPair_" + key.replace(/[^a-zA-Z0-9_-]/g, "_"));
+    const pairOn = cb ? cb.checked : true;
+    if (masterOn && pairOn) group.addTo(mapLeft);
+  }});
+  // Parent layer used only for master toggle bookkeeping (empty).
+  corridorPathLayer = L.layerGroup(Object.values(corridorPairLayers));
+  syncMapKeyCorridor();
+}}
+function rebuildCorridorLandmarks() {{
+  if (corridorLandmarkLayer && mapLeft.hasLayer(corridorLandmarkLayer)) {{
+    mapLeft.removeLayer(corridorLandmarkLayer);
+  }}
+  corridorLandmarkLayer = null;
+  const lms = (corridorData && corridorData.landmarks) || [];
+  if (!lms.length) return;
+  const feats = lms.map(lm => ({{
+    type: "Feature",
+    properties: {{ id: lm.id, name: lm.name, kind: lm.kind }},
+    geometry: {{ type: "Point", coordinates: [lm.lon, lm.lat] }},
+  }}));
+  corridorLandmarkLayer = L.geoJSON({{ type: "FeatureCollection", features: feats }}, {{
+    pane: "selectPane",
+    pointToLayer: (f, ll) => L.circleMarker(ll, {{
+      radius: 5, color: "#14161a", weight: 1.25,
+      fillColor: "#fafafb", fillOpacity: 0.95, pane: "selectPane",
+    }}),
+    onEachFeature: (f, layer) => {{
+      const p = f.properties || {{}};
+      layer.bindTooltip((p.name || "landmark") + " · corridor endpoint · research");
+    }},
+  }});
+  const ly = document.getElementById("lyCorridorLandmarks");
+  if (ly && ly.checked) corridorLandmarkLayer.addTo(mapLeft);
+}}
+function syncCorridorPairVisibility() {{
+  const master = document.getElementById("lyCorridorPath");
+  const masterOn = !master || master.checked;
+  Object.keys(corridorPairLayers).forEach(key => {{
+    const ly = corridorPairLayers[key];
+    if (!ly) return;
+    const cb = document.getElementById("corridorPair_" + key.replace(/[^a-zA-Z0-9_-]/g, "_"));
+    const on = masterOn && (!cb || cb.checked);
+    if (on) {{
+      if (!mapLeft.hasLayer(ly)) ly.addTo(mapLeft);
+    }} else if (mapLeft.hasLayer(ly)) {{
+      mapLeft.removeLayer(ly);
+    }}
+  }});
+  syncMapKeyCorridor();
+}}
+function enableCorridorMultiPairDefault() {{
+  const path = document.getElementById("lyCorridorPath");
+  const lm = document.getElementById("lyCorridorLandmarks");
+  if (path && !path.checked) {{
+    path.checked = true;
+  }}
+  if (lm && !lm.checked) lm.checked = true;
+  document.querySelectorAll("#corridorPairs input[type=checkbox]").forEach(cb => {{
+    cb.checked = true;
+  }});
+  syncCorridorPairVisibility();
+  if (corridorLandmarkLayer) {{
+    if (!mapLeft.hasLayer(corridorLandmarkLayer)) corridorLandmarkLayer.addTo(mapLeft);
+  }}
+  syncMapKeyCorridor();
+}}
 function renderCorridorPairs() {{
   const el = document.getElementById("corridorPairs");
   const honesty = document.getElementById("corridorHonesty");
+  const lmNote = document.getElementById("corridorLandmarksNote");
   if (!el) return;
   if (!corridorData || !(corridorData.pairs || []).length) {{
-    el.innerHTML = "<span>Corridor graph</span><b>unavailable</b>";
+    el.innerHTML = '<div class="empty">Corridor graph unavailable</div>';
     if (honesty) honesty.textContent = "";
+    if (lmNote) lmNote.textContent = "";
     return;
   }}
   if (honesty) honesty.textContent = corridorData.honesty || "Research only — not official closures.";
-  el.innerHTML = (corridorData.pairs || []).map(p => {{
-    const delta = p.delta_m_vs_open != null ? (" · +" + p.delta_m_vs_open + " m vs open") : "";
-    return "<div><span>" + (p.from_name || "?") + " → " + (p.to_name || "?") +
-      "</span><b>" + corridorStatusLabel(p.status) + delta + "</b></div>";
+  if (lmNote) {{
+    const names = ((corridorData.landmarks) || []).map(l => l.name).filter(Boolean);
+    lmNote.textContent = names.length
+      ? ("Endpoints: " + names.join(" · ") + " — each pair is its own path.")
+      : "";
+  }}
+  el.innerHTML = (corridorData.pairs || []).map((p, idx) => {{
+    const key = corridorPairKey(p);
+    const safe = key.replace(/[^a-zA-Z0-9_-]/g, "_");
+    const cut = corridorIsCut(p.status);
+    const pal = CORRIDOR_PAIR_PALETTE[idx % CORRIDOR_PAIR_PALETTE.length];
+    const swColor = cut ? pal.cut : pal.open;
+    const delta = p.delta_m_vs_open != null ? (" · +" + p.delta_m_vs_open + " m") : "";
+    return `<label class="corridor-pair" for="corridorPair_${{safe}}">
+      <input id="corridorPair_${{safe}}" type="checkbox" checked data-pair="${{key}}">
+      <span class="pair-names">${{p.from_name || "?"}} → ${{p.to_name || "?"}}</span>
+      <span class="pair-status ${{cut ? "cut" : "open"}}" title="${{p.honesty || ""}}">
+        <span class="pair-swatch ${{cut ? "cut" : "open"}}" style="color:${{swColor}};border-color:${{swColor}};display:inline-block;vertical-align:middle;margin-right:4px"></span>
+        ${{corridorStatusLabel(p.status)}}${{delta}}
+      </span>
+    </label>`;
   }}).join("");
+  el.querySelectorAll("input[type=checkbox]").forEach(cb => {{
+    cb.addEventListener("change", syncCorridorPairVisibility);
+  }});
 }}
 function loadCorridorImpassability() {{
   const cfg = manifest.corridor_impassability || {{}};
@@ -2461,15 +2677,27 @@ function loadCorridorImpassability() {{
     fetchGeoJSON(cfg.paths_geojson || "corridor_research_paths.geojson").catch(() => null),
   ]).then(([json, wet, paths]) => {{
     corridorData = json;
+    corridorPathGeo = paths;
+    // Stamp status onto features for tooltip honesty / offline inspection.
+    if (corridorPathGeo && corridorData) {{
+      const statusByPair = {{}};
+      (corridorData.pairs || []).forEach(p => {{ statusByPair[corridorPairKey(p)] = p.status; }});
+      (corridorPathGeo.features || []).forEach(f => {{
+        const props = f.properties || (f.properties = {{}});
+        if (props.pair && statusByPair[props.pair]) props.status = statusByPair[props.pair];
+      }});
+    }}
     renderCorridorPairs();
+    rebuildCorridorPairLayers();
+    rebuildCorridorLandmarks();
     if (wet) {{
       corridorWetLayer = L.geoJSON(wet, {{
         pane: "vectorPane",
         style: f => ({{
           color: (f.properties && f.properties.impassable_deep) ? "#9f1239" : "#b45309",
-          weight: (f.properties && f.properties.impassable_deep) ? 3.2 : 2,
-          opacity: 0.85,
-          dashArray: "4 5",
+          weight: (f.properties && f.properties.impassable_deep) ? 2.2 : 1.4,
+          opacity: 0.55,
+          dashArray: "3 4",
         }}),
         onEachFeature: (f, layer) => {{
           const p = f.properties || {{}};
@@ -2481,19 +2709,31 @@ function loadCorridorImpassability() {{
       }});
       bindToggle("lyCorridorWet", corridorWetLayer);
     }}
-    if (paths) {{
-      corridorPathLayer = L.geoJSON(paths, {{
-        pane: "selectPane",
-        style: {{ color: "#0d9488", weight: 4, opacity: 0.9 }},
-        onEachFeature: (f, layer) => {{
-          const p = f.properties || {{}};
-          layer.bindTooltip((p.name || "path edge") + " · research corridor");
-        }},
+    const lyPath = document.getElementById("lyCorridorPath");
+    if (lyPath) {{
+      lyPath.addEventListener("change", () => {{
+        if (lyPath.checked) {{
+          document.querySelectorAll("#corridorPairs input[type=checkbox]").forEach(cb => {{ cb.checked = true; }});
+        }}
+        syncCorridorPairVisibility();
       }});
-      const ly = document.getElementById("lyCorridorPath");
-      if (ly && ly.checked) corridorPathLayer.addTo(mapLeft);
-      bindToggle("lyCorridorPath", corridorPathLayer);
     }}
+    const lyLm = document.getElementById("lyCorridorLandmarks");
+    if (lyLm) {{
+      lyLm.addEventListener("change", () => {{
+        if (!corridorLandmarkLayer) return;
+        if (lyLm.checked) corridorLandmarkLayer.addTo(mapLeft);
+        else if (mapLeft.hasLayer(corridorLandmarkLayer)) mapLeft.removeLayer(corridorLandmarkLayer);
+      }});
+    }}
+    const drawer = document.getElementById("corridorDetails");
+    if (drawer) {{
+      drawer.addEventListener("toggle", () => {{
+        if (drawer.open) enableCorridorMultiPairDefault();
+        syncMapKeyCorridor();
+      }});
+    }}
+    syncMapKeyCorridor();
   }}).catch(err => {{
     console.warn(err);
     renderCorridorPairs();

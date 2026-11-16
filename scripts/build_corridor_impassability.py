@@ -35,12 +35,19 @@ def main() -> dict:
 
     (ASSETS / "corridor_impassability.json").write_text(json.dumps(payload, indent=2))
     (ASSETS / "corridor_wet_edges.geojson").write_text(json.dumps(wet_geo))
-    # Merge research paths into one FeatureCollection with pair labels
+    # Merge research paths into one FeatureCollection with pair + status labels
+    # (UI renders each pair as a distinct path — not one closed loop).
+    status_by_pair = {
+        f"{p.get('from_id')}__{p.get('to_id')}": p.get("status")
+        for p in (payload.get("pairs") or [])
+    }
     merged_feats = []
     for key, fc in path_geos.items():
         for ft in fc.get("features") or []:
             props = dict(ft.get("properties") or {})
             props["pair"] = key
+            if key in status_by_pair:
+                props["status"] = status_by_pair[key]
             merged_feats.append({"type": "Feature", "properties": props, "geometry": ft.get("geometry")})
     (ASSETS / "corridor_research_paths.geojson").write_text(
         json.dumps({"type": "FeatureCollection", "features": merged_feats})
