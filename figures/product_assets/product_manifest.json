@@ -5100,5 +5100,15 @@
     ],
     "honesty": "Research corridor impassability graph: wet HAND road edges (\u22653 / \u22658 cm) removed to test landmark connectivity on LION/OSM topology. NOT official DOT closures / NOT navigation.",
     "official_closures": false
+  },
+  "drainage_capacity_proxy": {
+    "meta": "drainage_capacity_meta.json",
+    "dense_sample_geojson": "dep_catch_basins_dense_sample.geojson",
+    "n_open_points": 154786,
+    "coverage_fraction": 0.15827956058573384,
+    "buffer_deg": 0.0022,
+    "not_swmm": true,
+    "not_dep_sewer": true,
+    "honesty": "Denser open catch-basin inventory for capacity proxy screening \u2014 NOT DEP sewer ops / NOT SWMM / NOT official closures."
   }
 }

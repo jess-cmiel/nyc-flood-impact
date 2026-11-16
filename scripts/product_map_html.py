@@ -594,7 +594,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
         <summary>Archived open layers</summary>
         <p class="drawer-note">Optional Open Data samples — off by default. Not sewer performance / not official closures.</p>
         <label class="layer-btn"><input id="lyArchive511" type="checkbox">Archived 511-style</label>
-        <label class="layer-btn"><input id="lyDepBasins" type="checkbox">DEP catch basins (sample)</label>
+        <label class="layer-btn"><input id="lyDepBasins" type="checkbox">Open catch basins (dense sample)</label>
         <label class="layer-btn"><input id="lyBuildings" type="checkbox">Building footprints (sample)</label>
         <div id="archiveLayersStatus" class="drawer-note" style="margin-top:4px">Load on toggle…</div>
       </details>
@@ -2297,21 +2297,24 @@ function loadArchiveOpenLayers() {{
     setArchiveStatus(statusBits.join(" · ") + " ready");
   }}).catch(() => statusBits.push("511 missing"));
 
-  fetchGeoJSON("dep_catch_basins_sample.geojson").then(geo => {{
+  const basinsName = (manifest.drainage_capacity_proxy && manifest.drainage_capacity_proxy.dense_sample_geojson)
+    || "dep_catch_basins_dense_sample.geojson";
+  fetchGeoJSON(basinsName).catch(() => fetchGeoJSON("dep_catch_basins_sample.geojson")).then(geo => {{
+    if (!geo) throw new Error("basins missing");
     depBasinsLayer = L.geoJSON(geo, {{
       pointToLayer: (f, ll) => L.circleMarker(ll, {{
-        radius: 2.5, fillColor: "#6b7280", color: "#111827", weight: 0.8, fillOpacity: 0.7, pane: "pointPane"
+        radius: 2.2, fillColor: "#6b7280", color: "#111827", weight: 0.7, fillOpacity: 0.65, pane: "pointPane"
       }}),
       onEachFeature: (f, layer) => {{
         const p = f.properties || {{}};
-        layer.bindTooltip((p.unitid || p.node_id || "DEP basin") + " · open inventory");
+        layer.bindTooltip((p.unitid || p.node_id || "catch basin") + " · open inventory (not SWMM)");
       }},
     }});
     bindToggle("lyDepBasins", depBasinsLayer);
-    statusBits.push("DEP×" + ((geo.features || []).length));
+    statusBits.push("basins×" + ((geo.features || []).length));
     setArchiveStatus(statusBits.join(" · ") + " ready");
   }}).catch(() => {{
-    statusBits.push("DEP missing");
+    statusBits.push("basins missing");
     setArchiveStatus(statusBits.join(" · "));
   }});
 

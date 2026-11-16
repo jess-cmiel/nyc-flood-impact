@@ -4,10 +4,10 @@ ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 DEMO_TAG ?= demo-ida-v1
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor relativize vendor test ci-guard demo-tag
+.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains relativize vendor test ci-guard demo-tag
 
 help:
-	@echo "Decision Desk: desk html access-pack disagreement henri-parity corridor vendor relativize test demo-tag"
+	@echo "Decision Desk: desk html access-pack disagreement henri-parity corridor denser-drains vendor relativize test demo-tag"
 	@echo "Legacy: validation live-ida live clean"
 	@echo "Earth2Studio is a dependency — use E2S_PYTHON for GPU forecasts."
 
@@ -38,6 +38,10 @@ henri-parity:
 # P2.3 research corridor impassability (LION × HAND; not DOT closures)
 corridor:
 	$(ACTIVATE) && python scripts/build_corridor_impassability.py
+
+# P2.5 denser open catch-basin inventory for capacity proxy (not SWMM)
+denser-drains:
+	$(ACTIVATE) && python scripts/build_denser_drain_inventory.py
 
 # Vendor Leaflet + fonts for offline serve
 vendor:
