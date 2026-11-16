@@ -36,10 +36,15 @@ def main() -> None:
     if not (root / "product_assets").is_dir():
         raise SystemExit(f"missing product_assets/ under {root}")
     vendor_js = root / "vendor" / "leaflet" / "1.9.4" / "leaflet.js"
+    vendor_maplibre = root / "vendor" / "maplibre" / "3.6.2" / "maplibre-gl.js"
     vendor_fonts = root / "vendor" / "fonts" / "fonts.css"
     if not vendor_js.exists() or not vendor_fonts.exists():
         raise SystemExit(
             "missing figures/vendor (Leaflet/fonts). Run: python scripts/vendor_static_assets.py"
+        )
+    if not vendor_maplibre.exists():
+        raise SystemExit(
+            "missing figures/vendor/maplibre. Run: python scripts/vendor_static_assets.py"
         )
 
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(root))

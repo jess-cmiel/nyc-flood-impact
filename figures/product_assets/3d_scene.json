@@ -1,0 +1,316 @@
+{
+  "product": "decision_desk_street_view_3d",
+  "schema_version": "1.0.0",
+  "engine": "maplibre_gl",
+  "inspired_by_pattern": "street-level 3D hotspot drill-down from 2D map (research UI pattern)",
+  "honesty": "Research HAND/MRMS lead-frame screening in MapLibre 3D. NOT photogrammetry street-truth. NOT official guidance. HAND cm \u2260 FloodNet sensor metres. SFINCS remains optional Advanced / non-peer.",
+  "official_nws": false,
+  "decision_grade": false,
+  "photogrammetry": false,
+  "basemap": {
+    "style": "https://demotiles.maplibre.org/style.json",
+    "terrain_source": "https://demotiles.maplibre.org/terrain-tiles/tiles.json",
+    "terrain_exaggeration": 1.15,
+    "note": "Open demotiles + optional terrain; buildings from product_assets GeoJSON."
+  },
+  "timeline": {
+    "source": "ida_mrms_hand_cumulative_leads",
+    "leads_h": [
+      0.0,
+      3.0,
+      6.0,
+      9.0,
+      12.0,
+      15.0,
+      18.0,
+      21.0,
+      24.0,
+      27.0,
+      30.0,
+      33.0,
+      36.0
+    ],
+    "units": "cm",
+    "band_cm": [
+      3,
+      8,
+      15
+    ]
+  },
+  "default_hotspot_id": "stations:gtfs:F22",
+  "hotspots": [
+    {
+      "id": "stations:gtfs:F22",
+      "kind": "shortlist_station",
+      "name": "Smith-9 Sts",
+      "label": "Smith\u20139",
+      "lon": -73.995959,
+      "lat": 40.67358,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.1,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.99,
+        9.19,
+        10.54,
+        9.95,
+        9.41,
+        8.92,
+        8.44,
+        7.96,
+        7.47
+      ],
+      "camera": {
+        "center": [
+          -73.995959,
+          40.67358
+        ],
+        "zoom": 17.35,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/smith9_buildings.geojson",
+      "depth_polygon": "3d_scenes/smith9_depth.geojson",
+      "honesty": "HAND cm research screening at station pin \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product."
+    },
+    {
+      "id": "BK-9th-st-smith-st-0etvg0",
+      "kind": "floodnet_post",
+      "name": "BK - 9th St/Smith St",
+      "label": "BK - 9th St/Smith St",
+      "lon": -73.995396,
+      "lat": 40.673654,
+      "borough": "Brooklyn",
+      "floodnet_obs_peak_m": 0.7051040000000001,
+      "floodnet_obs_peak_cm": 70.5,
+      "primary_hand_m": 0.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.99,
+        9.19,
+        10.54,
+        9.95,
+        9.41,
+        8.92,
+        8.44,
+        7.96,
+        7.47
+      ],
+      "camera": {
+        "center": [
+          -73.995396,
+          40.673654
+        ],
+        "zoom": 17.45,
+        "pitch": 64,
+        "bearing": -35
+      },
+      "buildings": "3d_scenes/bk-9th-st-smith-st-0etvg0_buildings.geojson",
+      "depth_polygon": "3d_scenes/bk-9th-st-smith-st-0etvg0_depth.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+    },
+    {
+      "id": "BK-carroll-st-4th-av-0ery00",
+      "kind": "floodnet_post",
+      "name": "BK - Carroll St/4th Av",
+      "label": "BK - Carroll St/4th Av",
+      "lon": -73.984089,
+      "lat": 40.676281,
+      "borough": "Brooklyn",
+      "floodnet_obs_peak_m": 0.9039860000000001,
+      "floodnet_obs_peak_cm": 90.4,
+      "primary_hand_m": 0.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.99,
+        9.19,
+        10.54,
+        9.95,
+        9.41,
+        8.92,
+        8.44,
+        7.96,
+        7.47
+      ],
+      "camera": {
+        "center": [
+          -73.984089,
+          40.676281
+        ],
+        "zoom": 17.45,
+        "pitch": 64,
+        "bearing": -35
+      },
+      "buildings": "3d_scenes/bk-carroll-st-4th-av-0ery00_buildings.geojson",
+      "depth_polygon": "3d_scenes/bk-carroll-st-4th-av-0ery00_depth.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+    },
+    {
+      "id": "BK-hoyt-st-5th-st-007sk0",
+      "kind": "floodnet_post",
+      "name": "BK - Hoyt St/5th St",
+      "label": "BK - Hoyt St/5th St",
+      "lon": -73.994591,
+      "lat": 40.676672,
+      "borough": "Brooklyn",
+      "floodnet_obs_peak_m": 0.26288999999999996,
+      "floodnet_obs_peak_cm": 26.3,
+      "primary_hand_m": 0.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.99,
+        9.19,
+        10.54,
+        9.95,
+        9.41,
+        8.92,
+        8.44,
+        7.96,
+        7.47
+      ],
+      "camera": {
+        "center": [
+          -73.994591,
+          40.676672
+        ],
+        "zoom": 17.45,
+        "pitch": 64,
+        "bearing": -35
+      },
+      "buildings": "3d_scenes/bk-hoyt-st-5th-st-007sk0_buildings.geojson",
+      "depth_polygon": "3d_scenes/bk-hoyt-st-5th-st-007sk0_depth.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+    },
+    {
+      "id": "Q-russell-st-2-07zt40",
+      "kind": "floodnet_post",
+      "name": "Q - Russell St 2",
+      "label": "Q - Russell St 2",
+      "lon": -73.831736,
+      "lat": 40.654254,
+      "borough": "Queens",
+      "floodnet_obs_peak_m": 0.072898,
+      "floodnet_obs_peak_cm": 7.3,
+      "primary_hand_m": 0.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.15,
+        1.38,
+        1.58,
+        1.49,
+        1.41,
+        1.34,
+        1.27,
+        1.19,
+        1.12
+      ],
+      "camera": {
+        "center": [
+          -73.831736,
+          40.654254
+        ],
+        "zoom": 17.45,
+        "pitch": 64,
+        "bearing": 18
+      },
+      "buildings": "3d_scenes/q-russell-st-2-07zt40_buildings.geojson",
+      "depth_polygon": "3d_scenes/q-russell-st-2-07zt40_depth.geojson",
+      "honesty": "FloodNet street peak is sensor metres; 3D extrusion follows HAND/MRMS lead-frame cm screening \u2014 not the same scale, not photogrammetry."
+    }
+  ],
+  "open_from": [
+    "shortlist click (Smith\u20139)",
+    "FloodNet Ida post click / list select",
+    "inspector Street view 3D button"
+  ]
+}

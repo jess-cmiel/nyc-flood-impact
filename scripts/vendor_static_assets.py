@@ -16,6 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "figures" / "vendor"
 LEAFLET_VER = "1.9.4"
+MAPLIBRE_VER = "3.6.2"
 UA = "nyc-flood-impact-vendor/1.0 (+research demo)"
 
 
@@ -52,6 +53,27 @@ def vendor_leaflet() -> dict:
             "bytes": len(data),
         }
     # Leaflet CSS uses url(images/...) relative — already correct under out/
+    (out / "VENDOR.json").write_text(json.dumps(meta, indent=2))
+    return meta
+
+
+def vendor_maplibre() -> dict:
+    """Vendor MapLibre GL for Decision Desk street-level 3D overlay."""
+    base = f"https://unpkg.com/maplibre-gl@{MAPLIBRE_VER}/dist"
+    out = VENDOR / "maplibre" / MAPLIBRE_VER
+    files = {
+        "maplibre-gl.js": f"{base}/maplibre-gl.js",
+        "maplibre-gl.css": f"{base}/maplibre-gl.css",
+    }
+    meta = {"version": MAPLIBRE_VER, "files": {}}
+    for rel, url in files.items():
+        data = _fetch(url)
+        _write(out / rel, data)
+        meta["files"][rel] = {
+            "url": url,
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "bytes": len(data),
+        }
     (out / "VENDOR.json").write_text(json.dumps(meta, indent=2))
     return meta
 
@@ -121,6 +143,7 @@ def write_checksums() -> Path:
 def main() -> None:
     VENDOR.mkdir(parents=True, exist_ok=True)
     leaflet = vendor_leaflet()
+    maplibre = vendor_maplibre()
     fonts = vendor_fonts()
     sums = write_checksums()
     print(
@@ -128,6 +151,7 @@ def main() -> None:
             {
                 "vendor": str(VENDOR.relative_to(ROOT)),
                 "leaflet_files": len(leaflet["files"]),
+                "maplibre_files": len(maplibre["files"]),
                 "font_faces": fonts["n_faces"],
                 "checksums": str(sums.relative_to(ROOT)),
             },

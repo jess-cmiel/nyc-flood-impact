@@ -34,6 +34,7 @@ def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
 <meta name="description" content="Research Asset Decision Desk for Hurricane Ida. Ranked wet assets from metro pysheds × MRMS. NOT official NWS. NOT decision-grade.">
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <link rel="stylesheet" href="vendor/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="vendor/maplibre/3.6.2/maplibre-gl.css">
 <style>
 :root {{
   --ink:#14161a; --ink-soft:#2c3138; --muted:#6b7280; --paper:#eef0f3;
@@ -419,6 +420,51 @@ body.has-selection .timeline-hud {{
   font-size:.72rem; color:var(--ink-soft); line-height:1.4; font-weight:600;
 }}
 .inspector-dock .sel-access-note {{ margin-top:4px; font-size:.64rem; color:var(--muted); line-height:1.35; }}
+.sel-street3d-btn {{
+  display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+  border:1px solid rgba(194,65,12,.35); background:rgba(194,65,12,.08);
+  color:var(--accent-deep); border-radius:var(--radius);
+  padding:7px 10px; font:600 .7rem var(--sans); cursor:pointer; width:100%;
+  justify-content:center;
+}}
+.sel-street3d-btn:hover {{ background:rgba(194,65,12,.14); }}
+.sel-street3d-btn[hidden] {{ display:none !important; }}
+.street-view-3d {{
+  position:absolute; inset:0; z-index:40; display:flex; flex-direction:column;
+  background:rgba(18,20,24,.94); color:#eef0f2;
+}}
+.street-view-3d[hidden] {{ display:none !important; }}
+.street-view-3d .sv-head {{
+  flex:0 0 auto; display:flex; align-items:flex-start; justify-content:space-between;
+  gap:12px; padding:12px 14px 10px; border-bottom:1px solid rgba(238,240,242,.12);
+}}
+.street-view-3d .sv-kicker {{
+  font:600 .56rem var(--sans); letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(238,240,242,.62); margin-bottom:4px;
+}}
+.street-view-3d h2 {{
+  margin:0; font:700 1.15rem/1.15 var(--serif); letter-spacing:-.015em; color:#fff;
+}}
+.street-view-3d .sv-sub {{ margin-top:4px; font:500 .72rem/1.35 var(--sans); color:rgba(238,240,242,.72); }}
+.street-view-3d .sv-close {{
+  border:0; background:rgba(238,240,242,.1); color:#fff; width:32px; height:32px;
+  border-radius:var(--radius); font-size:1.1rem; cursor:pointer; flex:0 0 auto;
+}}
+.street-view-3d .sv-close:hover {{ background:rgba(238,240,242,.18); }}
+.street-view-3d .sv-stats {{
+  flex:0 0 auto; display:flex; flex-wrap:wrap; gap:10px 16px; padding:8px 14px;
+  border-bottom:1px solid rgba(238,240,242,.08); font:600 .68rem var(--mono);
+}}
+.street-view-3d .sv-stats span {{ color:rgba(238,240,242,.55); font-weight:500; margin-right:4px; }}
+.street-view-3d .sv-map {{ flex:1 1 auto; min-height:0; position:relative; }}
+.street-view-3d .sv-map .maplibregl-map {{ position:absolute; inset:0; }}
+.street-view-3d .sv-foot {{
+  flex:0 0 auto; padding:8px 14px 12px; font:500 .66rem/1.4 var(--sans);
+  color:rgba(238,240,242,.7); border-top:1px solid rgba(238,240,242,.08);
+}}
+.street-view-3d .sv-status {{ margin-top:2px; color:rgba(238,240,242,.55); font-size:.62rem; }}
+body.street-view-open .timeline-hud {{ z-index:45; }}
+body.street-view-open .kbd-hint {{ display:none; }}
 .sel-access-line {{ font:600 .74rem var(--sans); color:var(--ink-soft); }}
 .briefing-card .access-pill {{
   font:600 .56rem var(--mono); padding:1px 4px; border-radius:2px;
@@ -962,9 +1008,32 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
         <div class="consequence-cap">Consequence timeline (research)</div>
         <div class="consequence-line" id="selConsequence">—</div>
       </div>
+      <button type="button" class="sel-street3d-btn" id="sv3dOpenBtn" hidden>
+        Street view 3D · lead scrub
+      </button>
       <div class="sel-hint" id="selHint"></div>
     </div>
   </aside>
+  <div class="street-view-3d" id="streetView3d" hidden aria-hidden="true" role="dialog" aria-label="Street-level 3D hotspot view">
+    <div class="sv-head">
+      <div>
+        <div class="sv-kicker">Street-level · research 3D</div>
+        <h2 id="sv3dTitle">—</h2>
+        <div class="sv-sub" id="sv3dSub">HAND/MRMS lead frames · not photogrammetry</div>
+      </div>
+      <button type="button" class="sv-close" id="sv3dClose" aria-label="Close 3D street view">×</button>
+    </div>
+    <div class="sv-stats" aria-live="polite">
+      <div><span>Lead</span><b id="sv3dLead">+0h</b></div>
+      <div><span>HAND depth</span><b id="sv3dDepth">0.0 cm</b></div>
+      <div><span>Band</span><b id="sv3dBand">&lt;3 cm</b></div>
+    </div>
+    <div class="sv-map" id="sv3dMap" role="presentation"></div>
+    <div class="sv-foot">
+      <div id="sv3dHonesty">Research HAND cm screening in extruded context — NOT street-truth photogrammetry. FloodNet metres stay separate. SFINCS optional Advanced.</div>
+      <div class="sv-status" id="sv3dStatus">Lazy-loads 3d_scene.json on open.</div>
+    </div>
+  </div>
   <div class="coach-overlay" id="coachOverlay" hidden>
     <div class="coach-card" role="dialog" aria-label="Decision Desk quick start">
       <strong>15s start</strong>
@@ -1039,6 +1108,8 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
 </div>
 
 <script src="vendor/leaflet/1.9.4/leaflet.js"></script>
+<script src="vendor/maplibre/3.6.2/maplibre-gl.js"></script>
+<script src="product_street_view_3d.js"></script>
 <script>
 const EVENTS = {json.dumps(EVENTS)};
 const EXTENTS = {json.dumps(EXTENTS)};
@@ -1430,6 +1501,7 @@ function setLead(i) {{
     if (!mapLeft.hasLayer(e2Total)) e2Total.addTo(mapLeft);
   }}
   leadIndex = i;
+  try {{ window.leadIndex = leadIndex; window.frames = frames; }} catch (err) {{}}
   const scrub = document.getElementById("hudScrub");
   if (scrub) {{ scrub.max = Math.max(frames.length - 1, 0); scrub.value = String(i); }}
   const clock = (f.valid_time || "").replace("T", " ");
@@ -1447,6 +1519,9 @@ function setLead(i) {{
   }}
   document.getElementById("leftLabel").textContent = "Decision Desk · " + (activePath.label || "Ida");
   syncSparklineToScrubber();
+  if (window.StreetView3D) {{
+    try {{ window.StreetView3D.syncToLead(f.lead_hours); }} catch (err) {{}}
+  }}
 }}
 
 function setPlaying(on) {{
@@ -1800,6 +1875,13 @@ function selectAsset(id) {{
   renderCompareStrip(a);
   appendDecisionLog(a, "select");
   setSelectionChrome(true);
+  if (window.StreetView3D) {{
+    try {{
+      window.selectedId = selectedId;
+      window.StreetView3D.maybeOfferButton(id);
+      if (window.StreetView3D.canOpenId(id)) window.StreetView3D.open(id);
+    }} catch (err) {{}}
+  }}
   requestAnimationFrame(() => {{
     try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}}
     if (compareOn) refreshCompareClip();
@@ -2711,17 +2793,25 @@ function floodnetPopupHtml(p) {{
 
 function selectFloodnetStation(sensorId) {{
   selectedFloodnetId = sensorId;
+  try {{ window.selectedFloodnetId = sensorId; }} catch (err) {{}}
   document.querySelectorAll("#floodnetList .asset-row").forEach(btn => {{
     btn.classList.toggle("selected", btn.dataset.id === sensorId);
   }});
-  if (!floodnetLayer) return;
-  floodnetLayer.eachLayer(layer => {{
-    const p = layer.feature && layer.feature.properties;
-    if (!p || p.sensor_id !== sensorId) return;
-    const ll = layer.getLatLng();
-    mapLeft.flyTo(ll, Math.max(mapLeft.getZoom(), 14), {{ duration: 0.65 }});
-    layer.openPopup();
-  }});
+  if (floodnetLayer) {{
+    floodnetLayer.eachLayer(layer => {{
+      const p = layer.feature && layer.feature.properties;
+      if (!p || p.sensor_id !== sensorId) return;
+      const ll = layer.getLatLng();
+      mapLeft.flyTo(ll, Math.max(mapLeft.getZoom(), 14), {{ duration: 0.65 }});
+      layer.openPopup();
+    }});
+  }}
+  if (window.StreetView3D) {{
+    try {{
+      window.StreetView3D.maybeOfferButton(sensorId);
+      if (window.StreetView3D.canOpenId(sensorId)) window.StreetView3D.open(sensorId);
+    }} catch (err) {{}}
+  }}
 }}
 
 function renderFloodnetList(stations) {{
@@ -2852,7 +2942,7 @@ function loadFloodNetProduct() {{
           const p = f.properties || {{}};
           layer.bindPopup(floodnetPopupHtml(p));
           layer.bindTooltip((p.sensor_name || p.sensor_id || "FloodNet") + " · obs " + fmtM(p.obs_peak_m) + " m");
-          layer.on("click", () => {{ selectedFloodnetId = p.sensor_id; renderFloodnetList(floodnetStations); }});
+          layer.on("click", () => {{ selectFloodnetStation(p.sensor_id); }});
         }},
       }});
       bindToggle("lyFloodNet", floodnetLayer);

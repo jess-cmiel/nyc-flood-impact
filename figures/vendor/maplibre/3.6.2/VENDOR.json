@@ -1,0 +1,15 @@
+{
+  "version": "3.6.2",
+  "files": {
+    "maplibre-gl.js": {
+      "url": "https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js",
+      "sha256": "c46084df69bbaa995b301a515274a86ec53905c78459b80dccbc27a0c0b8d13b",
+      "bytes": 762783
+    },
+    "maplibre-gl.css": {
+      "url": "https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css",
+      "sha256": "731181d400d65a8b09d842f55b70bc4dc11010b15b8549e2c65a69d233fbdd2e",
+      "bytes": 63722
+    }
+  }
+}
