@@ -467,12 +467,32 @@ body.has-selection .timeline-hud {{
   position:relative; z-index:2;
 }}
 .street-view-3d .sv-status {{ margin-top:2px; color:rgba(238,240,242,.55); font-size:.62rem; }}
-/* Timeline stays above 3D so lead scrub still drives HAND extrusion */
+/* Timeline + view toggle stay above 3D so lead scrub still drives HAND extrusion */
 body.street-view-open .timeline-hud {{ z-index:1300; }}
+body.street-view-open .view-mode-toggle {{ z-index:1310; }}
 body.street-view-open .kbd-hint,
 body.street-view-open .pane-label,
 body.street-view-open .map-key-float,
 body.street-view-open .sfincs-peer-banner {{ display:none !important; }}
+.view-mode-toggle {{
+  position:absolute; z-index:660; top:10px; right:10px;
+  display:inline-flex; gap:0; border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,.12); background:rgba(18,20,24,.9);
+  backdrop-filter:blur(6px); overflow:hidden;
+}}
+.view-mode-toggle button {{
+  border:0; background:transparent; color:#9aa3ae; cursor:pointer;
+  font:700 .68rem/1 var(--sans); letter-spacing:.06em; text-transform:uppercase;
+  padding:8px 12px; min-width:44px;
+}}
+.view-mode-toggle button[aria-pressed="true"] {{
+  background:rgba(194,65,12,.92); color:#fff;
+}}
+.view-mode-toggle button:hover:not([aria-pressed="true"]) {{
+  background:rgba(255,255,255,.06); color:#e8eaed;
+}}
+body.view-3d .compare-shell,
+body.view-3d .compare-toggle {{ pointer-events:none; opacity:.45; }}
 .sel-access-line {{ font:600 .74rem var(--sans); color:var(--ink-soft); }}
 .briefing-card .access-pill {{
   font:600 .56rem var(--mono); padding:1px 4px; border-radius:2px;
@@ -963,7 +983,11 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
 
 <div class="map-stage" id="mapStage">
   <div class="pane-label" id="leftLabel">Decision Desk · Ida</div>
-  <div class="kbd-hint" aria-hidden="true"><kbd>c</kbd> compare · <kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear</div>
+  <div class="view-mode-toggle" role="group" aria-label="Map view mode">
+    <button type="button" id="viewMode2d" aria-pressed="true" title="Leaflet 2D map with precip and depth">2D</button>
+    <button type="button" id="viewMode3d" aria-pressed="false" title="Street-level research 3D for selected hotspot">3D</button>
+  </div>
+  <div class="kbd-hint" aria-hidden="true"><kbd>c</kbd> compare · <kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear · <kbd>2</kbd>/<kbd>3</kbd> view</div>
   <div class="sfincs-peer-banner" id="sfincsPeerBanner">SFINCS on — non-peer metres vs HAND cm. HAND auto-dimmed. No SWMM.</div>
   <div id="mapLeft" class="map-el"></div>
   <aside class="inspector-dock" id="selectedCard" aria-label="Selected asset inspector" aria-hidden="true">
@@ -1231,11 +1255,37 @@ function currentBounds() {{
   const b = (EXTENTS[extentSel.value] || EXTENTS.metro || EXTENTS.citywide).bounds;
   return [[b.ymin, b.xmin],[b.ymax, b.xmax]];
 }}
+/** Normalize overlay georef to Leaflet [[south,west],[north,east]]. */
+function normalizeLeafletBounds(raw) {{
+  if (!raw) return null;
+  if (Array.isArray(raw) && raw.length === 2 && Array.isArray(raw[0]) && Array.isArray(raw[1])) {{
+    const a = raw[0], b = raw[1];
+    // Already [[lat,lon],[lat,lon]]
+    if (a.length >= 2 && b.length >= 2) {{
+      const south = Math.min(a[0], b[0]), north = Math.max(a[0], b[0]);
+      const west = Math.min(a[1], b[1]), east = Math.max(a[1], b[1]);
+      return [[south, west], [north, east]];
+    }}
+  }}
+  if (typeof raw === "object") {{
+    const xmin = raw.xmin ?? raw.west ?? raw.left;
+    const xmax = raw.xmax ?? raw.east ?? raw.right;
+    const ymin = raw.ymin ?? raw.south ?? raw.bottom;
+    const ymax = raw.ymax ?? raw.north ?? raw.top;
+    if ([xmin, xmax, ymin, ymax].every(v => v != null && Number.isFinite(Number(v)))) {{
+      return [[Number(ymin), Number(xmin)], [Number(ymax), Number(xmax)]];
+    }}
+  }}
+  return null;
+}}
 /** Native georef for data overlays — metro after DEM/MRMS rebuild; soft land mask (no painted box). */
 function dataDomainBounds() {{
-  const fromMeta = (manifest.inundation && manifest.inundation.bounds)
-    || (manifest.inundation_citywide && manifest.inundation_citywide.bounds)
-    || (manifest.layer_bounds && manifest.layer_bounds.data_domain_bounds);
+  const lb = manifest.layer_bounds || {{}};
+  const fromMeta = normalizeLeafletBounds(lb.inundation)
+    || normalizeLeafletBounds(lb.data_domain_bounds)
+    || normalizeLeafletBounds(lb.precip)
+    || normalizeLeafletBounds(manifest.inundation && manifest.inundation.bounds)
+    || normalizeLeafletBounds(manifest.inundation_citywide && manifest.inundation_citywide.bounds);
   if (fromMeta) return fromMeta;
   const b = (EXTENTS.metro || EXTENTS.citywide).bounds;
   return [[b.ymin, b.xmin],[b.ymax, b.xmax]];
@@ -1252,6 +1302,9 @@ let frames = [], suscFrames = [], depthCumFrames = [], e2Layers = [], suscLayers
 let activeE2 = null, activeSusc = null, activeDepth = null, e2Total = null, depthTotal = null, sfincsLayer = null, sfincsNestedLayer = null;
 let fadeE2 = null, fadeDepth = null, fadeSusc = null, fadeTimer = null;
 let playing = false, playTimer = null, leadIndex = 0;
+let viewMode = "2d"; // "2d" | "3d" — explicit toggle; 3D must not permanently kill precip
+let activeOverlayBounds = null; // shared precip/depth/compare georef
+let compareScrubSyncing = false;
 let desk = null, deskGeoSource = null, wetLayer = null, selectedLayer = null, selectedId = null;
 let highlightLayer = null, highlightIds = [];
 let floodnetLayer = null, floodnetStations = [], selectedFloodnetId = null;
@@ -1321,8 +1374,26 @@ function depthSetForPath(pathId) {{
 }}
 
 function overlayBoundsPreferMetro(explicit) {{
-  if (explicit) return explicit;
+  const n = normalizeLeafletBounds(explicit);
+  if (n) return n;
   return dataDomainBounds();
+}}
+/** Prefer metro PNG when storm_total lists both citywide + metro (same georef domain). */
+function stormTotalPng(ds) {{
+  if (!ds || !ds.storm_total) return null;
+  const st = ds.storm_total;
+  if (typeof st === "string") return st;
+  return st.metro_png || st.png || null;
+}}
+function sharedOverlayBounds(pathObj, ds) {{
+  const lb = manifest.layer_bounds || {{}};
+  return overlayBoundsPreferMetro(
+    (ds && ds.bounds)
+    || (pathObj && pathObj.precip && pathObj.precip.bounds)
+    || lb.inundation
+    || lb.precip
+    || lb.data_domain_bounds
+  );
 }}
 
 function nearestDepthIndex(leadHours) {{
@@ -1333,6 +1404,26 @@ function nearestDepthIndex(leadHours) {{
     if (d < bestAbs) {{ bestAbs = d; best = idx; }}
   }});
   return best;
+}}
+function precipIndexForLead(leadHours) {{
+  if (!frames.length) return 0;
+  let best = 0, bestAbs = Infinity;
+  frames.forEach((fr, idx) => {{
+    const d = Math.abs((fr.lead_hours || 0) - leadHours);
+    if (d < bestAbs) {{ bestAbs = d; best = idx; }}
+  }});
+  return best;
+}}
+function exactDepthPngForLead(leadH) {{
+  const di = nearestDepthIndex(leadH);
+  if (di < 0 || !depthCumFrames[di]) return null;
+  // Require the snapped lead to be the intended asset (no silent storm-total swap).
+  return depthCumFrames[di].png || null;
+}}
+function snappedDepthLead(leadH) {{
+  const di = nearestDepthIndex(leadH);
+  if (di < 0 || !depthCumFrames[di]) return leadH;
+  return Number(depthCumFrames[di].lead_hours);
 }}
 
 function syncTimeWindowLabel() {{
@@ -1365,8 +1456,13 @@ function rebuildPathLayers() {{
   frames = activePath.precip?.frames || [];
   renderTimelineTicks();
   suscFrames = activePath.susceptibility?.frames || [];
-  const precipBounds = overlayBoundsPreferMetro(activePath.precip && activePath.precip.bounds);
-  const suscBounds = overlayBoundsPreferMetro((activePath.susceptibility && activePath.susceptibility.bounds) || precipBounds);
+  const ds = depthSetForPath(activePath.id);
+  const overlayBounds = sharedOverlayBounds(activePath, ds);
+  activeOverlayBounds = overlayBounds;
+  const precipBounds = overlayBounds;
+  const suscBounds = overlayBoundsPreferMetro(
+    (activePath.susceptibility && activePath.susceptibility.bounds) || overlayBounds
+  );
   e2Layers = frames.map(f => L.imageOverlay(assets + f.png, precipBounds, {{
     opacity: 0, interactive:false, pane:"rasterPane", className:"precip-radar"
   }}));
@@ -1381,24 +1477,22 @@ function rebuildPathLayers() {{
         opacity: precipOpacity(), pane:"rasterPane", interactive:false, className:"precip-radar"
       }})
     : null;
-  const ds = depthSetForPath(activePath.id);
-  const depthBounds = overlayBoundsPreferMetro((ds && ds.bounds) || precipBounds);
+  const depthBounds = overlayBounds;
   depthCumFrames = (ds && ds.cumulative_frames) ? ds.cumulative_frames.slice() : [];
   depthLayers = depthCumFrames.map(fr => L.imageOverlay(assets + fr.png, depthBounds, {{
     opacity: 0, interactive:false, pane:"depthPane", className:"depth-radar"
   }}));
-  depthTotal = (ds && ds.storm_total && ds.storm_total.png)
-    ? L.imageOverlay(assets + ds.storm_total.png, depthBounds, {{
+  const depthStormPng = stormTotalPng(ds)
+    || (manifest.inundation_citywide && manifest.inundation_citywide.png)
+    || null;
+  depthTotal = depthStormPng
+    ? L.imageOverlay(assets + depthStormPng, depthBounds, {{
         opacity: 0, interactive:false, pane:"depthPane", className:"depth-radar"
       }})
-    : (manifest.inundation_citywide && manifest.inundation_citywide.png)
-      ? L.imageOverlay(assets + manifest.inundation_citywide.png, dataDomainBounds(), {{
-          opacity: 0, interactive:false, pane:"depthPane", className:"depth-radar"
-        }})
-      : null;
+    : null;
   if (manifest.inundation_sfincs_nested && manifest.inundation_sfincs_nested.png) {{
-    const nb = (manifest.inundation_sfincs_nested.bounds)
-      || overlayBoundsPreferMetro(dataDomainBounds());
+    const nb = normalizeLeafletBounds(manifest.inundation_sfincs_nested.bounds)
+      || overlayBounds;
     sfincsNestedLayer = L.imageOverlay(assets + manifest.inundation_sfincs_nested.png, nb, {{
       opacity: Math.min(depthOpacity(), 0.50), interactive:false, pane:"depthPane"
     }});
@@ -1518,9 +1612,24 @@ function setLead(i) {{
   const depthBit = depthLead != null ? (" · depth +" + depthLead + "h") : "";
   const suscBit = wantSusc ? " · screening on" : "";
   if (compareOn) {{
+    // Keep Compare B (right) locked to the same HAND cum asset as the scrubbed flood depth.
+    if (!compareScrubSyncing && !compareDragging) {{
+      const snapped = snappedDepthLead(f.lead_hours);
+      if (snapped !== compareRightLead && snapped >= compareLeftLead) {{
+        compareScrubSyncing = true;
+        compareRightLead = snapped;
+        const bSel = document.getElementById("compareLeadB");
+        if (bSel) bSel.value = String(compareRightLead);
+        applyCompareLayers();
+        compareScrubSyncing = false;
+      }} else {{
+        refreshCompareClip();
+      }}
+    }} else {{
+      refreshCompareClip();
+    }}
     document.getElementById("hudSub").textContent =
       "Compare +" + compareLeftLead + "h ↔ +" + compareRightLead + "h · HAND cum · research only";
-    refreshCompareClip();
   }} else {{
     document.getElementById("hudSub").textContent =
       "+" + f.lead_hours + "h · 3h cum screening frames · " + (f.temporal_blend ? "blend" : "native") + depthBit + suscBit;
@@ -1887,7 +1996,10 @@ function selectAsset(id) {{
     try {{
       window.selectedId = selectedId;
       window.StreetView3D.maybeOfferButton(id);
-      if (window.StreetView3D.canOpenId(id)) window.StreetView3D.open(id);
+      // Do not auto-open 3D — use the explicit 2D|3D toggle (or inspector button).
+      if (viewMode === "3d" && window.StreetView3D.canOpenId(id)) {{
+        window.StreetView3D.open(id);
+      }}
     }} catch (err) {{}}
   }}
   requestAnimationFrame(() => {{
@@ -2224,7 +2336,14 @@ function refreshCompareClip() {{
     if (!img) return;
     img.classList.add("compare-clip");
     const r = img.getBoundingClientRect();
-    if (!r.width || !r.height) return;
+    if (!r.width || !r.height) {{
+      // Image may not be laid out yet — retry once after load.
+      if (!img.dataset.compareClipBound) {{
+        img.dataset.compareClipBound = "1";
+        img.addEventListener("load", () => refreshCompareClip(), {{ once: true }});
+      }}
+      return;
+    }}
     if (side === "left") {{
       const right = Math.max(0, Math.min(r.width, nx - r.left));
       img.style.clip = "rect(0px," + right + "px," + r.height + "px,0px)";
@@ -2244,39 +2363,51 @@ function syncCompareChips() {{
   if (l) l.textContent = "+" + compareLeftLead + "h";
   if (r) r.textContent = "+" + compareRightLead + "h";
 }}
+function syncScrubToCompareRight() {{
+  if (!frames.length) return;
+  compareScrubSyncing = true;
+  const idx = precipIndexForLead(compareRightLead);
+  setLead(idx);
+  compareScrubSyncing = false;
+}}
 function applyCompareLayers() {{
   if (!compareOn) return;
   clearCompareLayers();
-  const left = depthOverlayForLead(compareLeftLead);
-  const right = depthOverlayForLead(compareRightLead);
-  if (!left && !right) return;
-  // Clone-ish: reuse existing ImageOverlay instances would fight setLead opacity.
-  // Build dedicated overlays from the same PNG sources.
+  // Snap L/R to actual HAND cum frame leads so chips match the flood depth assets.
+  compareLeftLead = snappedDepthLead(compareLeftLead);
+  compareRightLead = snappedDepthLead(compareRightLead);
+  if (compareRightLead < compareLeftLead) {{
+    const tmp = compareLeftLead;
+    compareLeftLead = compareRightLead;
+    compareRightLead = tmp;
+  }}
+  const aSel = document.getElementById("compareLeadA");
+  const bSel = document.getElementById("compareLeadB");
+  if (aSel) aSel.value = String(compareLeftLead);
+  if (bSel) bSel.value = String(compareRightLead);
   const ds = depthSetForPath(activePath.id);
-  const precipBounds = overlayBoundsPreferMetro(activePath.precip && activePath.precip.bounds);
-  const depthBounds = overlayBoundsPreferMetro((ds && ds.bounds) || precipBounds);
-  const pngFor = (leadH) => {{
-    const di = nearestDepthIndex(leadH);
-    if (di >= 0 && depthCumFrames[di]) return depthCumFrames[di].png;
-    if (ds && ds.storm_total && ds.storm_total.png) return ds.storm_total.png;
-    if (manifest.inundation_citywide && manifest.inundation_citywide.png) return manifest.inundation_citywide.png;
-    return null;
-  }};
-  const leftPng = pngFor(compareLeftLead);
-  const rightPng = pngFor(compareRightLead);
+  const depthBounds = activeOverlayBounds
+    || sharedOverlayBounds(activePath, ds);
+  // Same lead assets as the normal depth timeline (depthCumFrames), never a mismatched total.
+  const leftPng = exactDepthPngForLead(compareLeftLead) || stormTotalPng(ds);
+  const rightPng = exactDepthPngForLead(compareRightLead) || stormTotalPng(ds);
   const op = Math.max(effectiveDepthOpacity(), 0.55);
+  const mk = (png) => L.imageOverlay(assets + png, depthBounds, {{
+    opacity: op, interactive: false, pane: "depthPane", className: "depth-radar compare-clip"
+  }});
   if (leftPng) {{
-    compareLeftLayer = L.imageOverlay(assets + leftPng, depthBounds, {{
-      opacity: op, interactive: false, pane: "depthPane", className: "depth-radar compare-clip"
-    }}).addTo(mapLeft);
+    compareLeftLayer = mk(leftPng).addTo(mapLeft);
+    compareLeftLayer.once("load", () => refreshCompareClip());
   }}
   if (rightPng) {{
-    compareRightLayer = L.imageOverlay(assets + rightPng, depthBounds, {{
-      opacity: op, interactive: false, pane: "depthPane", className: "depth-radar compare-clip"
-    }}).addTo(mapLeft);
+    compareRightLayer = mk(rightPng).addTo(mapLeft);
+    compareRightLayer.once("load", () => refreshCompareClip());
   }}
   syncCompareChips();
-  requestAnimationFrame(() => refreshCompareClip());
+  requestAnimationFrame(() => {{
+    refreshCompareClip();
+    requestAnimationFrame(() => refreshCompareClip());
+  }});
 }}
 function setCompareMode(on) {{
   compareOn = !!on;
@@ -2286,7 +2417,11 @@ function setCompareMode(on) {{
   const shell = document.getElementById("compareShell");
   if (shell) shell.setAttribute("aria-hidden", compareOn ? "false" : "true");
   if (compareOn) {{
+    if (viewMode === "3d") setViewMode("2d");
     setPlaying(false);
+    // Keep precip checked — compare must not strip storm radar.
+    const lyP = document.getElementById("lyE2");
+    if (lyP) lyP.checked = true;
     // Hide the looping depth overlay so A/B frames own the depth pane.
     if (activeDepth && mapLeft.hasLayer(activeDepth)) {{
       activeDepth.setOpacity(0);
@@ -2294,6 +2429,7 @@ function setCompareMode(on) {{
     document.getElementById("lyDepthTot").checked = true;
     populateCompareLeadSelects();
     applyCompareLayers();
+    syncScrubToCompareRight();
     const key = document.getElementById("mapKeyFloat");
     if (key && key.classList.contains("collapsed")) {{
       key.classList.remove("collapsed");
@@ -2307,6 +2443,7 @@ function setCompareMode(on) {{
     document.querySelectorAll(".leaflet-image-layer.compare-clip").forEach(el => {{
       el.style.clip = "";
       el.style.clipPath = "";
+      delete el.dataset.compareClipBound;
     }});
     setLead(leadIndex);
   }}
@@ -2325,7 +2462,10 @@ function applyComparePreset(id) {{
   document.querySelectorAll(".compare-controls .preset-btn").forEach(btn => {{
     btn.classList.toggle("active", btn.dataset.preset === id);
   }});
-  if (compareOn) applyCompareLayers();
+  if (compareOn) {{
+    applyCompareLayers();
+    syncScrubToCompareRight();
+  }}
 }}
 function wireCompareUi() {{
   const toggle = document.getElementById("compareToggle");
@@ -2336,11 +2476,17 @@ function wireCompareUi() {{
   const b = document.getElementById("compareLeadB");
   if (a) a.addEventListener("change", () => {{
     compareLeftLead = Number(a.value);
-    if (compareOn) applyCompareLayers();
+    if (compareOn) {{
+      applyCompareLayers();
+      syncScrubToCompareRight();
+    }}
   }});
   if (b) b.addEventListener("change", () => {{
     compareRightLead = Number(b.value);
-    if (compareOn) applyCompareLayers();
+    if (compareOn) {{
+      applyCompareLayers();
+      syncScrubToCompareRight();
+    }}
   }});
   document.querySelectorAll(".compare-controls .preset-btn").forEach(btn => {{
     btn.addEventListener("click", () => applyComparePreset(btn.dataset.preset));
@@ -2364,7 +2510,7 @@ function wireCompareUi() {{
     onMove(e.clientX);
   }};
   handle.addEventListener("pointerdown", (e) => {{
-    if (!compareOn) return;
+    if (!compareOn || viewMode === "3d") return;
     e.preventDefault();
     compareDragging = true;
     handle.setPointerCapture?.(e.pointerId);
@@ -2376,6 +2522,94 @@ function wireCompareUi() {{
     if (compareOn) refreshCompareClip();
   }});
   window.addEventListener("resize", () => {{ if (compareOn) refreshCompareClip(); }});
+}}
+function defaultHotspotIdFor3d() {{
+  const hint = window.__streetViewOpenHint;
+  if (hint) {{
+    window.__streetViewOpenHint = null;
+    if (!window.StreetView3D || window.StreetView3D.canOpenId(hint)) return hint;
+  }}
+  if (selectedId && window.StreetView3D && window.StreetView3D.canOpenId(selectedId)) return selectedId;
+  if (selectedFloodnetId && window.StreetView3D && window.StreetView3D.canOpenId(selectedFloodnetId)) {{
+    return selectedFloodnetId;
+  }}
+  // Smith–9 GTFS F22 is the demo hotspot when nothing is selected yet.
+  return "stations:gtfs:F22";
+}}
+function syncViewModeButtons() {{
+  const b2 = document.getElementById("viewMode2d");
+  const b3 = document.getElementById("viewMode3d");
+  if (b2) b2.setAttribute("aria-pressed", viewMode === "2d" ? "true" : "false");
+  if (b3) b3.setAttribute("aria-pressed", viewMode === "3d" ? "true" : "false");
+  document.body.classList.toggle("view-3d", viewMode === "3d");
+}}
+function restoreLeaflet2dAfter3d() {{
+  // Re-assert precip/radar defaults and Leaflet timeline after leaving 3D.
+  const lyP = document.getElementById("lyE2");
+  if (lyP && !lyP.checked) lyP.checked = true;
+  try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}}
+  if (frames.length) setLead(leadIndex);
+  requestAnimationFrame(() => {{
+    try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}}
+    if (compareOn) refreshCompareClip();
+  }});
+}}
+function setViewMode(mode) {{
+  const next = mode === "3d" ? "3d" : "2d";
+  if (next === viewMode && next === "2d" && !(window.StreetView3D && window.StreetView3D.state && window.StreetView3D.state.open)) {{
+    syncViewModeButtons();
+    return;
+  }}
+  viewMode = next;
+  syncViewModeButtons();
+  if (viewMode === "3d") {{
+    if (compareOn) setCompareMode(false);
+    const hid = defaultHotspotIdFor3d();
+    if (window.StreetView3D) {{
+      try {{
+        window.StreetView3D.open(hid);
+      }} catch (err) {{
+        console.warn("3D open failed", err);
+        viewMode = "2d";
+        syncViewModeButtons();
+        restoreLeaflet2dAfter3d();
+      }}
+    }}
+  }} else {{
+    if (window.StreetView3D && window.StreetView3D.state && window.StreetView3D.state.open) {{
+      try {{
+        // close() fires onStreetViewClosed → restore; skip double restore below.
+        window.__skipStreetViewRestore = true;
+        window.StreetView3D.close();
+        window.__skipStreetViewRestore = false;
+      }} catch (err) {{
+        window.__skipStreetViewRestore = false;
+      }}
+    }}
+    restoreLeaflet2dAfter3d();
+  }}
+}}
+window.setViewMode = setViewMode;
+function wireViewModeToggle() {{
+  const b2 = document.getElementById("viewMode2d");
+  const b3 = document.getElementById("viewMode3d");
+  if (b2) b2.addEventListener("click", () => setViewMode("2d"));
+  if (b3) b3.addEventListener("click", () => setViewMode("3d"));
+  document.addEventListener("keydown", (e) => {{
+    if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+    if (e.key === "2" && !e.metaKey && !e.ctrlKey && !e.altKey) setViewMode("2d");
+    if (e.key === "3" && !e.metaKey && !e.ctrlKey && !e.altKey) setViewMode("3d");
+  }});
+  // When 3D panel closes via × / Esc, snap toggle back to 2D and restore precip loop.
+  window.onStreetViewClosed = function onStreetViewClosed() {{
+    if (viewMode !== "2d") {{
+      viewMode = "2d";
+      syncViewModeButtons();
+    }}
+    if (window.__skipStreetViewRestore) return;
+    restoreLeaflet2dAfter3d();
+  }};
+  syncViewModeButtons();
 }}
 function needsFullDesk() {{
   const q = (document.getElementById("assetSearch").value || "").trim();
@@ -2817,7 +3051,9 @@ function selectFloodnetStation(sensorId) {{
   if (window.StreetView3D) {{
     try {{
       window.StreetView3D.maybeOfferButton(sensorId);
-      if (window.StreetView3D.canOpenId(sensorId)) window.StreetView3D.open(sensorId);
+      if (viewMode === "3d" && window.StreetView3D.canOpenId(sensorId)) {{
+        window.StreetView3D.open(sensorId);
+      }}
     }} catch (err) {{}}
   }}
 }}
@@ -3761,6 +3997,7 @@ if (btnPrint) btnPrint.onclick = () => printShortlistSnapshot();
 }})();
 
 wireCompareUi();
+wireViewModeToggle();
 rebuildPathLayers();
 fitMapFrame();
 setLead(0);

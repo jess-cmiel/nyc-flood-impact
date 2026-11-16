@@ -112,10 +112,19 @@
   function setPanelOpen(open) {
     const panel = $("streetView3d");
     if (!panel) return;
+    const wasOpen = STATE.open;
     panel.hidden = !open;
     panel.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("street-view-open", open);
     STATE.open = open;
+    // Notify product map so 2D|3D toggle + precip/radar restore stay in sync.
+    if (wasOpen && !open && typeof global.onStreetViewClosed === "function") {
+      try {
+        global.onStreetViewClosed();
+      } catch (err) {
+        console.warn("onStreetViewClosed", err);
+      }
+    }
   }
 
   function updateReadout() {
@@ -454,7 +463,18 @@
     if (btn) {
       btn.addEventListener("click", () => {
         const id = btn.dataset.hotspotId || STATE.hotspotId;
-        if (id) openStreetView3d(id);
+        if (!id) return;
+        // Prefer the map's explicit view-mode API so leaving 3D restores precip.
+        if (typeof global.setViewMode === "function") {
+          try {
+            global.__streetViewOpenHint = id;
+            global.setViewMode("3d");
+            return;
+          } catch (err) {
+            console.warn(err);
+          }
+        }
+        openStreetView3d(id);
       });
     }
     document.addEventListener("keydown", (e) => {

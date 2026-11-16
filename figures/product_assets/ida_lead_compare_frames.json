@@ -19,6 +19,8 @@
   },
   "default_left_lead_h": 6,
   "default_right_lead_h": 18,
+  "sync_scrub_to": "right_lead",
+  "depth_asset_rule": "L/R must use the same HAND cumulative depth PNGs as the Decision Desk depth timeline (depthCumFrames), snapped to available lead hours",
   "presets": [
     {
       "id": "buildup_peak",
