@@ -4542,7 +4542,8 @@
     "fixture_pack": "ida_v1",
     "engine_disagreement": "engine_disagreement_ida.json",
     "henri_parity": true,
-    "compare_strip_json": "ida_henri_compare_strip.json"
+    "compare_strip_json": "ida_henri_compare_strip.json",
+    "corridor_impassability_json": "corridor_impassability.json"
   },
   "depth_engines": {
     "primary": {
@@ -5085,5 +5086,19 @@
       }
     ],
     "honesty": "Henri HAND depth after drainage capacity proxy \u2014 research screening, NOT NWS / NOT street-truth / NOT DEP sewer."
+  },
+  "corridor_impassability": {
+    "json": "corridor_impassability.json",
+    "wet_edges_geojson": "corridor_wet_edges.geojson",
+    "paths_geojson": "corridor_research_paths.geojson",
+    "available": true,
+    "n_pairs": 3,
+    "statuses": [
+      "cut_at_deep_ponding",
+      "cut_at_deep_ponding",
+      "open_research"
+    ],
+    "honesty": "Research corridor impassability graph: wet HAND road edges (\u22653 / \u22658 cm) removed to test landmark connectivity on LION/OSM topology. NOT official DOT closures / NOT navigation.",
+    "official_closures": false
   }
 }

@@ -555,9 +555,17 @@ details.drawer[open] > summary::after {{ content:"–"; }}
           <div><label class="caption" for="extentSelect">Extent</label><select id="extentSelect"></select></div>
           <div><label class="caption" for="eventSelect">Event</label><select id="eventSelect" title="Ida primary · Henri research second storm when parity is built"></select></div>
         </div>
-        <p class="drawer-note" id="eventPickerNote">Event picker hidden until Henri radar + inventory parity. Ida only.</p>
+        <p class="drawer-note" id="eventPickerNote">Henri Event switch enabled when parity is built (radar + official inventory + shortlist).</p>
         <label class="caption" for="stormPathSelect" style="margin-top:6px">Scenario path</label>
         <select id="stormPathSelect" aria-label="Scenario path"></select>
+      </details>
+      <details class="drawer" id="corridorDetails">
+        <summary>Corridor impassability (research)</summary>
+        <p class="drawer-note">LION street graph × HAND wet edges between Smith-9 · Brooklyn Hospital · Myrtle. <b>Not official DOT closures.</b></p>
+        <div id="corridorPairs" class="metric" style="flex-direction:column;align-items:stretch;gap:6px"></div>
+        <label class="layer-btn"><input id="lyCorridorWet" type="checkbox">Wet road edges (≥3 cm)</label>
+        <label class="layer-btn"><input id="lyCorridorPath" type="checkbox" checked>Research path / cut</label>
+        <p class="drawer-note" id="corridorHonesty"></p>
       </details>
       <details class="drawer">
         <summary>Advanced research hydro</summary>
@@ -827,6 +835,7 @@ let floodnetLaterLayer = null;
 let accessFixture = null, accessLayer = null, accessFeedMode = "fixture";
 let archive511Layer = null, depBasinsLayer = null, buildingsLayer = null;
 let stormwaterLayer = null, lionTunLayer = null, besLayer = null;
+let corridorWetLayer = null, corridorPathLayer = null, corridorData = null;
 let typeFilter = "all";
 let deskLoadedMode = "none"; // shortlist | full
 let fullDeskPromise = null;
@@ -2133,6 +2142,84 @@ function setInventoryStatus(msg) {{
   const el = document.getElementById("inventoryLayersStatus");
   if (el) el.textContent = msg;
 }}
+function corridorStatusLabel(status) {{
+  const map = {{
+    cut_at_deep_ponding: "cut ≥8 cm",
+    cut_at_ponding: "cut ≥3 cm",
+    detour_around_deep: "detour ≥8 cm",
+    open_research: "open (research)",
+    no_network_path: "no network path",
+    unsnapped: "unsnapped",
+  }};
+  return map[status] || status || "—";
+}}
+function renderCorridorPairs() {{
+  const el = document.getElementById("corridorPairs");
+  const honesty = document.getElementById("corridorHonesty");
+  if (!el) return;
+  if (!corridorData || !(corridorData.pairs || []).length) {{
+    el.innerHTML = "<span>Corridor graph</span><b>unavailable</b>";
+    if (honesty) honesty.textContent = "";
+    return;
+  }}
+  if (honesty) honesty.textContent = corridorData.honesty || "Research only — not official closures.";
+  el.innerHTML = (corridorData.pairs || []).map(p => {{
+    const delta = p.delta_m_vs_open != null ? (" · +" + p.delta_m_vs_open + " m vs open") : "";
+    return "<div><span>" + (p.from_name || "?") + " → " + (p.to_name || "?") +
+      "</span><b>" + corridorStatusLabel(p.status) + delta + "</b></div>";
+  }}).join("");
+}}
+function loadCorridorImpassability() {{
+  const cfg = manifest.corridor_impassability || {{}};
+  if (!cfg.available && !cfg.json) {{
+    renderCorridorPairs();
+    return;
+  }}
+  const jsonName = cfg.json || "corridor_impassability.json";
+  Promise.all([
+    fetch(assets + jsonName, {{ cache: "no-cache" }}).then(r => r.ok ? r.json() : null),
+    fetchGeoJSON(cfg.wet_edges_geojson || "corridor_wet_edges.geojson").catch(() => null),
+    fetchGeoJSON(cfg.paths_geojson || "corridor_research_paths.geojson").catch(() => null),
+  ]).then(([json, wet, paths]) => {{
+    corridorData = json;
+    renderCorridorPairs();
+    if (wet) {{
+      corridorWetLayer = L.geoJSON(wet, {{
+        pane: "vectorPane",
+        style: f => ({{
+          color: (f.properties && f.properties.impassable_deep) ? "#9f1239" : "#b45309",
+          weight: (f.properties && f.properties.impassable_deep) ? 3.2 : 2,
+          opacity: 0.85,
+          dashArray: "4 5",
+        }}),
+        onEachFeature: (f, layer) => {{
+          const p = f.properties || {{}};
+          layer.bindTooltip(
+            (p.name || "wet edge") + " · " + (p.depth_cm != null ? p.depth_cm + " cm" : "") +
+            " · research impassability (not DOT)"
+          );
+        }},
+      }});
+      bindToggle("lyCorridorWet", corridorWetLayer);
+    }}
+    if (paths) {{
+      corridorPathLayer = L.geoJSON(paths, {{
+        pane: "selectPane",
+        style: {{ color: "#0d9488", weight: 4, opacity: 0.9 }},
+        onEachFeature: (f, layer) => {{
+          const p = f.properties || {{}};
+          layer.bindTooltip((p.name || "path edge") + " · research corridor");
+        }},
+      }});
+      const ly = document.getElementById("lyCorridorPath");
+      if (ly && ly.checked) corridorPathLayer.addTo(mapLeft);
+      bindToggle("lyCorridorPath", corridorPathLayer);
+    }}
+  }}).catch(err => {{
+    console.warn(err);
+    renderCorridorPairs();
+  }});
+}}
 function loadOfficialInventoryOverlays() {{
   const bits = [];
   const inv = (manifest.official_inventory_layers) || {{}};
@@ -2535,6 +2622,7 @@ loadAccessSignals();
 loadFloodNetProduct();
 loadOptionalLayers();
 loadOfficialInventoryOverlays();
+loadCorridorImpassability();
 loadArchiveOpenLayers();
 setPlaying(true);
 </script>
