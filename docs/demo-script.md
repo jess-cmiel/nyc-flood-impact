@@ -23,7 +23,7 @@
 | 3 | **Brooklyn Hospital Downtown** | Facility | 8.5 cm | watch (research) | `facilities:uid:a464e8e63eb8b2c92ab1995735cfd284` | band @ +18h |
 | 4 | **Myrtle Avenue** | Road | 8.2 cm | watch (research) | `road:37394898` | band @ +18h |
 
-**UI:** leave **Shortlist** selected; click each row → map fly-to + highlight + typed `action_hint` + access chip. Optional: Map layers → DOT / access.
+**UI:** leave **Shortlist** selected (loads light bundle first); click each row → map fly-to + highlight + typed `action_hint` + access chip + engine agree/disagree chip (non-peer). Optional: Map layers → DOT / access. All-mode / search lazy-loads the full desk.
 
 **Do not** open All-mode for the 60s beat — decision-class filter helps, but shortlist is the story.
 
@@ -35,7 +35,7 @@
 | --- | --- | --- |
 | Frame | 0–5s | Brand + sticky honesty + magnitude chip (HAND cm ≠ FloodNet ~0.9 m) |
 | Where | 5–15s | Primary depth on; MRMS precip loop low opacity — no screening |
-| What | 15–40s | Click Smith-9 → Van Wyck → Brooklyn Hospital → Myrtle; point at access chip + distinct SOP hint |
+| What | 15–40s | Click Smith-9 → Van Wyck → Brooklyn Hospital → Myrtle; point at access chip, SOP hint, and disagreement chip on Smith-9 / Brooklyn Hospital |
 | When | 40–50s | Lead chip (“band @ +15h / +18h · 3h cum screening frames”); read one hint aloud |
 | Close | 50–60s | Repeat honesty (research access, not official closures); do **not** open Advanced / SFINCS |
 

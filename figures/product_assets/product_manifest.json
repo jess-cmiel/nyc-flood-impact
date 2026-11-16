@@ -3571,7 +3571,12 @@
     "not_swmm": true,
     "shortlist_source": "config/demo_shortlist.yaml",
     "map_paint_default": "shortlist_plus_top_n",
-    "event_picker": "ida_only_until_henri_parity"
+    "event_picker": "ida_only_until_henri_parity",
+    "shortlist_json": "decision_desk_shortlist.json",
+    "shortlist_geojson": "decision_desk_shortlist.geojson",
+    "default_bundle": "shortlist",
+    "fixture_pack": "ida_v1",
+    "engine_disagreement": "engine_disagreement_ida.json"
   },
   "depth_engines": {
     "primary": {

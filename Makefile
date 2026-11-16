@@ -3,7 +3,7 @@ VENV ?= .venv
 ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack relativize test ci-guard
+.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement relativize test ci-guard
 
 help:
 	@echo "Decision Desk targets: desk html access-pack relativize test map"
@@ -25,6 +25,10 @@ desk:
 # Expand labeled synthetic Ida access pack + re-join
 access-pack:
 	$(ACTIVATE) && python scripts/expand_ida_access_replay_pack.py
+
+# HAND vs SFINCS non-peer disagreement chips (shortlist + top-100)
+disagreement:
+	$(ACTIVATE) && python scripts/build_engine_disagreement.py
 
 # Regenerate product_map.html from current manifest
 html:

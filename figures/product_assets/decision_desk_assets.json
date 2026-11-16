@@ -175,7 +175,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 15.5 cm screening vs SFINCS 0.58 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 15.5,
+        "sfincs_m": 0.5802,
+        "non_peer": true
+      }
     },
     {
       "id": "road:38077183",
@@ -257,7 +266,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 14.9 cm screening vs SFINCS 0.53 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 14.9,
+        "sfincs_m": 0.5311,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:dec013545ad18ef6d1d6fe59bc11c26b",
@@ -336,7 +354,16 @@
       "bes_chip": "first-floor ~23.3 ft NAVD88 (BES)",
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 14.8 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 14.8,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:d31fe44470d65b532bf44241101965c6",
@@ -410,7 +437,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 14.0 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 14.0,
+        "sfincs_m": 0.0113,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:568c019d68935a9ed3d196e3e48bd545",
@@ -484,7 +520,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 12.2 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 12.2,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:7455a9d08a1dd82b70eb60ff0c138e10",
@@ -558,7 +603,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 12.2 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 12.2,
+        "sfincs_m": 0.0124,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:f7be842fe8ef9c32c47bac02ce86e6de",
@@ -632,7 +686,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 11.8 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 11.8,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S17",
@@ -706,7 +769,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.6 cm screening vs SFINCS 0.33 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.6,
+        "sfincs_m": 0.3316,
+        "non_peer": true
+      }
     },
     {
       "id": "road:5710902",
@@ -788,7 +860,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.6 cm screening vs SFINCS 0.21 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.6,
+        "sfincs_m": 0.2068,
+        "non_peer": true
+      }
     },
     {
       "id": "road:32056669",
@@ -870,7 +951,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 11.5 cm screening vs SFINCS 0.04 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 11.5,
+        "sfincs_m": 0.0354,
+        "non_peer": true
+      }
     },
     {
       "id": "road:42709375",
@@ -952,7 +1042,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 11.4 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 11.4,
+        "sfincs_m": 0.0331,
+        "non_peer": true
+      }
     },
     {
       "id": "road:60727821",
@@ -1034,7 +1133,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.4 cm screening vs SFINCS 0.92 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.4,
+        "sfincs_m": 0.917,
+        "non_peer": true
+      }
     },
     {
       "id": "road:60730829",
@@ -1116,7 +1224,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.3 cm screening vs SFINCS 0.15 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.3,
+        "sfincs_m": 0.1476,
+        "non_peer": true
+      }
     },
     {
       "id": "road:60730778",
@@ -1198,7 +1315,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.3 cm screening vs SFINCS 0.17 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.3,
+        "sfincs_m": 0.1667,
+        "non_peer": true
+      }
     },
     {
       "id": "road:32056646",
@@ -1280,7 +1406,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.2 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.2,
+        "sfincs_m": 0.0534,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:d2629a8174b1bee3311353a2a5251379",
@@ -1354,7 +1489,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 11.2 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 11.2,
+        "sfincs_m": 0.0208,
+        "non_peer": true
+      }
     },
     {
       "id": "road:60727823",
@@ -1436,7 +1580,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.1 cm screening vs SFINCS 0.66 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.1,
+        "sfincs_m": 0.6609,
+        "non_peer": true
+      }
     },
     {
       "id": "road:42708898",
@@ -1518,7 +1671,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.1 cm screening vs SFINCS 0.12 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.1,
+        "sfincs_m": 0.1221,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:F22",
@@ -1591,7 +1753,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 11.1 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 11.1,
+        "sfincs_m": 0.0133,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:39435311267b2bacfe9a5d97447f871f",
@@ -1665,7 +1836,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 11.0 cm screening vs SFINCS 0.25 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 11.0,
+        "sfincs_m": 0.2546,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:603",
@@ -1739,7 +1919,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.9 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.9,
+        "sfincs_m": 0.0114,
+        "non_peer": true
+      }
     },
     {
       "id": "road:38068831",
@@ -1821,7 +2010,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.9 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.9,
+        "sfincs_m": 0.0173,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:R13",
@@ -1895,7 +2093,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.9 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.9,
+        "sfincs_m": 0.0225,
+        "non_peer": true
+      }
     },
     {
       "id": "road:60727808",
@@ -1977,7 +2184,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.9 cm screening vs SFINCS 0.66 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.9,
+        "sfincs_m": 0.6609,
+        "non_peer": true
+      }
     },
     {
       "id": "road:42708897",
@@ -2059,7 +2275,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.9 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.9,
+        "sfincs_m": 0.0336,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S16",
@@ -2133,7 +2358,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.8 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.8,
+        "sfincs_m": 0.0153,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:612",
@@ -2207,7 +2441,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.7,
+        "sfincs_m": 0.0127,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S20",
@@ -2281,7 +2524,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.7,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:335b283e2c9d402fa294b677716e36cb",
@@ -2355,7 +2607,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.7,
+        "sfincs_m": 0.0114,
+        "non_peer": true
+      }
     },
     {
       "id": "road:32056784",
@@ -2437,7 +2698,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.6 cm screening vs SFINCS 0.04 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.6,
+        "sfincs_m": 0.0411,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:a20ce4d58480494184d39406c34a9c31",
@@ -2511,7 +2781,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.6 cm screening vs SFINCS 0.06 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.6,
+        "sfincs_m": 0.0566,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:baf0b0d518349997bb2e6d7224fd78a9",
@@ -2585,7 +2864,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.6 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.6,
+        "sfincs_m": 0.0481,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:ec4f9668773eb0fa542645ada9472292",
@@ -2659,7 +2947,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.6 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.6,
+        "sfincs_m": 0.0481,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S18",
@@ -2733,7 +3030,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.5 cm screening vs SFINCS 0.14 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.5,
+        "sfincs_m": 0.1426,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23506195",
@@ -2815,7 +3121,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.4 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.4,
+        "sfincs_m": 0.0453,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23465401",
@@ -2897,7 +3212,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.4 cm screening vs SFINCS 1.24 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.4,
+        "sfincs_m": 1.2376,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:213",
@@ -2971,7 +3295,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.3 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.3,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S15",
@@ -3045,7 +3378,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.3 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.3,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:214",
@@ -3119,7 +3461,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.3 cm screening vs SFINCS 0.07 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.3,
+        "sfincs_m": 0.0711,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:A22",
@@ -3193,7 +3544,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.2 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.2,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:A18",
@@ -3267,7 +3627,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.2 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.2,
+        "sfincs_m": 0.0114,
+        "non_peer": true
+      }
     },
     {
       "id": "road:32341745",
@@ -3349,7 +3718,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.1 cm screening vs SFINCS 0.35 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.1,
+        "sfincs_m": 0.3541,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:702",
@@ -3423,7 +3801,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.1 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.1,
+        "sfincs_m": 0.0128,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23537605",
@@ -3505,7 +3892,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.1 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.1,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "road:42700906",
@@ -3587,7 +3983,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.1 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.1,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:c076af3dcfc526fad6bfdc25d418f1de",
@@ -3661,7 +4066,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.1 cm screening vs SFINCS 0.04 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.1,
+        "sfincs_m": 0.035,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23529454",
@@ -3743,7 +4157,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.0 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.0,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:G21",
@@ -3809,7 +4232,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.0 cm screening vs SFINCS 0.12 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.0,
+        "sfincs_m": 0.1211,
+        "non_peer": true
+      }
     },
     {
       "id": "road:32341749",
@@ -3889,7 +4321,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.0 cm screening vs SFINCS 0.16 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.0,
+        "sfincs_m": 0.1611,
+        "non_peer": true
+      }
     },
     {
       "id": "road:11576242",
@@ -3955,7 +4396,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 10.0 cm screening vs SFINCS 0.16 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 10.0,
+        "sfincs_m": 0.1611,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23530510",
@@ -4021,7 +4471,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.0 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.0,
+        "sfincs_m": 0.0159,
+        "non_peer": true
+      }
     },
     {
       "id": "road:40345807",
@@ -4087,7 +4546,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 10.0 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 10.0,
+        "sfincs_m": 0.0114,
+        "non_peer": true
+      }
     },
     {
       "id": "road:38078911",
@@ -4153,7 +4621,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.9 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.9,
+        "sfincs_m": 0.0126,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:101",
@@ -4219,7 +4696,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.8 cm screening vs SFINCS 0.22 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.8,
+        "sfincs_m": 0.2158,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:5d4d9ba956fcd9ccd824549213c838be",
@@ -4285,7 +4771,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.8 cm screening vs SFINCS 0.91 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.8,
+        "sfincs_m": 0.9054,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:762973e2a583ecbdcc0b02d5a4d2edd7",
@@ -4351,7 +4846,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.8 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.8,
+        "sfincs_m": 0.045,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:720",
@@ -4417,7 +4921,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.8 cm screening vs SFINCS 0.28 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.8,
+        "sfincs_m": 0.2775,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S19",
@@ -4483,7 +4996,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.7 cm screening vs SFINCS 0.10 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.7,
+        "sfincs_m": 0.0966,
+        "non_peer": true
+      }
     },
     {
       "id": "road:5710935",
@@ -4549,7 +5071,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.7 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.7,
+        "sfincs_m": 0.05,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S14",
@@ -4615,7 +5146,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.7 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.7,
+        "sfincs_m": 0.0158,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:G24",
@@ -4681,7 +5221,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.7 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.7,
+        "sfincs_m": 0.0171,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23517048",
@@ -4747,7 +5296,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.7,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "road:5698906",
@@ -4813,7 +5371,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.7 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.7,
+        "sfincs_m": 0.0472,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23473677",
@@ -4879,7 +5446,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.6 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.6,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "road:11571112",
@@ -4945,7 +5521,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.6 cm screening vs SFINCS 0.22 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.6,
+        "sfincs_m": 0.2204,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:B12",
@@ -5011,7 +5596,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.5 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.5,
+        "sfincs_m": 0.0131,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S13",
@@ -5077,7 +5671,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.4 cm screening vs SFINCS 0.13 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.4,
+        "sfincs_m": 0.1339,
+        "non_peer": true
+      }
     },
     {
       "id": "road:25430129",
@@ -5157,7 +5760,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.4 cm screening vs SFINCS 0.05 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.4,
+        "sfincs_m": 0.0528,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:S21",
@@ -5223,7 +5835,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.4 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.4,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "road:40023343",
@@ -5289,7 +5910,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.3 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.3,
+        "sfincs_m": 0.0123,
+        "non_peer": true
+      }
     },
     {
       "id": "road:41647206",
@@ -5355,7 +5985,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.3 cm screening vs SFINCS 0.07 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.3,
+        "sfincs_m": 0.0711,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:fd54434fca72d58f2ef1d0c0f893ff28",
@@ -5421,7 +6060,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.3 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.3,
+        "sfincs_m": 0.0114,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:e6200bee48842bca3db0167396a37e46",
@@ -5487,7 +6135,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.3 cm screening vs SFINCS 0.22 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.3,
+        "sfincs_m": 0.2225,
+        "non_peer": true
+      }
     },
     {
       "id": "road:32341716",
@@ -5553,7 +6210,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.3 cm screening vs SFINCS 1.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.3,
+        "sfincs_m": 1.0258,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:907b5058373077d586fcb58e19cf30a9",
@@ -5619,7 +6285,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.2 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.2,
+        "sfincs_m": 0.0285,
+        "non_peer": true
+      }
     },
     {
       "id": "road:23531390",
@@ -5685,7 +6360,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 9.2 cm screening vs SFINCS 0.07 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 9.2,
+        "sfincs_m": 0.0662,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:D03",
@@ -5751,7 +6435,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.2 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.2,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:cf585eab1cad1b37c629de9abd85ace6",
@@ -5817,7 +6510,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.1 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.1,
+        "sfincs_m": 0.0175,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:405",
@@ -5883,7 +6585,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.1 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.1,
+        "sfincs_m": 0.017,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:402",
@@ -5949,7 +6660,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.1 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.1,
+        "sfincs_m": 0.0313,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:7e63b12cd884fa096813d8086c8224ac",
@@ -6015,7 +6735,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.1 cm screening vs SFINCS 0.04 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.1,
+        "sfincs_m": 0.0382,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:fd7dc21a2d6dcf981779ad729644f333",
@@ -6081,7 +6810,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 9.0 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 9.0,
+        "sfincs_m": 0.0143,
+        "non_peer": true
+      }
     },
     {
       "id": "road:11587487",
@@ -6147,7 +6885,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 8.9 cm screening vs SFINCS 0.07 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 8.9,
+        "sfincs_m": 0.0669,
+        "non_peer": true
+      }
     },
     {
       "id": "road:11563888",
@@ -6213,7 +6960,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.9 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.9,
+        "sfincs_m": 0.0253,
+        "non_peer": true
+      }
     },
     {
       "id": "road:11585519",
@@ -6279,7 +7035,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.8 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.8,
+        "sfincs_m": 0.0182,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:b315472fffa956f8c9fb43b96abfd682",
@@ -6345,7 +7110,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 8.8 cm screening vs SFINCS 0.30 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 8.8,
+        "sfincs_m": 0.2983,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:104",
@@ -6411,7 +7185,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 8.8 cm screening vs SFINCS 0.17 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 8.8,
+        "sfincs_m": 0.1738,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:d0dcaf35e3a661a706616d7fc6edd34c",
@@ -6477,7 +7260,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.8 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.8,
+        "sfincs_m": 0.0115,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:M01",
@@ -6543,7 +7335,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:106",
@@ -6609,7 +7410,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0113,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:73512000086178992087ec46791a9d32",
@@ -6675,7 +7485,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0112,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:L20",
@@ -6741,7 +7560,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0262,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:7c67f75fa93e564427e460091c2e7235",
@@ -6807,7 +7635,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0159,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:627",
@@ -6873,7 +7710,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0174,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:b9191b43d2dd29cf8fb334d47342fd7d",
@@ -6939,7 +7785,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0338,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:acc5fcd123df0c0f490e83482ca4608c",
@@ -7005,7 +7860,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.02 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0175,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:208",
@@ -7071,7 +7935,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0111,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:aeefec7ce17d84355ebd26ea421b2e9e",
@@ -7137,7 +8010,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0113,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:b2e7addaaf58184426b575f43afc24f9",
@@ -7203,7 +8085,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0147,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:Q03",
@@ -7276,7 +8167,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.7 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.7,
+        "sfincs_m": 0.0113,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:e33b56ed7b40ae4335d09e62e822edc9",
@@ -7342,7 +8242,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.6 cm screening vs SFINCS 0.01 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.6,
+        "sfincs_m": 0.0113,
+        "non_peer": true
+      }
     },
     {
       "id": "road:27211392",
@@ -7408,7 +8317,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 8.6 cm screening vs SFINCS 0.15 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 8.6,
+        "sfincs_m": 0.1544,
+        "non_peer": true
+      }
     },
     {
       "id": "facilities:uid:1cd2022ce430b45c576b0a835d5307f2",
@@ -8359,7 +9277,16 @@
       "bes_chip": "first-floor ~31.0 ft NAVD88 (BES)",
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "disagree (HAND wet \u00b7 SFINCS dry)",
+        "chip": "engines disagree (research)",
+        "hover": "HAND 8.5 cm screening vs SFINCS 0.03 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": true,
+        "hand_cm": 8.5,
+        "sfincs_m": 0.0271,
+        "non_peer": true
+      }
     },
     {
       "id": "stations:gtfs:R30",
@@ -11008,7 +11935,16 @@
       "near_lion_tunnel": false,
       "decision_class": true,
       "name_quality": "named",
-      "action_hint_source": "typed_unofficial_sop_v1"
+      "action_hint_source": "typed_unofficial_sop_v1",
+      "engine_compare": {
+        "status": "engines agree (wetness)",
+        "chip": "engines agree (research)",
+        "hover": "HAND 8.2 cm screening vs SFINCS 0.07 m nested sample \u2014 non-peer magnitudes; never blended. Research only \u00b7 not NWS.",
+        "disagree": false,
+        "hand_cm": 8.2,
+        "sfincs_m": 0.0662,
+        "non_peer": true
+      }
     },
     {
       "id": "road:46818457",
@@ -125487,5 +126423,11 @@
     ],
     "note": "Default All-mode lists decision-relevant classes; schools / full inventory are opt-in."
   },
-  "git_sha": "7449d13"
+  "git_sha": "7449d13",
+  "engine_disagreement": {
+    "file": "engine_disagreement_ida.json",
+    "n": 104,
+    "n_disagree": 68,
+    "honesty": "HAND screening cm vs SFINCS nested metres are NOT peer products. Chip compares wet/dry / band class only \u2014 depths never blended. SFINCS wet fraction is high citywide; disagreement is research signal only."
+  }
 }

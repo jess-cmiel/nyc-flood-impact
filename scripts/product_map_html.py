@@ -92,6 +92,32 @@ aside {{
 @keyframes riseIn {{ from {{ opacity:0; transform:translateY(8px); }} to {{ opacity:1; transform:none; }} }}
 @keyframes selectPulse {{ 0% {{ box-shadow:0 0 0 0 var(--accent-glow); }} 100% {{ box-shadow:0 0 0 14px transparent; }} }}
 @keyframes playGlow {{ 0%,100% {{ box-shadow:0 0 0 0 rgba(27,192,205,.35); }} 50% {{ box-shadow:0 0 0 10px transparent; }} }}
+@media (prefers-reduced-motion: reduce) {{
+  .brand::before, .brand::after {{ animation:none !important; }}
+  .section {{ animation:none !important; }}
+  .radar-hud.playing .play {{ animation:none !important; }}
+  .asset-row, .chip, .selected-card {{ transition:none !important; }}
+  * {{ scroll-behavior:auto !important; }}
+}}
+.coach-overlay {{
+  position:fixed; inset:0; z-index:2000; pointer-events:none;
+  background:radial-gradient(ellipse at 18% 28%, rgba(5,40,51,.45), transparent 42%);
+}}
+.coach-card {{
+  pointer-events:auto; position:absolute; left:18px; top:210px; width:min(300px,86vw);
+  padding:14px 14px 12px; border-radius:12px;
+  background:rgba(4,34,39,.94); color:#e8f7f9; border:1px solid rgba(27,192,205,.35);
+  box-shadow:0 12px 40px rgba(0,0,0,.28); font:500 .78rem/1.4 Figtree,sans-serif;
+}}
+.coach-card strong {{ font:700 .72rem Syne,sans-serif; letter-spacing:.04em; display:block; margin-bottom:6px; }}
+.coach-card button {{
+  margin-top:10px; border:0; border-radius:8px; padding:7px 10px; cursor:pointer;
+  background:#1bc0cd; color:#042227; font:700 .72rem Syne,sans-serif;
+}}
+.sel-chip.disagree {{ background:rgba(154,74,18,.16); color:var(--warn); border:1px solid var(--warn-line); }}
+.sel-chip.agree {{ background:rgba(13,143,156,.1); color:var(--accent-deep); }}
+.consequence-cap {{ font:650 .62rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase; color:#9eb8c0; margin:8px 0 4px; }}
+.consequence-line {{ font:500 .72rem/1.35 Figtree,sans-serif; color:#d7ecef; }}
 .brand-kicker {{ position:relative; font:700 .62rem Syne,sans-serif; letter-spacing:.16em; text-transform:uppercase; opacity:.7; margin-bottom:8px; }}
 .brand-mark {{ position:relative; font:800 clamp(1.55rem,3.4vw,1.9rem)/1.02 Syne,sans-serif; letter-spacing:-.045em; }}
 .brand-tag {{ position:relative; margin-top:8px; font-size:.8rem; line-height:1.35; max-width:28ch; opacity:.88; font-weight:500; }}
@@ -444,7 +470,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     </div>
     <div class="asset-list" id="assetList" aria-label="Ranked wet assets"><div class="empty">Loading ranked assets…</div></div>
     <div class="shortlist-actions" role="group" aria-label="Shortlist snapshot">
-      <button type="button" id="btnShareSnapshot">Copy snapshot</button>
+      <button type="button" id="btnShareSnapshot">Copy decision log</button>
       <button type="button" id="btnPrintSnapshot">Print / share</button>
       <div class="status" id="snapshotStatus" aria-live="polite"></div>
     </div>
@@ -468,6 +494,8 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       <p class="drawer-note">Post-level Ida OOM check — does not rescale citywide HAND. All five 2021 posts listed.</p>
       <div id="floodnetSummary" class="metric"><span>Loading…</span><b>—</b></div>
       <div id="floodnetMeta" class="metric" style="display:none"><span>Primary HAND @ posts</span><b>—</b></div>
+      <label class="layer-btn"><input id="lyModelWrong" type="checkbox">Where model is wrong (FloodNet residuals)</label>
+      <p class="drawer-note">Residual mode highlights posts where HAND≪street peak — trust-building, not a rescaled depth product.</p>
       <p class="drawer-note">Map toggle lives under <b>Map layers</b> above (FloodNet · off by default).</p>
       <div class="floodnet-list" id="floodnetList" aria-label="FloodNet Ida peak comparison"><div class="empty">Loading sensor peaks…</div></div>
       <details class="drawer" id="floodnetLaterDrawer">
@@ -594,9 +622,18 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       <div class="spark-cap">Depth vs lead (HAND cm)</div>
       <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to scrubber"></svg>
       <div class="spark-readout" id="selSparkReadout">—</div>
+      <div class="consequence-cap">Consequence timeline (research)</div>
+      <div class="consequence-line" id="selConsequence">—</div>
     </div>
     <div class="sel-hint" id="selHint"></div>
     <div class="sel-access-note" id="selAccessNote"></div>
+  </div>
+  <div class="coach-overlay" id="coachOverlay" hidden>
+    <div class="coach-card" role="dialog" aria-label="Decision Desk quick start">
+      <strong>15s start</strong>
+      Shortlist → click a row → read depth / access / hint. HAND cm ≠ FloodNet street metres. Stay out of Advanced for the demo.
+      <button type="button" id="coachDismiss">Got it</button>
+    </div>
   </div>
   <div class="map-key-float" id="mapKeyFloat">
     <div class="map-key-float-head">
@@ -747,6 +784,10 @@ let accessFixture = null, accessLayer = null, accessFeedMode = "fixture";
 let archive511Layer = null, depBasinsLayer = null, buildingsLayer = null;
 let stormwaterLayer = null, lionTunLayer = null, besLayer = null;
 let typeFilter = "all";
+let deskLoadedMode = "none"; // shortlist | full
+let fullDeskPromise = null;
+let decisionLog = [];
+let residualMode = false;
 let listMode = "shortlist";
 let activeEventId = "ida-2021";
 const PLAY_MS = 380;
@@ -1185,6 +1226,11 @@ function selectAsset(id) {{
   if (a.stormwater_chip) extraChips.push(`<span class="sel-chip">${{a.stormwater_chip}}</span>`);
   if (a.lion_chip) extraChips.push(`<span class="sel-chip">${{a.lion_chip}}</span>`);
   if (a.bes_chip) extraChips.push(`<span class="sel-chip">${{a.bes_chip}}</span>`);
+  const ec = a.engine_compare || null;
+  if (ec) {{
+    const cls = ec.disagree ? "disagree" : "agree";
+    extraChips.push(`<span class="sel-chip ${{cls}}" title="${{(ec.hover || "").replace(/"/g, "&quot;")}}">${{ec.chip}}</span>`);
+  }}
   document.getElementById("selChips").innerHTML =
     `<span class="sel-chip access-${{acc}}">${{accessChipLabel(acc)}}</span>` +
     `<span class="sel-chip">${{a.band_label}}</span>` +
@@ -1196,9 +1242,40 @@ function selectAsset(id) {{
     ? ("Signals: " + sigs.slice(0, 2).join(" · ") + " — not official closures.")
     : "Open DOT/MTA signals + research depth — not official closures.";
   renderSparkline(a);
+  renderConsequenceTimeline(a);
+  appendDecisionLog(a, "select");
   card.classList.remove("on");
   void card.offsetWidth;
   card.classList.add("on");
+}}
+function renderConsequenceTimeline(a) {{
+  const el = document.getElementById("selConsequence");
+  if (!el || !a) return;
+  const lead = a.first_exceedance_lead_h != null ? ("band first @" + a.first_exceedance_lead_h + "h") : "lead n/a";
+  const acc = accessStatus(a);
+  const ec = a.engine_compare;
+  const eng = ec
+    ? (ec.disagree
+      ? ("HAND " + (ec.hand_cm != null ? ec.hand_cm + " cm" : "cm") + " vs SFINCS " + (ec.sfincs_m != null ? ec.sfincs_m + " m" : "n/a") + " · non-peer")
+      : "engines agree on wetness · non-peer magnitudes")
+    : "engine compare n/a";
+  const nearestFn = () => {{
+    if (!floodnetStations.length) return "FloodNet nearest n/a";
+    let best = null, bestD = Infinity;
+    floodnetStations.forEach(s => {{
+      const lon = s.lon != null ? s.lon : (s.geometry && s.geometry.coordinates && s.geometry.coordinates[0]);
+      const lat = s.lat != null ? s.lat : (s.geometry && s.geometry.coordinates && s.geometry.coordinates[1]);
+      if (lon == null || lat == null) return;
+      const d = Math.hypot(Number(lon) - Number(a.lon), Number(lat) - Number(a.lat));
+      if (d < bestD) {{ bestD = d; best = s; }}
+    }});
+    if (!best) return "FloodNet nearest n/a";
+    const obs = best.obs_peak_m != null ? Number(best.obs_peak_m).toFixed(2) + " m" : "—";
+    const hand = best.primary_hand_m != null ? Number(best.primary_hand_m).toFixed(2) + " m"
+      : (best.model_peak_m != null ? Number(best.model_peak_m).toFixed(2) + " m" : "HAND —");
+    return "nearest FloodNet obs " + obs + " / HAND " + hand + " (not blended)";
+  }};
+  el.textContent = lead + " · access " + acc + " · " + eng + " · " + nearestFn();
 }}
 
 function clearSelection() {{
@@ -1217,16 +1294,19 @@ function buildShortlistSnapshotText() {{
   const clock = (f.valid_time || "").replace("T", " ") || "—";
   const sel = selectedId && desk ? (desk.assets || []).find(x => x.id === selectedId) : null;
   const lines = [
-    "Asset Decision Desk · shortlist snapshot",
-    "Research only · NOT NWS · NOT decision-grade",
+    "Asset Decision Desk · research decision log",
+    "Research only · NOT NWS · NOT decision-grade · fixture ida_v1",
     "Event: " + activeEventId + " · scrubber +" + lead + "h · " + clock + " UTC",
+    "Band filter: " + (document.getElementById("bandFilter").value || "—") +
+      " · list: " + listMode + " · desk: " + deskLoadedMode,
     "",
-    "Shortlist (" + rows.length + "):",
+    "Visible shortlist / rows (" + rows.length + "):",
   ];
   rows.forEach(a => {{
+    const ec = a.engine_compare ? (" · " + a.engine_compare.chip) : "";
     lines.push(
       "#" + a.rank + " · " + a.name + " · " + a.max_depth_cm.toFixed(1) + " cm · " +
-      a.band_label + " · " + leadLabel(a) + " · access " + accessStatus(a)
+      a.band_label + " · " + leadLabel(a) + " · access " + accessStatus(a) + ec
     );
   }});
   if (sel) {{
@@ -1236,7 +1316,16 @@ function buildShortlistSnapshotText() {{
     lines.push("");
     lines.push("Selected: " + sel.name + " · storm-total " + sel.max_depth_cm.toFixed(1) + " cm · at scrubber " + at);
     lines.push("Hint: " + (sel.action_hint || "research only"));
+    if (sel.engine_compare) lines.push("Engine: " + sel.engine_compare.chip + " — " + (sel.engine_compare.hover || "non-peer"));
   }}
+  lines.push("");
+  lines.push("Inspect log (" + decisionLog.length + "):");
+  decisionLog.slice(-12).forEach(e => {{
+    lines.push(
+      e.t + " · " + e.reason + " · " + e.name + " · " + Number(e.depth_cm).toFixed(1) + " cm · access " +
+      e.access + (e.engine_chip ? (" · " + e.engine_chip) : "")
+    );
+  }});
   lines.push("");
   lines.push("FloodNet Ida posts: " + (floodnetStations.length || 0) + " surfaced in panel.");
   return lines.join("\\n");
@@ -1263,20 +1352,70 @@ function printShortlistSnapshot() {{
   window.print();
 }}
 
-function deskPathsForEvent(eventId) {{
+function deskPathsForEvent(eventId, mode) {{
   const deskCfg = manifest.asset_decision_desk || {{}};
   const events = deskCfg.events || {{}};
+  const want = mode || "shortlist";
   if (eventId && events[eventId]) return events[eventId];
   if (eventId === "henri-2021" && secondStorm && secondStorm.desk) {{
     return {{
       assets_json: secondStorm.desk.assets_json || "decision_desk_assets_henri.json",
       assets_geojson: secondStorm.desk.assets_geojson || "decision_desk_assets_henri.geojson",
+      mode: "full",
+    }};
+  }}
+  if (want === "shortlist") {{
+    return {{
+      assets_json: deskCfg.shortlist_json || "decision_desk_shortlist.json",
+      assets_geojson: deskCfg.shortlist_geojson || "decision_desk_shortlist.geojson",
+      mode: "shortlist",
+      full_json: deskCfg.assets_json || "decision_desk_assets.json",
+      full_geojson: deskCfg.assets_geojson || "decision_desk_assets.geojson",
     }};
   }}
   return {{
     assets_json: deskCfg.assets_json || "decision_desk_assets.json",
     assets_geojson: deskCfg.assets_geojson || "decision_desk_assets.geojson",
+    mode: "full",
   }};
+}}
+function needsFullDesk() {{
+  const q = (document.getElementById("assetSearch").value || "").trim();
+  return listMode === "all" || includeSchools() || !!q;
+}}
+async function ensureFullDesk() {{
+  if (deskLoadedMode === "full") return desk;
+  if (fullDeskPromise) return fullDeskPromise;
+  const paths = deskPathsForEvent(activeEventId, "full");
+  fullDeskPromise = Promise.all([
+    fetch(assets + paths.assets_json, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
+    fetch(assets + paths.assets_geojson, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
+  ]).then(([json, geo]) => {{
+    if (!json) throw new Error("full desk missing");
+    const keepId = selectedId;
+    applyDeskPayload(json, geo, "full");
+    if (keepId) selectAsset(keepId);
+    return desk;
+  }}).finally(() => {{ fullDeskPromise = null; }});
+  return fullDeskPromise;
+}}
+function appendDecisionLog(a, reason) {{
+  if (!a) return;
+  const f = frames[leadIndex] || {{}};
+  decisionLog.push({{
+    t: new Date().toISOString(),
+    reason: reason || "select",
+    id: a.id,
+    name: a.name,
+    depth_cm: a.max_depth_cm,
+    band: a.band,
+    access: accessStatus(a),
+    lead_h: a.first_exceedance_lead_h,
+    scrubber_h: f.lead_hours,
+    engine_chip: (a.engine_compare && a.engine_compare.chip) || null,
+    hint: a.action_hint || null,
+  }});
+  if (decisionLog.length > 40) decisionLog = decisionLog.slice(-40);
 }}
 
 function topHighlightTargets() {{
@@ -1332,73 +1471,99 @@ function applyAutoHighlight(selectFirst) {{
   if (selectFirst) selectAsset(tops[0].id);
 }}
 
-function loadDecisionDesk() {{
-  const paths = deskPathsForEvent(activeEventId);
-  const name = paths.assets_json;
-  const geoName = paths.assets_geojson;
+function applyDeskPayload(json, geo, mode) {{
+  desk = json;
+  deskLoadedMode = mode || (json.bundle ? "shortlist" : "full");
+  const c = json.counts || {{}};
+  const label = activeEventId === "henri-2021" ? "Wet · Henri HAND" : "Wet · metro HAND";
+  const bundleBit = deskLoadedMode === "shortlist" ? " · shortlist bundle" : "";
+  const modeNote = listMode === "all" && !includeSchools() ? " · decision classes" : "";
+  document.getElementById("deskSummary").innerHTML =
+    `<span>${{label}}${{bundleBit}}${{modeNote}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
+  const leftLabel = document.getElementById("leftLabel");
+  if (leftLabel) leftLabel.textContent = activeEventId === "henri-2021"
+    ? "Decision Desk · Henri" : "Decision Desk · Ida";
+  const accMeta = json.access_signals || {{}};
+  const badge = document.getElementById("accessFixtureBadge");
+  if (badge) {{
+    const nJoin = accMeta.joined_assets != null ? accMeta.joined_assets : "—";
+    badge.style.display = "block";
+    badge.textContent = "Replay fixture (synthetic joins labeled) · ida_v1 · joined " + nJoin +
+      (accMeta.fixture_pack ? (" · " + accMeta.fixture_pack) : "");
+  }}
   if (wetLayer) {{ mapLeft.removeLayer(wetLayer); wetLayer = null; }}
+  renderAssetList();
+  const sourceFeats = (geo && geo.features) ? geo.features
+    : (desk.assets || []).map(a => ({{
+        type: "Feature",
+        properties: a,
+        geometry: {{ type: "Point", coordinates: [a.lon, a.lat] }}
+      }}));
+  const paintIds = new Set(mapPaintAssets().map(a => a.id));
+  const filteredGeo = {{
+    type: "FeatureCollection",
+    features: sourceFeats.filter(f => paintIds.has((f.properties || {{}}).id))
+  }};
+  wetLayer = L.geoJSON(filteredGeo, {{
+    pane: "vectorPane",
+    style: f => {{
+      const band = f.properties && f.properties.band;
+      const color = band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
+      return {{ color, weight: 3.5, opacity: 0.85 }};
+    }},
+    pointToLayer: (f, ll) => {{
+      const band = f.properties && f.properties.band;
+      const ft = (f.properties && f.properties.facility_type) || "";
+      const color = (ft === "school") ? "#94a3b8"
+        : band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
+      return L.circleMarker(ll, {{ radius:5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.9, pane:"pointPane" }});
+    }},
+    onEachFeature: (f, layer) => {{
+      layer.on("click", () => selectAsset(f.properties.id));
+      layer.bindTooltip((f.properties.name || "") + " · " + (f.properties.band_label || ""));
+    }}
+  }});
+  syncWetLayerVisibility();
+  rebuildAccessOverlay();
+}}
+function loadDecisionDesk() {{
+  const mode = needsFullDesk() ? "full" : "shortlist";
+  const paths = deskPathsForEvent(activeEventId, mode);
   if (highlightLayer) {{ mapLeft.removeLayer(highlightLayer); highlightLayer = null; }}
   highlightIds = [];
   clearSelection();
   Promise.all([
-    fetch(assets + name, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
-    fetch(assets + geoName, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
+    fetch(assets + paths.assets_json, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
+    fetch(assets + paths.assets_geojson, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
   ]).then(([json, geo]) => {{
     if (!json) {{
+      // Fall back to full desk if shortlist bundle missing
+      if (mode === "shortlist") {{
+        return loadDecisionDeskFullFallback();
+      }}
       document.getElementById("assetList").innerHTML = '<div class="empty">Desk assets missing for ' + activeEventId + ' — run build scripts.</div>';
       return;
     }}
-    desk = json;
-    const c = json.counts || {{}};
-    const label = activeEventId === "henri-2021" ? "Wet · Henri HAND" : "Wet · metro HAND";
-    const modeNote = listMode === "all" && !includeSchools() ? " · decision classes" : "";
-    document.getElementById("deskSummary").innerHTML =
-      `<span>${{label}}${{modeNote}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
-    const leftLabel = document.getElementById("leftLabel");
-    if (leftLabel) leftLabel.textContent = activeEventId === "henri-2021"
-      ? "Decision Desk · Henri" : "Decision Desk · Ida";
-    const accMeta = json.access_signals || {{}};
-    const badge = document.getElementById("accessFixtureBadge");
-    if (badge) {{
-      const nJoin = accMeta.joined_assets != null ? accMeta.joined_assets : "—";
-      badge.style.display = "block";
-      badge.textContent = "Replay fixture (synthetic joins labeled) · joined " + nJoin +
-        (accMeta.fixture_pack ? (" · " + accMeta.fixture_pack) : "");
-    }}
-    renderAssetList();
-    if (geo && geo.features) {{
-      const paintIds = new Set(mapPaintAssets().map(a => a.id));
-      const filteredGeo = {{
-        type: "FeatureCollection",
-        features: (geo.features || []).filter(f => paintIds.has((f.properties || {{}}).id))
-      }};
-      wetLayer = L.geoJSON(filteredGeo, {{
-        pane: "vectorPane",
-        style: f => {{
-          const band = f.properties && f.properties.band;
-          const color = band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
-          return {{ color, weight: 3.5, opacity: 0.85 }};
-        }},
-        pointToLayer: (f, ll) => {{
-          const band = f.properties && f.properties.band;
-          const ft = (f.properties && f.properties.facility_type) || "";
-          const color = (ft === "school") ? "#94a3b8"
-            : band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
-          return L.circleMarker(ll, {{ radius:5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.9, pane:"pointPane" }});
-        }},
-        onEachFeature: (f, layer) => {{
-          layer.on("click", () => selectAsset(f.properties.id));
-          layer.bindTooltip((f.properties.name || "") + " · " + (f.properties.band_label || ""));
-        }}
-      }});
-      syncWetLayerVisibility();
-    }}
+    applyDeskPayload(json, geo, paths.mode || mode);
     applyAutoHighlight(true);
-    rebuildAccessOverlay();
   }}).catch(err => {{
     document.getElementById("assetList").innerHTML = '<div class="empty">Failed to load desk assets.</div>';
     const b = document.getElementById("assetBanner");
     if (b) {{ b.style.display="block"; b.textContent = String(err); }}
+  }});
+}}
+function loadDecisionDeskFullFallback() {{
+  const paths = deskPathsForEvent(activeEventId, "full");
+  return Promise.all([
+    fetch(assets + paths.assets_json, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
+    fetch(assets + paths.assets_geojson, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null),
+  ]).then(([json, geo]) => {{
+    if (!json) {{
+      document.getElementById("assetList").innerHTML = '<div class="empty">Desk assets missing — run build scripts.</div>';
+      return;
+    }}
+    applyDeskPayload(json, geo, "full");
+    applyAutoHighlight(true);
   }});
 }}
 
@@ -1941,17 +2106,20 @@ document.getElementById("listModeChips").addEventListener("click", e => {{
   const btn = e.target.closest(".chip");
   if (!btn) return;
   listMode = btn.dataset.mode || "shortlist";
-  // toast-ish: decision-class default for All
-  if (listMode === "all" && !includeSchools()) {{
-    const summary = document.getElementById("deskSummary");
-    if (summary && desk) {{
-      const c = desk.counts || {{}};
-      summary.innerHTML =
-        `<span>Wet · metro HAND · decision classes</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
-    }}
-  }}
   document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c === btn));
-  renderAssetList();
+  const after = () => {{
+    if (listMode === "all" && !includeSchools()) {{
+      const summary = document.getElementById("deskSummary");
+      if (summary && desk) {{
+        const c = desk.counts || {{}};
+        summary.innerHTML =
+          `<span>Wet · metro HAND · decision classes</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
+      }}
+    }}
+    renderAssetList();
+  }};
+  if (needsFullDesk()) ensureFullDesk().then(after).catch(() => after());
+  else after();
 }});
 document.getElementById("typeChips").addEventListener("click", e => {{
   const btn = e.target.closest(".chip");
@@ -1967,6 +2135,7 @@ document.getElementById("typeChips").addEventListener("click", e => {{
       band.value = "all";
     }}
   }}
+  if (needsFullDesk()) {{ ensureFullDesk().then(() => renderAssetList()); return; }}
   renderAssetList();
 }});
 document.getElementById("bandFilter").onchange = renderAssetList;
@@ -1975,7 +2144,8 @@ document.getElementById("assetSearch").oninput = () => {{
     listMode = "all";
     document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "all"));
   }}
-  renderAssetList();
+  if (needsFullDesk()) ensureFullDesk().then(() => renderAssetList()).catch(() => renderAssetList());
+  else renderAssetList();
 }};
 document.getElementById("hudPlay").onclick = () => setPlaying(!playing);
 document.getElementById("hudScrub").oninput = (e) => {{
@@ -2107,13 +2277,70 @@ document.getElementById("lyTopHits").onchange = () => {{
 }};
 const lySchools = document.getElementById("lyIncludeSchools");
 if (lySchools) lySchools.onchange = () => {{
-  const c = (desk && desk.counts) || {{}};
-  const modeNote = listMode === "all" && !includeSchools() ? " · decision classes" : "";
-  const summary = document.getElementById("deskSummary");
-  if (summary) summary.innerHTML =
-    `<span>Wet · metro HAND${{modeNote}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
-  renderAssetList();
+  const refresh = () => {{
+    const c = (desk && desk.counts) || {{}};
+    const modeNote = listMode === "all" && !includeSchools() ? " · decision classes" : "";
+    const summary = document.getElementById("deskSummary");
+    if (summary) summary.innerHTML =
+      `<span>Wet · metro HAND${{modeNote}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
+    renderAssetList();
+  }};
+  if (needsFullDesk()) ensureFullDesk().then(refresh).catch(refresh);
+  else refresh();
 }};
+function restyleFloodNetResiduals() {{
+  residualMode = !!(document.getElementById("lyModelWrong") && document.getElementById("lyModelWrong").checked);
+  if (residualMode) {{
+    const ly = document.getElementById("lyFloodNet");
+    if (ly && !ly.checked) {{ ly.checked = true; if (floodnetLayer && !mapLeft.hasLayer(floodnetLayer)) floodnetLayer.addTo(mapLeft); }}
+  }}
+  if (!floodnetLayer) return;
+  floodnetLayer.eachLayer(layer => {{
+    const p = (layer.feature && layer.feature.properties) || {{}};
+    const obs = Number(p.obs_peak_m);
+    const hand = Number(p.primary_hand_m != null ? p.primary_hand_m : (p.model_peak_m != null ? p.model_peak_m : 0));
+    const resid = (Number.isFinite(obs) ? obs : 0) - (Number.isFinite(hand) ? hand : 0);
+    if (!residualMode) {{
+      const ok = !!p.oom_ok;
+      layer.setStyle({{
+        radius: 8,
+        fillColor: ok ? "#0a8a96" : "#8d3d14",
+        color: "#071018",
+        weight: 2,
+        fillOpacity: 0.95,
+      }});
+      return;
+    }}
+    // Residual mode: larger / warmer = HAND more wrong (underestimate)
+    const r = Math.max(7, Math.min(16, 7 + resid * 10));
+    layer.setStyle({{
+      radius: r,
+      fillColor: resid >= 0.4 ? "#b91c1c" : resid >= 0.15 ? "#c2410c" : "#a16207",
+      color: "#042227",
+      weight: 2,
+      fillOpacity: 0.95,
+    }});
+    layer.bindTooltip(
+      (p.sensor_name || p.sensor_id || "FloodNet") +
+      " · residual ~" + (Number.isFinite(resid) ? resid.toFixed(2) : "—") + " m (obs−HAND) · not blended"
+    );
+  }});
+}}
+const lyModelWrong = document.getElementById("lyModelWrong");
+if (lyModelWrong) lyModelWrong.onchange = restyleFloodNetResiduals;
+(function initCoach() {{
+  const overlay = document.getElementById("coachOverlay");
+  const btn = document.getElementById("coachDismiss");
+  if (!overlay || !btn) return;
+  try {{
+    if (localStorage.getItem("nyc_flood_desk_coach_v1") === "1") return;
+  }} catch (err) {{}}
+  overlay.hidden = false;
+  btn.onclick = () => {{
+    overlay.hidden = true;
+    try {{ localStorage.setItem("nyc_flood_desk_coach_v1", "1"); }} catch (err) {{}}
+  }};
+}})();
 document.getElementById("lyAccessLive").onchange = () => {{
   loadAccessSignals();
   // Live overlay does not rebuild desk ranks in-browser; run fetch_live_access_feeds.py --apply-desk for joined chips.
