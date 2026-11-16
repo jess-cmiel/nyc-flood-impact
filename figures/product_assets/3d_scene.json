@@ -1,6 +1,6 @@
 {
   "product": "decision_desk_street_view_3d",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "engine": "maplibre_gl",
   "inspired_by_pattern": "street-level 3D hotspot drill-down from 2D map (research UI pattern)",
   "honesty": "Research HAND/MRMS lead-frame screening in MapLibre 3D. NOT photogrammetry street-truth. NOT official guidance. HAND cm \u2260 FloodNet sensor metres. SFINCS remains optional Advanced / non-peer.",
@@ -12,7 +12,24 @@
     "terrain_enabled": false,
     "terrain_source": null,
     "terrain_exaggeration": 1.0,
-    "note": "OpenFreeMap liberty streets + product GeoJSON building/depth extrusions. demotiles is a countries demo (not streets) and its terrain 404s over NYC."
+    "light": {
+      "anchor": "viewport",
+      "color": "#f2f0ea",
+      "intensity": 0.42,
+      "position": [
+        1.15,
+        210,
+        35
+      ]
+    },
+    "note": "OpenFreeMap liberty streets + product GeoJSON building/depth extrusions. demotiles is a countries demo (not streets) and its terrain 404s over NYC. No sky layer (MapLibre 3.6.2); atmosphere via light + fog-tint overlays."
+  },
+  "risk_ramp_cm": {
+    "0": "#dbeafe",
+    "3": "#9ecae1",
+    "8": "#4292c6",
+    "15": "#08306b",
+    "note": "Matches Decision Desk HAND cm risk ramp (research screening)."
   },
   "timeline": {
     "source": "ida_mrms_hand_cumulative_leads",

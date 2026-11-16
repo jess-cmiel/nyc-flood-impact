@@ -104,23 +104,59 @@ def _synthetic_block(lon: float, lat: float, n: int = 24, spread: float = 0.0012
     return feats
 
 
-def _depth_polygon(lon: float, lat: float, half: float = 0.00055) -> dict:
-    return {
-        "type": "Feature",
-        "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-                [
-                    [lon - half, lat - half * 0.7],
-                    [lon + half, lat - half * 0.7],
-                    [lon + half, lat + half * 0.7],
-                    [lon - half, lat + half * 0.7],
-                    [lon - half, lat - half * 0.7],
-                ]
-            ],
-        },
-        "properties": {"role": "hand_depth_proxy", "units": "cm"},
-    }
+def _ellipse_ring(
+    lon: float, lat: float, half_lon: float, half_lat: float, n: int = 28
+) -> list[list[float]]:
+    """Closed lon/lat ellipse approximating street-level ponding footprint."""
+    ring: list[list[float]] = []
+    for i in range(n):
+        t = (2.0 * math.pi * i) / n
+        # Slight asymmetry so ponding reads as a street gutter, not a perfect disc.
+        wobble = 1.0 + 0.06 * math.sin(3.0 * t)
+        ring.append(
+            [
+                lon + half_lon * wobble * math.cos(t),
+                lat + half_lat * wobble * math.sin(t),
+            ]
+        )
+    ring.append(ring[0][:])
+    return ring
+
+
+def _depth_polygon_features(lon: float, lat: float) -> list[dict]:
+    """Concentric HAND ponding rings for MapLibre fill-extrusion water.
+
+    Core / mid / fringe scale heights in the client from lead-synced HAND cm.
+    Schematic street-level screening — not a hydraulic free surface.
+    """
+    rings = [
+        # (half_lon, half_lat, ring_id, height_scale, opacity_bias)
+        (0.00028, 0.00020, "core", 1.0, 0.0),
+        (0.00048, 0.00034, "mid", 0.62, 0.0),
+        (0.00072, 0.00050, "fringe", 0.28, 0.0),
+    ]
+    feats: list[dict] = []
+    for half_lon, half_lat, ring_id, height_scale, _op in rings:
+        feats.append(
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [_ellipse_ring(lon, lat, half_lon, half_lat)],
+                },
+                "properties": {
+                    "role": "hand_depth_proxy",
+                    "ring": ring_id,
+                    "height_scale": height_scale,
+                    "units": "cm",
+                    "honesty": (
+                        "Schematic HAND ponding ring for lead-synced extrusion — "
+                        "not a hydraulic water surface / not street-truth."
+                    ),
+                },
+            }
+        )
+    return feats
 
 
 def main() -> Path:
@@ -249,20 +285,21 @@ def main() -> Path:
                     "type": "FeatureCollection",
                     "properties": {
                         "hotspot_id": h["id"],
-                        "role": "hand_depth_proxy_polygon",
+                        "role": "hand_depth_proxy_rings",
+                        "rings": ["core", "mid", "fringe"],
                         "honesty": (
-                            "Schematic ponding polygon for fill-extrusion of HAND cm "
-                            "by lead — not a hydraulic water surface."
+                            "Concentric schematic ponding rings for fill-extrusion of "
+                            "HAND cm by lead — not a hydraulic water surface."
                         ),
                     },
-                    "features": [_depth_polygon(lon, lat)],
+                    "features": _depth_polygon_features(lon, lat),
                 }
             )
         )
 
     scene = {
         "product": "decision_desk_street_view_3d",
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "engine": "maplibre_gl",
         "inspired_by_pattern": "street-level 3D hotspot drill-down from 2D map (research UI pattern)",
         "honesty": (
@@ -278,10 +315,24 @@ def main() -> Path:
             "terrain_enabled": False,
             "terrain_source": None,
             "terrain_exaggeration": 1.0,
+            "light": {
+                "anchor": "viewport",
+                "color": "#f2f0ea",
+                "intensity": 0.42,
+                "position": [1.15, 210, 35],
+            },
             "note": (
                 "OpenFreeMap liberty streets + product GeoJSON building/depth extrusions. "
-                "demotiles is a countries demo (not streets) and its terrain 404s over NYC."
+                "demotiles is a countries demo (not streets) and its terrain 404s over NYC. "
+                "No sky layer (MapLibre 3.6.2); atmosphere via light + fog-tint overlays."
             ),
+        },
+        "risk_ramp_cm": {
+            "0": "#dbeafe",
+            "3": "#9ecae1",
+            "8": "#4292c6",
+            "15": "#08306b",
+            "note": "Matches Decision Desk HAND cm risk ramp (research screening).",
         },
         "timeline": {
             "source": "ida_mrms_hand_cumulative_leads",

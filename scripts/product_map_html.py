@@ -461,12 +461,56 @@ body.has-selection .timeline-hud {{
 .street-view-3d .sv-stats span {{ color:rgba(238,240,242,.55); font-weight:500; margin-right:4px; }}
 .street-view-3d .sv-map {{ flex:1 1 auto; min-height:0; position:relative; background:#1a1d22; }}
 .street-view-3d .sv-map .maplibregl-map {{ position:absolute; inset:0; }}
+.street-view-3d .sv-hud {{
+  position:absolute; left:12px; bottom:12px; z-index:5;
+  display:flex; flex-direction:column; gap:6px; max-width:min(280px,70%);
+  pointer-events:none;
+}}
+.street-view-3d .sv-hud-card {{
+  background:rgba(18,20,24,.78); backdrop-filter:blur(8px);
+  border:1px solid rgba(238,240,242,.14); border-radius:10px;
+  padding:8px 10px; color:#eef0f2;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+}}
+.street-view-3d .sv-hud-name {{
+  font:700 .78rem/1.2 var(--serif); letter-spacing:-.01em; color:#fff;
+}}
+.street-view-3d .sv-hud-meta {{
+  margin-top:3px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;
+  font:600 .62rem/1.2 var(--mono);
+}}
+.street-view-3d .sv-hud-band {{
+  display:inline-flex; align-items:center; padding:2px 7px; border-radius:999px;
+  background:#9ecae1; color:#0f172a; font-weight:700;
+}}
+.street-view-3d .sv-hud-ramp {{
+  margin-top:6px; height:5px; border-radius:999px; overflow:hidden;
+  background:linear-gradient(90deg,#dbeafe,#9ecae1,#4292c6,#08306b);
+}}
+.street-view-3d .sv-hud-ramp > span {{
+  display:block; height:100%; width:4%; background:#08306b; border-radius:inherit;
+  transition:width .35s ease;
+}}
+.street-view-3d .sv-hud-note {{
+  font:500 .58rem/1.35 var(--sans); color:rgba(238,240,242,.62);
+}}
+.sv-map-label {{
+  pointer-events:none; white-space:nowrap;
+  background:rgba(18,20,24,.86); color:#eef0f2;
+  border:1px solid rgba(238,240,242,.18); border-radius:8px;
+  padding:5px 8px; font:600 .62rem/1.2 var(--sans);
+  box-shadow:0 6px 16px rgba(0,0,0,.35);
+  transform:translateY(-8px);
+}}
 .street-view-3d .sv-foot {{
   flex:0 0 auto; padding:8px 14px 12px; font:500 .66rem/1.4 var(--sans);
   color:rgba(238,240,242,.7); border-top:1px solid rgba(238,240,242,.08);
   position:relative; z-index:2;
 }}
 .street-view-3d .sv-status {{ margin-top:2px; color:rgba(238,240,242,.55); font-size:.62rem; }}
+.street-view-3d .sv-stats .sv-stat-band b {{
+  padding:1px 6px; border-radius:999px; background:rgba(66,146,198,.25);
+}}
 /* Timeline + view toggle stay above 3D so lead scrub still drives HAND extrusion */
 body.street-view-open .timeline-hud {{ z-index:1300; }}
 body.street-view-open .view-mode-toggle {{ z-index:1310; }}
@@ -1058,12 +1102,24 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
     <div class="sv-stats" aria-live="polite">
       <div><span>Lead</span><b id="sv3dLead">+0h</b></div>
       <div><span>HAND depth</span><b id="sv3dDepth">0.0 cm</b></div>
-      <div><span>Band</span><b id="sv3dBand">&lt;3 cm</b></div>
+      <div class="sv-stat-band"><span>Band</span><b id="sv3dBand">&lt;3 cm</b></div>
     </div>
-    <div class="sv-map" id="sv3dMap" role="presentation"></div>
+    <div class="sv-map" id="sv3dMap" role="presentation">
+      <div class="sv-hud" aria-hidden="true">
+        <div class="sv-hud-card">
+          <div class="sv-hud-name" id="sv3dHudName">—</div>
+          <div class="sv-hud-meta">
+            <span id="sv3dHudDepth">0.0 cm HAND</span>
+            <span class="sv-hud-band" id="sv3dHudBand">&lt;3 cm</span>
+          </div>
+          <div class="sv-hud-ramp" title="HAND cm risk ramp"><span id="sv3dRampFill"></span></div>
+          <div class="sv-hud-note">Street ponding = research HAND rings · not hydraulic free surface</div>
+        </div>
+      </div>
+    </div>
     <div class="sv-foot">
       <div id="sv3dHonesty">Research HAND cm screening in extruded context — NOT street-truth photogrammetry. FloodNet metres stay separate. SFINCS optional Advanced.</div>
-      <div class="sv-status" id="sv3dStatus">Lazy-loads 3d_scene.json on open.</div>
+      <div class="sv-status" id="sv3dStatus">Lazy-loads 3d_scene.json on open. Select a hotspot to fly the camera.</div>
     </div>
   </div>
   <div class="coach-overlay" id="coachOverlay" hidden>
@@ -1996,9 +2052,9 @@ function selectAsset(id) {{
     try {{
       window.selectedId = selectedId;
       window.StreetView3D.maybeOfferButton(id);
-      // Do not auto-open 3D — use the explicit 2D|3D toggle (or inspector button).
+      // Keep 2D default; when already in 3D (or opening), fly/ease camera to selection.
       if (viewMode === "3d" && window.StreetView3D.canOpenId(id)) {{
-        window.StreetView3D.open(id);
+        window.StreetView3D.open(id, {{ animate: true }});
       }}
     }} catch (err) {{}}
   }}
@@ -3052,7 +3108,7 @@ function selectFloodnetStation(sensorId) {{
     try {{
       window.StreetView3D.maybeOfferButton(sensorId);
       if (viewMode === "3d" && window.StreetView3D.canOpenId(sensorId)) {{
-        window.StreetView3D.open(sensorId);
+        window.StreetView3D.open(sensorId, {{ animate: true }});
       }}
     }} catch (err) {{}}
   }}
