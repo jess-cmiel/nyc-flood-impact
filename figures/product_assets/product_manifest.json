@@ -5141,5 +5141,9 @@
     "sfincs_role": "advanced_research_hydro_non_peer",
     "honesty": "Additive science validation contract \u2014 observed/modeled/synthetic tagged. Does not redesign UI; Advanced panel may optionally summarize.",
     "updated_utc": "2026-11-16T17:18:01Z"
+  },
+  "lead_compare": {
+    "json": "ida_lead_compare_frames.json",
+    "note": "Ida HAND cum lead drag-compare \u00b7 research only \u00b7 not First Street / NWS / FEMA"
   }
 }

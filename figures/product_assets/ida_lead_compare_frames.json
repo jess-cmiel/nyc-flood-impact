@@ -1,0 +1,45 @@
+{
+  "product": "ida_lead_time_compare",
+  "inspired_by": "First Street–style drag-to-compare interaction pattern (not their data, scores, or brand)",
+  "honesty": "Research HAND cumulative depth frames · NOT First Street · NOT NWS · NOT FEMA · NOT decision-grade · cm-scale screening, not street-truth",
+  "event": "ida-2021",
+  "engine": "pysheds HAND / bathtub · primary Decision Desk depth",
+  "depth_path_id": "mrms_qpe_ida",
+  "bands_cm": [3, 8, 15],
+  "risk_ramp": {
+    "label": "Research depth severity (HAND cm)",
+    "units": "cm",
+    "stops": [
+      {"cm": 0, "label": "<3", "color": "#f7fbff", "band": "dry"},
+      {"cm": 3, "label": "≥3 cm", "color": "#9ecae1", "band": "ponding"},
+      {"cm": 8, "label": "≥8 cm", "color": "#4292c6", "band": "deep_ponding"},
+      {"cm": 15, "label": "≥15 cm", "color": "#08306b", "band": "hazard"}
+    ],
+    "gradient_css": "linear-gradient(90deg,#f7fbff 0%,#9ecae1 22%,#4292c6 55%,#08519c 78%,#08306b 100%)"
+  },
+  "default_left_lead_h": 6,
+  "default_right_lead_h": 18,
+  "presets": [
+    {
+      "id": "buildup_peak",
+      "label": "+6h → +18h",
+      "left_lead_h": 6,
+      "right_lead_h": 18,
+      "note": "Early buildup vs near-peak cumulative HAND"
+    },
+    {
+      "id": "early_late",
+      "label": "+3h → +24h",
+      "left_lead_h": 3,
+      "right_lead_h": 24,
+      "note": "Sparse wet vs storm-total era"
+    },
+    {
+      "id": "peak_recession",
+      "label": "+18h → +30h",
+      "left_lead_h": 18,
+      "right_lead_h": 30,
+      "note": "Peak pool vs post-peak recession (proxy drainage)"
+    }
+  ]
+}

@@ -42,6 +42,7 @@ def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
   --brand:#16181c; --brand-fg:#eef0f2; --brand-muted:rgba(238,240,242,.68);
   --warn:#9a3412; --warn-bg:rgba(154,52,18,.06); --warn-line:rgba(154,52,18,.22);
   --band-3:#8a6a12; --band-8:#b45309; --band-15:#a31b2e;
+  --risk-0:#f7fbff; --risk-3:#9ecae1; --risk-8:#4292c6; --risk-15:#08306b;
   --hud:rgba(18,20,24,.94); --ease:cubic-bezier(.22,.8,.28,1);
   --sans:"DM Sans",ui-sans-serif,sans-serif;
   --serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
@@ -91,7 +92,7 @@ aside.command-rail {{
   0%,100% {{ opacity:.45; }} 50% {{ opacity:.9; }}
 }}
 @media (prefers-reduced-motion: reduce) {{
-  .inspector-dock, .briefing-card, .timeline-hud .play {{ transition:none !important; animation:none !important; }}
+  .inspector-dock, .briefing-card, .timeline-hud .play, .compare-handle, .risk-ramp-fill {{ transition:none !important; animation:none !important; }}
   * {{ scroll-behavior:auto !important; }}
 }}
 .coach-overlay {{
@@ -251,6 +252,23 @@ select:focus, input[type=search]:focus, .briefing-card:focus-visible, .seg:focus
 .legend-swatch.precip {{ background:linear-gradient(90deg,#0b1d2a,#1a6f7a,#1ae4b6,#a2fc3c,#f9ba38,#e8332b); }}
 .legend-swatch.susc {{ background:linear-gradient(90deg,#fff7bc,#fec44f,#d95f0e,#7f2704); }}
 .legend-swatch.depth {{ background:linear-gradient(90deg,#f7fbff,#9ecae1,#4292c6,#08519c,#08306b); }}
+.risk-ramp-card {{
+  margin:8px 12px 0; padding:8px 9px; border-radius:var(--radius);
+  border:1px solid var(--line-soft); background:#fff;
+}}
+.risk-ramp-card .cap {{
+  font:600 .56rem var(--sans); letter-spacing:.08em; text-transform:uppercase; color:#8b929c; margin:0 0 5px;
+}}
+.risk-ramp-track {{
+  height:8px; border-radius:2px;
+  background:linear-gradient(90deg,var(--risk-0) 0%,var(--risk-3) 22%,var(--risk-8) 55%,#08519c 78%,var(--risk-15) 100%);
+  border:1px solid rgba(20,22,26,.08);
+}}
+.risk-ramp-labels {{
+  display:flex; justify-content:space-between; margin-top:4px;
+  font:600 .56rem var(--mono); color:var(--muted);
+}}
+.risk-ramp-note {{ margin:4px 0 0; font-size:.6rem; line-height:1.35; color:var(--muted); }}
 .opacity-row {{ display:grid; grid-template-columns:64px 1fr 34px; gap:8px; align-items:center; font-size:.7rem; margin:4px 0; color:var(--muted); }}
 .opacity-row input[type=range] {{ width:100%; accent-color:var(--accent); }}
 .layer-grid {{ display:grid; grid-template-columns:1fr 1fr; gap:5px; }}
@@ -486,12 +504,13 @@ body.has-selection .timeline-hud {{
   font:600 .56rem var(--sans); letter-spacing:.08em; text-transform:uppercase; color:#8b929c;
 }}
 .map-key-float {{
-  position:absolute; z-index:650; left:10px; bottom:84px; max-width:min(168px, calc(100% - 20px));
+  position:absolute; z-index:650; left:10px; bottom:84px; max-width:min(188px, calc(100% - 20px));
   padding:6px 8px; border-radius:var(--radius); background:rgba(18,20,24,.88); color:#e4e7eb;
   border:1px solid rgba(255,255,255,.07); font-size:.6rem; line-height:1.3;
   transition:bottom .22s var(--ease);
   backdrop-filter:blur(6px);
 }}
+body.compare-on .map-key-float {{ bottom:118px; }}
 .map-key-float.collapsed .map-key-float-body {{ display:none; }}
 .map-key-float-head {{
   display:flex; align-items:center; justify-content:space-between; gap:8px;
@@ -507,6 +526,117 @@ body.has-selection .timeline-hud {{
 .map-key-float .map-legend-row span {{ color:#9aa3ae; }}
 .map-key-float .key-corridor {{ display:none; }}
 .map-key-float.show-corridor .key-corridor {{ display:flex; }}
+.map-key-float .key-risk-ramp {{
+  margin-top:2px; padding-top:5px; border-top:1px solid rgba(255,255,255,.08);
+}}
+.map-key-float .key-risk-track {{
+  height:6px; border-radius:1px; margin:3px 0 3px;
+  background:linear-gradient(90deg,#f7fbff 0%,#9ecae1 22%,#4292c6 55%,#08519c 78%,#08306b 100%);
+}}
+.map-key-float .key-risk-labels {{
+  display:flex; justify-content:space-between; font:600 .5rem var(--mono); color:#9aa3ae;
+}}
+.compare-shell {{
+  position:absolute; inset:0; z-index:620; pointer-events:none;
+  display:none;
+}}
+body.compare-on .compare-shell {{ display:block; }}
+.compare-divider {{
+  position:absolute; top:0; bottom:0; width:0; left:50%;
+  pointer-events:none;
+}}
+.compare-divider::before {{
+  content:""; position:absolute; top:0; bottom:0; left:-1px; width:2px;
+  background:rgba(255,255,255,.92); box-shadow:0 0 0 1px rgba(20,22,26,.35);
+}}
+.compare-handle {{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(18,20,24,.92); color:#eef0f2;
+  border:1.5px solid rgba(255,255,255,.55);
+  display:flex; align-items:center; justify-content:center;
+  font:700 .7rem var(--mono); letter-spacing:-.04em;
+  pointer-events:auto; cursor:ew-resize; user-select:none;
+  box-shadow:0 4px 14px rgba(0,0,0,.28);
+  transition:transform .14s var(--ease), background .14s;
+}}
+.compare-handle:hover {{ background:#c2410c; transform:translate(-50%,-50%) scale(1.04); }}
+.compare-handle:active {{ cursor:grabbing; }}
+.compare-chip {{
+  position:absolute; top:48px; padding:5px 8px; border-radius:var(--radius);
+  background:rgba(18,20,24,.88); color:#e8eaed; border:1px solid rgba(255,255,255,.08);
+  font:600 .62rem/1.25 var(--sans); pointer-events:none; max-width:42%;
+  backdrop-filter:blur(6px);
+}}
+.compare-chip.left {{ left:12px; }}
+.compare-chip.right {{ right:12px; text-align:right; }}
+.compare-chip .sub {{ display:block; margin-top:1px; font:500 .56rem var(--sans); color:#9aa3ae; }}
+body.compare-on .timeline-hud {{ grid-template-columns:auto 1fr auto auto; }}
+.compare-toggle {{
+  border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06);
+  color:#e8eaed; border-radius:var(--radius); padding:6px 9px;
+  font:600 .62rem var(--sans); cursor:pointer; white-space:nowrap;
+}}
+.compare-toggle[aria-pressed="true"] {{
+  background:#c2410c; border-color:rgba(255,255,255,.2); color:#fff;
+}}
+.compare-toggle:hover {{ filter:brightness(1.06); }}
+.compare-controls {{
+  display:none; grid-column:1 / -1; gap:8px; align-items:center;
+  padding-top:4px; border-top:1px solid rgba(255,255,255,.08); margin-top:2px;
+}}
+body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
+.compare-controls label {{
+  display:flex; align-items:center; gap:5px; font:500 .6rem var(--sans); color:#b8c0c8;
+}}
+.compare-controls select {{
+  background:rgba(255,255,255,.08); color:#eef0f2; border:1px solid rgba(255,255,255,.14);
+  border-radius:2px; font:600 .6rem var(--mono); padding:3px 5px;
+}}
+.compare-controls .preset-btn {{
+  border:1px solid rgba(255,255,255,.14); background:transparent; color:#cfd4da;
+  border-radius:2px; padding:3px 7px; font:600 .56rem var(--sans); cursor:pointer;
+}}
+.compare-controls .preset-btn.active {{ background:rgba(194,65,12,.35); border-color:rgba(255,180,140,.35); color:#fff; }}
+.compare-controls .hint {{ font:500 .56rem var(--sans); color:#8b929c; margin-left:auto; }}
+.leaflet-image-layer.compare-clip {{ will-change: clip; }}
+.sel-severity {{
+  display:grid; grid-template-columns:1fr auto; gap:6px 10px; align-items:end;
+  margin-top:6px;
+}}
+.sel-severity .meter {{
+  height:7px; border-radius:2px; background:rgba(20,22,26,.06); overflow:hidden;
+  border:1px solid var(--line-soft);
+}}
+.sel-severity .meter > i {{
+  display:block; height:100%; border-radius:1px;
+  background:linear-gradient(90deg,var(--risk-3),var(--risk-8),var(--risk-15));
+  transition:width .22s var(--ease);
+}}
+.sel-severity .meter-label {{
+  font:600 .58rem var(--mono); color:var(--muted); text-align:right;
+}}
+.sel-tag-row {{
+  display:flex; flex-wrap:wrap; gap:4px; margin-top:6px;
+}}
+.sel-tag {{
+  display:inline-flex; align-items:center; gap:3px; padding:2px 6px;
+  border-radius:2px; border:1px solid var(--line-soft);
+  font:600 .56rem var(--sans); color:var(--ink-soft); background:#fff;
+}}
+.sel-tag.warn {{ border-color:var(--warn-line); color:var(--warn); background:var(--warn-bg); }}
+.sel-tag.ok {{ border-color:rgba(15,118,110,.28); color:#0f766e; background:rgba(15,118,110,.06); }}
+.sel-tag.muted {{ color:var(--muted); }}
+.sel-lead-grid {{
+  display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px;
+}}
+.sel-stat {{
+  padding:6px 7px; border-radius:var(--radius); border:1px solid var(--line-soft);
+  background:rgba(20,22,26,.02);
+}}
+.sel-stat .k {{ font:600 .52rem var(--sans); letter-spacing:.06em; text-transform:uppercase; color:#8b929c; }}
+.sel-stat .v {{ margin-top:2px; font:700 .78rem/1.2 var(--mono); color:var(--ink); }}
+.sel-stat .s {{ margin-top:1px; font:500 .58rem var(--sans); color:var(--muted); }}
 .leaflet-div-icon.access-div {{
   background:transparent; border:0; width:16px !important; height:16px !important;
 }}
@@ -584,6 +714,12 @@ body.has-selection .timeline-hud {{
   <p class="honesty-line">Research only · NOT NWS · cm-scale HAND ranking, not street-truth depths.</p>
   <div class="magnitude-chip" id="magnitudeChip" role="status">
     HAND screening <b>~cm</b> · FloodNet street peaks up to <b>~0.9 m</b> (n=5) — not the same scale.
+  </div>
+  <div class="risk-ramp-card" aria-label="Research depth severity ramp">
+    <div class="cap">Risk ramp · HAND cm bands</div>
+    <div class="risk-ramp-track" title="Research severity gradient"></div>
+    <div class="risk-ramp-labels"><span>&lt;3</span><span>≥3</span><span>≥8</span><span>≥15</span></div>
+    <p class="risk-ramp-note">Screening severity — not First Street / FEMA scores · not street-truth depths.</p>
   </div>
   <div class="access-fixture-badge" id="accessFixtureBadge" role="status"></div>
   <div id="assetBanner"></div>
@@ -773,7 +909,7 @@ body.has-selection .timeline-hud {{
 
 <div class="map-stage" id="mapStage">
   <div class="pane-label" id="leftLabel">Decision Desk · Ida</div>
-  <div class="kbd-hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear</div>
+  <div class="kbd-hint" aria-hidden="true"><kbd>c</kbd> compare · <kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear</div>
   <div class="sfincs-peer-banner" id="sfincsPeerBanner">SFINCS on — non-peer metres vs HAND cm. HAND auto-dimmed. No SWMM.</div>
   <div id="mapLeft" class="map-el"></div>
   <aside class="inspector-dock" id="selectedCard" aria-label="Selected asset inspector" aria-hidden="true">
@@ -788,9 +924,25 @@ body.has-selection .timeline-hud {{
     </div>
     <div class="dock-body">
       <div class="sel-block">
-        <div class="sel-block-label">Depth</div>
+        <div class="sel-block-label">Severity · depth</div>
         <div class="sel-depth-hero" id="selDepthHero">—</div>
         <div class="sel-depth-meta" id="selBody">—</div>
+        <div class="sel-severity" id="selSeverity" aria-hidden="true">
+          <div class="meter" title="Research band position"><i id="selSeverityFill" style="width:0%"></i></div>
+          <div class="meter-label" id="selSeverityLabel">—</div>
+        </div>
+        <div class="sel-lead-grid">
+          <div class="sel-stat">
+            <div class="k">Lead</div>
+            <div class="v" id="selLeadVal">—</div>
+            <div class="s" id="selLeadSub">first band exceedance</div>
+          </div>
+          <div class="sel-stat">
+            <div class="k">Access</div>
+            <div class="v" id="selAccessVal">—</div>
+            <div class="s" id="selAccessSub">research signal</div>
+          </div>
+        </div>
         <div class="sparkline-wrap" id="selSparkWrap" hidden>
           <div class="spark-cap">Depth vs lead (HAND cm)</div>
           <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to timeline"></svg>
@@ -798,12 +950,13 @@ body.has-selection .timeline-hud {{
         </div>
       </div>
       <div class="sel-block">
-        <div class="sel-block-label">Access</div>
+        <div class="sel-block-label">Access · signals</div>
         <div class="sel-access-line" id="selAccessLine">—</div>
         <div class="sel-access-note" id="selAccessNote"></div>
       </div>
       <div class="sel-block">
-        <div class="sel-block-label">Context</div>
+        <div class="sel-block-label">Briefing · validation</div>
+        <div class="sel-tag-row" id="selTags"></div>
         <div class="sel-chips" id="selChips"></div>
         <div class="compare-strip" id="selCompareStrip" hidden role="status"></div>
         <div class="consequence-cap">Consequence timeline (research)</div>
@@ -815,8 +968,15 @@ body.has-selection .timeline-hud {{
   <div class="coach-overlay" id="coachOverlay" hidden>
     <div class="coach-card" role="dialog" aria-label="Decision Desk quick start">
       <strong>15s start</strong>
-      Briefing card → fly + inspector dock. Timeline <kbd>←</kbd><kbd>→</kbd> · list <kbd>j</kbd>/<kbd>k</kbd>. HAND cm ≠ FloodNet street metres. Stay out of Advanced.
+      Briefing card → inspector. <b>Compare</b> drag-line for lead hours. Risk ramp ≥3/≥8/≥15 cm. HAND cm ≠ FloodNet metres.
       <button type="button" id="coachDismiss">Got it</button>
+    </div>
+  </div>
+  <div class="compare-shell" id="compareShell" aria-hidden="true">
+    <div class="compare-chip left" id="compareChipL"><b id="compareLeadL">+6h</b><span class="sub">Earlier HAND cum</span></div>
+    <div class="compare-chip right" id="compareChipR"><b id="compareLeadR">+18h</b><span class="sub">Later HAND cum</span></div>
+    <div class="compare-divider" id="compareDivider" style="left:50%">
+      <button type="button" class="compare-handle" id="compareHandle" aria-label="Drag to compare lead hours" title="Drag to compare">⟷</button>
     </div>
   </div>
   <div class="map-key-float collapsed" id="mapKeyFloat">
@@ -825,6 +985,11 @@ body.has-selection .timeline-hud {{
       <button type="button" id="mapKeyFloatToggle" aria-label="Expand map key" aria-expanded="false">+</button>
     </div>
     <div class="map-key-float-body">
+      <div class="key-risk-ramp" aria-label="Depth severity ramp">
+        <div class="map-legend-row"><span>HAND risk ramp</span></div>
+        <div class="key-risk-track"></div>
+        <div class="key-risk-labels"><span>&lt;3</span><span>≥3</span><span>≥8</span><span>≥15 cm</span></div>
+      </div>
       <div class="map-legend-row">
         <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="3.2" fill="#9a5a2a" stroke="rgba(255,255,255,.85)" stroke-width="1"/></svg></span>
         <span>Asset dot</span>
@@ -857,9 +1022,18 @@ body.has-selection .timeline-hud {{
       <span id="hudLegendLabel">Precip · context</span>
       <div class="bar" id="hudLegendBar"></div>
     </div>
+    <button type="button" class="compare-toggle" id="compareToggle" aria-pressed="false" title="Drag-line lead compare">Compare</button>
     <div class="timeline-track">
       <div class="timeline-ticks" id="timelineTicks" aria-hidden="true"></div>
       <input class="scrub" id="hudScrub" type="range" min="0" max="{n - 1}" value="0" aria-label="Storm lead timeline">
+    </div>
+    <div class="compare-controls" id="compareControls" aria-label="Compare lead selectors">
+      <label>A <select id="compareLeadA" aria-label="Earlier compare lead"></select></label>
+      <label>B <select id="compareLeadB" aria-label="Later compare lead"></select></label>
+      <button type="button" class="preset-btn" data-preset="buildup_peak">+6→+18</button>
+      <button type="button" class="preset-btn" data-preset="early_late">+3→+24</button>
+      <button type="button" class="preset-btn" data-preset="peak_recession">+18→+30</button>
+      <span class="hint">Drag the line · HAND cum · research only</span>
     </div>
   </div>
 </div>
@@ -1022,10 +1196,19 @@ let residualMode = false;
 let listMode = "shortlist";
 let activeEventId = "ida-2021";
 let compareStrip = null;
+let compareFramesMeta = null;
+let compareOn = false;
+let comparePct = 0.5;
+let compareLeftLead = 6;
+let compareRightLead = 18;
+let compareLeftLayer = null;
+let compareRightLayer = null;
+let compareDragging = false;
 let focusedAssetId = null;
 let hoverAssetId = null;
 const PLAY_MS = 380;
 const FADE_MS = 220;
+const RISK_BAND_CM = {{ ponding: 3, deep_ponding: 8, hazard: 15 }};
 
 function setSelectionChrome(on) {{
   document.body.classList.toggle("has-selection", !!on);
@@ -1090,6 +1273,7 @@ function syncTimeWindowLabel() {{
 }}
 
 function rebuildPathLayers() {{
+  clearCompareLayers();
   [activeE2, fadeE2, activeSusc, fadeSusc, activeDepth, fadeDepth].forEach(l => {{
     if (l && mapLeft.hasLayer(l)) mapLeft.removeLayer(l);
   }});
@@ -1166,6 +1350,7 @@ function rebuildPathLayers() {{
       : "Depth is storm-total only on this path (no cum frames) — label as static if it does not change with the loop.";
   }}
   syncTimeWindowLabel();
+  populateCompareLeadSelects();
   // Prefer bilinear-ish for MRMS awareness; keep Earth2 pixelated if selected
   const nearest = !(
     activePath.ida_primary_viz
@@ -1176,6 +1361,7 @@ function rebuildPathLayers() {{
   document.querySelectorAll(".leaflet-image-layer").forEach(el => {{
     el.style.imageRendering = nearest ? "pixelated" : "auto";
   }});
+  if (compareOn) applyCompareLayers();
 }}
 
 function screeningOn() {{ return !!document.getElementById("lySusc").checked; }}
@@ -1228,7 +1414,7 @@ function setLead(i) {{
 
   const di = nearestDepthIndex(f.lead_hours);
   const nextDepth = (di >= 0 && depthLayers[di]) ? depthLayers[di] : depthTotal;
-  const wantDepth = document.getElementById("lyDepthTot").checked;
+  const wantDepth = document.getElementById("lyDepthTot").checked && !compareOn;
   swapOverlay(activeDepth, wantDepth ? nextDepth : null, effectiveDepthOpacity, (a, fprev) => {{
     activeDepth = a; fadeDepth = fprev;
   }});
@@ -1251,8 +1437,14 @@ function setLead(i) {{
   const depthLead = (di >= 0 && depthCumFrames[di]) ? depthCumFrames[di].lead_hours : null;
   const depthBit = depthLead != null ? (" · depth +" + depthLead + "h") : "";
   const suscBit = wantSusc ? " · screening on" : "";
-  document.getElementById("hudSub").textContent =
-    "+" + f.lead_hours + "h · 3h cum screening frames · " + (f.temporal_blend ? "blend" : "native") + depthBit + suscBit;
+  if (compareOn) {{
+    document.getElementById("hudSub").textContent =
+      "Compare +" + compareLeftLead + "h ↔ +" + compareRightLead + "h · HAND cum · research only";
+    refreshCompareClip();
+  }} else {{
+    document.getElementById("hudSub").textContent =
+      "+" + f.lead_hours + "h · 3h cum screening frames · " + (f.temporal_blend ? "blend" : "native") + depthBit + suscBit;
+  }}
   document.getElementById("leftLabel").textContent = "Decision Desk · " + (activePath.label || "Ida");
   syncSparklineToScrubber();
 }}
@@ -1555,19 +1747,40 @@ function selectAsset(id) {{
   // Access overlay stays opt-in (Map layers) — dock still shows access status.
   document.getElementById("selKicker").textContent = typeLabel(a.asset_type) + " · #" + (a.rank != null ? a.rank : "—");
   document.getElementById("selName").textContent = a.name;
+  const depthCm = Number(a.max_depth_cm || 0);
   const depthHero = document.getElementById("selDepthHero");
-  if (depthHero) depthHero.textContent = Number(a.max_depth_cm || 0).toFixed(1) + " cm";
+  if (depthHero) depthHero.textContent = depthCm.toFixed(1) + " cm";
   document.getElementById("selBody").textContent =
-    (a.band_label || a.band || "—") + " · " + leadLabel(a) + " · HAND primary";
+    (a.band_full_label || a.band_label || a.band || "—") + " · HAND primary · research only";
+  renderSeverityMeter(a);
+  const leadVal = document.getElementById("selLeadVal");
+  const leadSub = document.getElementById("selLeadSub");
+  if (leadVal) {{
+    leadVal.textContent = a.first_exceedance_lead_h != null
+      ? ("+" + a.first_exceedance_lead_h + "h")
+      : "late / n/a";
+  }}
+  if (leadSub) {{
+    leadSub.textContent = a.first_exceedance_note
+      ? String(a.first_exceedance_note).slice(0, 42)
+      : "first band exceedance";
+  }}
+  const accVal = document.getElementById("selAccessVal");
+  const accSub = document.getElementById("selAccessSub");
+  if (accVal) accVal.textContent = acc;
+  if (accSub) accSub.textContent = accessChipLabel(acc).replace("access: ", "");
   const accessLine = document.getElementById("selAccessLine");
   if (accessLine) {{
     accessLine.innerHTML = `<span class="sel-chip access-${{acc}}">${{accessChipLabel(acc)}}</span>`;
   }}
+  renderValidationTags(a);
   const extraChips = [];
   if (a.structure) extraChips.push(`<span class="sel-chip">Structure · ${{a.structure}}</span>`);
   if (a.stormwater_chip) extraChips.push(`<span class="sel-chip">${{a.stormwater_chip}}</span>`);
   if (a.lion_chip) extraChips.push(`<span class="sel-chip">${{a.lion_chip}}</span>`);
   if (a.bes_chip) extraChips.push(`<span class="sel-chip">${{a.bes_chip}}</span>`);
+  if (a.near_lion_tunnel) extraChips.push(`<span class="sel-chip">Near tunnel inventory</span>`);
+  if (a.facility_type) extraChips.push(`<span class="sel-chip">${{a.facility_type}}</span>`);
   const ec = a.engine_compare || null;
   if (ec) {{
     const cls = ec.disagree ? "disagree" : "agree";
@@ -1587,7 +1800,44 @@ function selectAsset(id) {{
   renderCompareStrip(a);
   appendDecisionLog(a, "select");
   setSelectionChrome(true);
-  requestAnimationFrame(() => {{ try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}} }});
+  requestAnimationFrame(() => {{
+    try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}}
+    if (compareOn) refreshCompareClip();
+  }});
+}}
+function severityPct(a) {{
+  const cm = Number(a && a.max_depth_cm != null ? a.max_depth_cm : 0);
+  // Map 0–18 cm onto the research ramp so ≥15 sits near the end.
+  return Math.max(4, Math.min(100, (cm / 18) * 100));
+}}
+function renderSeverityMeter(a) {{
+  const fill = document.getElementById("selSeverityFill");
+  const label = document.getElementById("selSeverityLabel");
+  const wrap = document.getElementById("selSeverity");
+  if (!fill || !label || !wrap) return;
+  wrap.setAttribute("aria-hidden", "false");
+  fill.style.width = severityPct(a).toFixed(0) + "%";
+  label.textContent = a.band_label || ("≥" + (RISK_BAND_CM[a.band] || 3) + " cm");
+}}
+function renderValidationTags(a) {{
+  const el = document.getElementById("selTags");
+  if (!el || !a) return;
+  const tags = [];
+  tags.push('<span class="sel-tag muted">HAND primary</span>');
+  tags.push('<span class="sel-tag muted">research · not NWS</span>');
+  if (a.band_label) tags.push(`<span class="sel-tag">${{a.band_label}}</span>`);
+  if (a.demo_demoted) tags.push('<span class="sel-tag warn">demo-demoted rank</span>');
+  if (a.decision_class) tags.push('<span class="sel-tag ok">decision-class asset</span>');
+  const ec = a.engine_compare;
+  if (ec) {{
+    tags.push(ec.disagree
+      ? '<span class="sel-tag warn">engines disagree · non-peer</span>'
+      : '<span class="sel-tag ok">engines agree · non-peer</span>');
+  }} else {{
+    tags.push('<span class="sel-tag muted">SFINCS Advanced only</span>');
+  }}
+  if (a.sample_method) tags.push(`<span class="sel-tag muted">${{a.sample_method}}</span>`);
+  el.innerHTML = tags.join("");
 }}
 function renderConsequenceTimeline(a) {{
   const el = document.getElementById("selConsequence");
@@ -1629,8 +1879,19 @@ function clearSelection() {{
   if (cmp) {{ cmp.hidden = true; cmp.innerHTML = ""; }}
   const hero = document.getElementById("selDepthHero");
   if (hero) hero.textContent = "—";
+  const tags = document.getElementById("selTags");
+  if (tags) tags.innerHTML = "";
+  const fill = document.getElementById("selSeverityFill");
+  if (fill) fill.style.width = "0%";
+  ["selLeadVal", "selAccessVal", "selSeverityLabel"].forEach(id => {{
+    const el = document.getElementById(id);
+    if (el) el.textContent = "—";
+  }});
   renderAssetList();
-  requestAnimationFrame(() => {{ try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}} }});
+  requestAnimationFrame(() => {{
+    try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}}
+    if (compareOn) refreshCompareClip();
+  }});
 }}
 
 function buildShortlistSnapshotText() {{
@@ -1806,6 +2067,225 @@ function renderCompareStrip(a) {{
   el.innerHTML = "<div class=\\"compare-kicker\\">Ida ↔ Henri compare</div>"
     + idaBit + " · " + henriBit
     + "<div style=\\"margin-top:4px;opacity:.85\\">Same official ID · research HAND — not peer-calibrated · not NWS.</div>";
+}}
+
+async function loadCompareFramesMeta() {{
+  const name = (manifest.lead_compare && manifest.lead_compare.json)
+    || "ida_lead_compare_frames.json";
+  try {{
+    const r = await fetch(assets + name, {{ cache: "no-cache" }});
+    compareFramesMeta = r.ok ? await r.json() : null;
+  }} catch (e) {{
+    compareFramesMeta = null;
+  }}
+  if (compareFramesMeta) {{
+    if (compareFramesMeta.default_left_lead_h != null) compareLeftLead = compareFramesMeta.default_left_lead_h;
+    if (compareFramesMeta.default_right_lead_h != null) compareRightLead = compareFramesMeta.default_right_lead_h;
+  }}
+  populateCompareLeadSelects();
+}}
+function depthLeadOptions() {{
+  if (depthCumFrames.length) {{
+    return depthCumFrames.map(fr => Number(fr.lead_hours));
+  }}
+  return [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36];
+}}
+function populateCompareLeadSelects() {{
+  const a = document.getElementById("compareLeadA");
+  const b = document.getElementById("compareLeadB");
+  if (!a || !b) return;
+  const leads = depthLeadOptions();
+  const opts = leads.map(h => `<option value="${{h}}">+${{h}}h</option>`).join("");
+  a.innerHTML = opts;
+  b.innerHTML = opts;
+  const snap = (sel, want) => {{
+    const nums = leads.slice();
+    let best = nums[0], bestAbs = Infinity;
+    nums.forEach(h => {{
+      const d = Math.abs(h - want);
+      if (d < bestAbs) {{ bestAbs = d; best = h; }}
+    }});
+    sel.value = String(best);
+    return best;
+  }};
+  compareLeftLead = snap(a, compareLeftLead);
+  compareRightLead = snap(b, compareRightLead);
+}}
+function clearCompareLayers() {{
+  [compareLeftLayer, compareRightLayer].forEach(l => {{
+    if (l && mapLeft.hasLayer(l)) mapLeft.removeLayer(l);
+  }});
+  compareLeftLayer = compareRightLayer = null;
+}}
+function depthOverlayForLead(leadH) {{
+  const di = nearestDepthIndex(leadH);
+  if (di >= 0 && depthLayers[di]) return depthLayers[di];
+  return depthTotal;
+}}
+function refreshCompareClip() {{
+  if (!compareOn) return;
+  const divider = document.getElementById("compareDivider");
+  if (divider) divider.style.left = (comparePct * 100).toFixed(2) + "%";
+  const mapRect = mapLeft.getContainer().getBoundingClientRect();
+  const nx = mapRect.left + comparePct * mapRect.width;
+  const clipLayer = (layer, side) => {{
+    if (!layer) return;
+    const img = layer.getElement ? layer.getElement() : null;
+    if (!img) return;
+    img.classList.add("compare-clip");
+    const r = img.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    if (side === "left") {{
+      const right = Math.max(0, Math.min(r.width, nx - r.left));
+      img.style.clip = "rect(0px," + right + "px," + r.height + "px,0px)";
+      img.style.clipPath = "inset(0 " + Math.max(0, r.width - right) + "px 0 0)";
+    }} else {{
+      const left = Math.max(0, Math.min(r.width, nx - r.left));
+      img.style.clip = "rect(0px," + r.width + "px," + r.height + "px," + left + "px)";
+      img.style.clipPath = "inset(0 0 0 " + left + "px)";
+    }}
+  }};
+  clipLayer(compareLeftLayer, "left");
+  clipLayer(compareRightLayer, "right");
+}}
+function syncCompareChips() {{
+  const l = document.getElementById("compareLeadL");
+  const r = document.getElementById("compareLeadR");
+  if (l) l.textContent = "+" + compareLeftLead + "h";
+  if (r) r.textContent = "+" + compareRightLead + "h";
+}}
+function applyCompareLayers() {{
+  if (!compareOn) return;
+  clearCompareLayers();
+  const left = depthOverlayForLead(compareLeftLead);
+  const right = depthOverlayForLead(compareRightLead);
+  if (!left && !right) return;
+  // Clone-ish: reuse existing ImageOverlay instances would fight setLead opacity.
+  // Build dedicated overlays from the same PNG sources.
+  const ds = depthSetForPath(activePath.id);
+  const precipBounds = overlayBoundsPreferMetro(activePath.precip && activePath.precip.bounds);
+  const depthBounds = overlayBoundsPreferMetro((ds && ds.bounds) || precipBounds);
+  const pngFor = (leadH) => {{
+    const di = nearestDepthIndex(leadH);
+    if (di >= 0 && depthCumFrames[di]) return depthCumFrames[di].png;
+    if (ds && ds.storm_total && ds.storm_total.png) return ds.storm_total.png;
+    if (manifest.inundation_citywide && manifest.inundation_citywide.png) return manifest.inundation_citywide.png;
+    return null;
+  }};
+  const leftPng = pngFor(compareLeftLead);
+  const rightPng = pngFor(compareRightLead);
+  const op = Math.max(effectiveDepthOpacity(), 0.55);
+  if (leftPng) {{
+    compareLeftLayer = L.imageOverlay(assets + leftPng, depthBounds, {{
+      opacity: op, interactive: false, pane: "depthPane", className: "depth-radar compare-clip"
+    }}).addTo(mapLeft);
+  }}
+  if (rightPng) {{
+    compareRightLayer = L.imageOverlay(assets + rightPng, depthBounds, {{
+      opacity: op, interactive: false, pane: "depthPane", className: "depth-radar compare-clip"
+    }}).addTo(mapLeft);
+  }}
+  syncCompareChips();
+  requestAnimationFrame(() => refreshCompareClip());
+}}
+function setCompareMode(on) {{
+  compareOn = !!on;
+  document.body.classList.toggle("compare-on", compareOn);
+  const btn = document.getElementById("compareToggle");
+  if (btn) btn.setAttribute("aria-pressed", compareOn ? "true" : "false");
+  const shell = document.getElementById("compareShell");
+  if (shell) shell.setAttribute("aria-hidden", compareOn ? "false" : "true");
+  if (compareOn) {{
+    setPlaying(false);
+    // Hide the looping depth overlay so A/B frames own the depth pane.
+    if (activeDepth && mapLeft.hasLayer(activeDepth)) {{
+      activeDepth.setOpacity(0);
+    }}
+    document.getElementById("lyDepthTot").checked = true;
+    populateCompareLeadSelects();
+    applyCompareLayers();
+    const key = document.getElementById("mapKeyFloat");
+    if (key && key.classList.contains("collapsed")) {{
+      key.classList.remove("collapsed");
+      const t = document.getElementById("mapKeyFloatToggle");
+      if (t) {{ t.textContent = "–"; t.setAttribute("aria-expanded", "true"); }}
+    }}
+    document.getElementById("hudSub").textContent =
+      "Compare +" + compareLeftLead + "h ↔ +" + compareRightLead + "h · HAND cum · research only";
+  }} else {{
+    clearCompareLayers();
+    document.querySelectorAll(".leaflet-image-layer.compare-clip").forEach(el => {{
+      el.style.clip = "";
+      el.style.clipPath = "";
+    }});
+    setLead(leadIndex);
+  }}
+}}
+function applyComparePreset(id) {{
+  const presets = (compareFramesMeta && compareFramesMeta.presets) || [
+    {{ id: "buildup_peak", left_lead_h: 6, right_lead_h: 18 }},
+    {{ id: "early_late", left_lead_h: 3, right_lead_h: 24 }},
+    {{ id: "peak_recession", left_lead_h: 18, right_lead_h: 30 }},
+  ];
+  const p = presets.find(x => x.id === id) || presets[0];
+  if (!p) return;
+  compareLeftLead = p.left_lead_h;
+  compareRightLead = p.right_lead_h;
+  populateCompareLeadSelects();
+  document.querySelectorAll(".compare-controls .preset-btn").forEach(btn => {{
+    btn.classList.toggle("active", btn.dataset.preset === id);
+  }});
+  if (compareOn) applyCompareLayers();
+}}
+function wireCompareUi() {{
+  const toggle = document.getElementById("compareToggle");
+  if (toggle) {{
+    toggle.addEventListener("click", () => setCompareMode(!compareOn));
+  }}
+  const a = document.getElementById("compareLeadA");
+  const b = document.getElementById("compareLeadB");
+  if (a) a.addEventListener("change", () => {{
+    compareLeftLead = Number(a.value);
+    if (compareOn) applyCompareLayers();
+  }});
+  if (b) b.addEventListener("change", () => {{
+    compareRightLead = Number(b.value);
+    if (compareOn) applyCompareLayers();
+  }});
+  document.querySelectorAll(".compare-controls .preset-btn").forEach(btn => {{
+    btn.addEventListener("click", () => applyComparePreset(btn.dataset.preset));
+  }});
+  const handle = document.getElementById("compareHandle");
+  const stage = document.getElementById("mapStage");
+  if (!handle || !stage) return;
+  const onMove = (clientX) => {{
+    const rect = mapLeft.getContainer().getBoundingClientRect();
+    if (!rect.width) return;
+    comparePct = Math.max(0.04, Math.min(0.96, (clientX - rect.left) / rect.width));
+    refreshCompareClip();
+  }};
+  const stopDrag = () => {{
+    compareDragging = false;
+    window.removeEventListener("pointermove", onPtrMove);
+    window.removeEventListener("pointerup", stopDrag);
+  }};
+  const onPtrMove = (e) => {{
+    if (!compareDragging) return;
+    onMove(e.clientX);
+  }};
+  handle.addEventListener("pointerdown", (e) => {{
+    if (!compareOn) return;
+    e.preventDefault();
+    compareDragging = true;
+    handle.setPointerCapture?.(e.pointerId);
+    onMove(e.clientX);
+    window.addEventListener("pointermove", onPtrMove);
+    window.addEventListener("pointerup", stopDrag);
+  }});
+  mapLeft.on("move zoom moveend zoomend resize", () => {{
+    if (compareOn) refreshCompareClip();
+  }});
+  window.addEventListener("resize", () => {{ if (compareOn) refreshCompareClip(); }});
 }}
 function needsFullDesk() {{
   const q = (document.getElementById("assetSearch").value || "").trim();
@@ -2939,7 +3419,13 @@ document.addEventListener("keydown", (e) => {{
   }}
   if (e.key === " " || e.code === "Space") {{
     e.preventDefault();
+    if (compareOn) return;
     setPlaying(!playing);
+    return;
+  }}
+  if (e.key === "c" || e.key === "C") {{
+    e.preventDefault();
+    setCompareMode(!compareOn);
   }}
 }});
 document.getElementById("extentSelect").onchange = () => fitMapFrame();
@@ -3176,10 +3662,12 @@ if (btnPrint) btnPrint.onclick = () => printShortlistSnapshot();
   }});
 }})();
 
+wireCompareUi();
 rebuildPathLayers();
 fitMapFrame();
 setLead(0);
 loadCompareStrip();
+loadCompareFramesMeta();
 loadDecisionDesk();
 loadAccessSignals();
 loadFloodNetProduct();
