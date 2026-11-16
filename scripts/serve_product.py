@@ -19,6 +19,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="Bind address (default 127.0.0.1; use 0.0.0.0 for LAN)",
+    )
+    parser.add_argument(
         "--dir",
         type=Path,
         default=FIGURES_DIR,
@@ -38,9 +43,12 @@ def main() -> None:
         )
 
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(root))
-    with socketserver.TCPServer(("127.0.0.1", args.port), handler) as httpd:
+    socketserver.TCPServer.allow_reuse_address = True
+    with socketserver.TCPServer((args.host, args.port), handler) as httpd:
         print(f"Serving {root}")
         print(f"Open http://127.0.0.1:{args.port}/product_map.html")
+        if args.host not in ("127.0.0.1", "localhost"):
+            print(f"Bound on {args.host}:{args.port}")
         print("Offline chrome: vendor/ Leaflet+fonts · paper basemap (uncheck Online streets if offline)")
         httpd.serve_forever()
 

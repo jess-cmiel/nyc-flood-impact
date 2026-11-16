@@ -57,11 +57,11 @@ def vendor_leaflet() -> dict:
 
 
 def vendor_fonts() -> dict:
-    """Download Syne / Figtree / IBM Plex Mono woff2 via Google Fonts CSS API."""
+    """Download Source Serif 4 / DM Sans / IBM Plex Mono woff2 via Google Fonts CSS API."""
     css_url = (
         "https://fonts.googleapis.com/css2?"
-        "family=Syne:wght@600;700;800&"
-        "family=Figtree:wght@400;500;600;700&"
+        "family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&"
+        "family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&"
         "family=IBM+Plex+Mono:wght@500;600&display=swap"
     )
     # Request woff2-capable CSS
