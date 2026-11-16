@@ -187,6 +187,12 @@ def apply_access_and_demotion(
     buffer_m: float = 100.0,
 ) -> dict[str, Any]:
     """Mutate desk payload: demote NJ Turnpike-class tops, join access chips."""
+    from flood_risk.risk.decision_classes import (
+        apply_decision_class_ranks,
+        apply_typed_action_hints,
+    )
+    from flood_risk.risk.demo_shortlist import demo_shortlist_ids
+
     assets = list(payload.get("assets") or [])
     assets = apply_demo_geography_ranks(assets)
     access_meta: dict[str, Any] = {
@@ -199,8 +205,18 @@ def apply_access_and_demotion(
         access_meta["honesty"] = fixture.get("honesty")
         access_meta["sources"] = fixture.get("sources")
         access_meta["replay"] = fixture.get("replay")
+        access_meta["synthetic"] = bool(fixture.get("synthetic"))
+        access_meta["fixture_pack"] = fixture.get("fixture_pack") or fixture.get("id")
+    # Decision-class re-rank after geography demotion so All-mode tops are usable.
+    assets = apply_decision_class_ranks(assets)
+    apply_typed_action_hints(assets)
     payload["assets"] = assets
     payload["access_signals"] = access_meta
+    payload["schema_version"] = payload.get("schema_version") or "1.1.0"
+    try:
+        payload["shortlist_ids"] = demo_shortlist_ids()
+    except Exception:  # noqa: BLE001
+        payload["shortlist_ids"] = payload.get("shortlist_ids") or []
     payload["demo_geography"] = {
         "prefer_nyc": True,
         "demote_nj_turnpike": True,
@@ -208,6 +224,15 @@ def apply_access_and_demotion(
         "note": (
             "Demo ranking demotes New Jersey Turnpike / non-NYC mainland noise "
             "so All-mode tops stay NYC-memorable. Depths unchanged."
+        ),
+    }
+    payload["decision_class_filter"] = {
+        "default_all_mode": True,
+        "include_schools_opt_in": True,
+        "demote_unnamed": True,
+        "classes": ["hospital", "fire", "police", "station", "named_primary_road", "tunnel"],
+        "note": (
+            "Default All-mode lists decision-relevant classes; schools / full inventory are opt-in."
         ),
     }
     if assets:

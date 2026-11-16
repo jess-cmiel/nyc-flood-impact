@@ -98,17 +98,10 @@ def main() -> None:
         }
         for a in (payload.get("assets") or [])[:8]
     ]
-    shortlist = [
-        a
-        for a in payload.get("assets") or []
-        if a["id"]
-        in {
-            "stations:gtfs:F22",
-            "road:25430129",
-            "facilities:uid:a464e8e63eb8b2c92ab1995735cfd284",
-            "road:37394898",
-        }
-    ]
+    from flood_risk.risk.demo_shortlist import demo_shortlist_ids  # noqa: E402
+
+    shortlist_ids = set(demo_shortlist_ids())
+    shortlist = [a for a in payload.get("assets") or [] if a["id"] in shortlist_ids]
     print(
         json.dumps(
             {

@@ -1,0 +1,20 @@
+# Single-source demo shortlist for Asset Decision Desk (Ida).
+# Consumed by HTML builder, golden tests, and access replay pack.
+# Depths/leads are documentation snapshots — live desk JSON is authoritative.
+event: ida-2021
+honesty: Research shortlist for 60s demo — NOT NWS / NOT decision-grade.
+assets:
+  - id: stations:gtfs:F22
+    name: Smith-9 Sts
+    asset_type: station
+    note: Iconic Ida station (MTA GTFS F22 / Structure=Viaduct)
+  - id: road:25430129
+    name: Van Wyck Expressway
+    asset_type: road
+  - id: facilities:uid:a464e8e63eb8b2c92ab1995735cfd284
+    name: Brooklyn Hospital Center - Downtown Campus
+    asset_type: facility
+    facility_type: hospital
+  - id: road:37394898
+    name: Myrtle Avenue
+    asset_type: road
