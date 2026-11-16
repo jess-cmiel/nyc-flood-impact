@@ -4,7 +4,7 @@ ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 DEMO_TAG ?= demo-ida-v1
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains relativize vendor test ci-guard demo-tag
+.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains nest-exchange relativize vendor test ci-guard demo-tag
 
 help:
 	@echo "Decision Desk: desk html access-pack disagreement henri-parity corridor denser-drains vendor relativize test demo-tag"
@@ -101,3 +101,7 @@ print(normalize_earth2_forecast('data/forecasts/earth2_precip_live.nc','data/for
 
 clean:
 	rm -rf $(VENV) outputs/validation_product.json outputs/live_pipeline_meta.json
+
+# P2.6 feathered nested SFINCS exchange + non-peer HAND calib (Advanced only)
+nest-exchange:
+	$(ACTIVATE) && python scripts/build_sfincs_nest_exchange.py

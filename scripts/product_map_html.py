@@ -569,7 +569,8 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       </details>
       <details class="drawer">
         <summary>Advanced research hydro</summary>
-        <p class="drawer-note">HAND stays primary. SFINCS = research 2D SWE only — spatial MRMS + open drainage sink. <b>No SWMM</b> / no fake DEP pipes. Magnitudes not peer with HAND.</p>
+        <p class="drawer-note">HAND stays primary — never blended. SFINCS = Advanced research 2D SWE with feathered nest↔coarse exchange + non-peer HAND overlap calib. <b>No SWMM</b> / no fake DEP pipes.</p>
+        <p class="drawer-note" id="sfincsExchangeNote"></p>
         <div class="layer-grid">
           <label class="layer-btn"><input id="lySfincsNested" type="checkbox">Metro nested SFINCS</label>
           <label class="layer-btn"><input id="lySfincs" type="checkbox">SFINCS Queens nest</label>
@@ -2500,6 +2501,14 @@ function syncSfincsPeerMode() {{
     setLead(leadIndex);
   }}
 }}
+(function fillSfincsExchangeNote() {{
+  const el = document.getElementById("sfincsExchangeNote");
+  if (!el) return;
+  const ex = manifest.sfincs_nest_exchange || {{}};
+  if (!ex.available) {{ el.textContent = ""; return; }}
+  const rmse = ex.hand_rmse_m != null ? (" · non-peer HAND overlap RMSE " + Number(ex.hand_rmse_m).toFixed(2) + " m") : "";
+  el.textContent = "Exchange: " + (ex.mode || "feathered") + rmse + " — research only, never blended into HAND ranks.";
+}})();
 document.getElementById("lySfincsNested").onchange = () => {{
   if (!sfincsNestedLayer) return;
   if (document.getElementById("lySfincsNested").checked) sfincsNestedLayer.addTo(mapLeft);
