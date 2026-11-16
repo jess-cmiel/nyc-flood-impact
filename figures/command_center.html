@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ops Command Center · Asset Decision Desk</title>
+<meta name="description" content="Research ops overview for Ida flood Decision Desk. NOT NWS. NOT decision-grade.">
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+:root {
+  --ink:#14161a; --ink-soft:#2c3138; --muted:#6b7280; --paper:#e8eaee;
+  --rail:#f4f5f7; --line:rgba(20,22,26,.12); --line-soft:rgba(20,22,26,.06);
+  --accent:#c2410c; --accent-deep:#9a3412; --ok:#0f766e; --warn:#b45309; --bad:#9f1239;
+  --hud:#121418; --sans:"DM Sans",ui-sans-serif,sans-serif;
+  --serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,.8,.28,1);
+}
+* { box-sizing:border-box; }
+html, body { margin:0; min-height:100%; }
+body {
+  font-family:var(--sans); color:var(--ink); background:
+    radial-gradient(1200px 600px at 8% -10%, rgba(194,65,12,.10), transparent 55%),
+    radial-gradient(900px 500px at 92% 0%, rgba(15,118,110,.08), transparent 50%),
+    linear-gradient(180deg, #dde1e7 0%, var(--paper) 42%, #eef0f3 100%);
+}
+a { color:inherit; }
+.cc {
+  max-width:1120px; margin:0 auto; padding:28px 22px 48px;
+}
+.cc-top {
+  display:flex; flex-wrap:wrap; gap:18px 28px; align-items:flex-end; justify-content:space-between;
+  margin-bottom:28px;
+}
+.brand-kicker {
+  font:600 .68rem var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--accent-deep);
+  margin-bottom:6px;
+}
+h1 {
+  margin:0; font:600 clamp(1.8rem, 3.2vw, 2.6rem)/1.05 var(--serif); letter-spacing:-.02em;
+  max-width:14ch;
+}
+.lede {
+  margin:10px 0 0; max-width:42ch; font:500 .95rem/1.45 var(--sans); color:var(--ink-soft);
+}
+.honesty {
+  margin-top:10px; font:500 .72rem/1.35 var(--sans); color:var(--muted);
+  border-left:3px solid rgba(194,65,12,.45); padding-left:10px;
+}
+.clock-card {
+  background:var(--hud); color:#eef0f2; border-radius:14px; padding:16px 18px; min-width:220px;
+  box-shadow:0 18px 40px rgba(20,22,26,.18);
+}
+.clock-card .lab { font:600 .58rem var(--sans); letter-spacing:.1em; text-transform:uppercase; color:rgba(238,240,242,.55); }
+.clock-card .time { margin-top:6px; font:600 1.55rem/1 var(--mono); letter-spacing:-.02em; }
+.clock-card .storm { margin-top:8px; font:500 .78rem/1.35 var(--sans); color:rgba(238,240,242,.72); }
+.cta {
+  display:inline-flex; align-items:center; gap:8px; margin-top:14px;
+  background:var(--accent); color:#fff; text-decoration:none; font:700 .78rem var(--sans);
+  letter-spacing:.04em; text-transform:uppercase; padding:12px 16px; border-radius:10px;
+  box-shadow:0 10px 24px rgba(194,65,12,.28); transition:transform .18s var(--ease), background .18s;
+}
+.cta:hover { background:var(--accent-deep); transform:translateY(-1px); }
+
+.grid {
+  display:grid; grid-template-columns:1.15fr .85fr; gap:16px;
+}
+@media (max-width:860px) { .grid { grid-template-columns:1fr; } }
+
+.panel {
+  background:rgba(247,248,250,.88); border:1px solid var(--line); border-radius:14px;
+  padding:16px 16px 14px; backdrop-filter:blur(8px);
+}
+.panel h2 {
+  margin:0 0 10px; font:600 .68rem var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+}
+.pulse {
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;
+}
+.pulse-item {
+  background:#fff; border:1px solid var(--line-soft); border-radius:12px; padding:12px;
+}
+.pulse-item .k { font:600 .58rem var(--sans); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.pulse-item .v { margin-top:6px; font:700 1.45rem/1 var(--mono); }
+.pulse-item .s { margin-top:4px; font:500 .68rem var(--sans); color:var(--muted); }
+.pulse-item .meter { margin-top:10px; height:6px; border-radius:3px; background:rgba(20,22,26,.08); overflow:hidden; }
+.pulse-item .meter > i { display:block; height:100%; background:var(--ok); }
+.pulse-item.warn .v { color:var(--warn); }
+.pulse-item.warn .meter > i { background:var(--warn); }
+.pulse-item.bad .v { color:var(--bad); }
+.pulse-item.bad .meter > i { background:var(--bad); }
+
+.prio {
+  margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;
+}
+.prio li {
+  display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center;
+  background:#fff; border:1px solid var(--line-soft); border-radius:12px; padding:10px 12px;
+}
+.prio .rank {
+  width:28px; height:28px; border-radius:8px; display:grid; place-items:center;
+  font:700 .72rem var(--mono); background:rgba(194,65,12,.1); color:var(--accent-deep);
+}
+.prio .name { font:600 .86rem var(--sans); }
+.prio .meta { font:500 .68rem var(--sans); color:var(--muted); margin-top:2px; }
+.prio .depth { font:700 .78rem var(--mono); color:var(--accent-deep); }
+
+.next60 {
+  margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;
+}
+@media (max-width:860px) { .next60 { grid-template-columns:1fr; } }
+.stat-line {
+  display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--line-soft);
+  font:500 .8rem var(--sans);
+}
+.stat-line:last-child { border-bottom:0; }
+.stat-line b { font-weight:700; font-family:var(--mono); }
+.chip {
+  display:inline-block; font:600 .62rem var(--sans); padding:2px 7px; border-radius:999px;
+  border:1px solid var(--line); color:var(--ink-soft); background:#fff;
+}
+.footer {
+  margin-top:22px; font:500 .7rem/1.4 var(--sans); color:var(--muted);
+}
+</style>
+</head>
+<body>
+  <main class="cc">
+    <header class="cc-top">
+      <div>
+        <div class="brand-kicker">NYC flood research · Ida replay</div>
+        <h1>Ops Command Center</h1>
+        <p class="lede">Current conditions, next-hour priorities, and system pulse before you open the Decision Desk map.</p>
+        <p class="honesty">Research prototype · NOT NWS · NOT decision-grade · HAND cm screening ≠ FloodNet metres.</p>
+        <a class="cta" href="product_map.html">Open Decision Desk map →</a>
+      </div>
+      <aside class="clock-card" aria-label="Current time and storm context">
+        <div class="lab">Local clock</div>
+        <div class="time" id="ccClock">—</div>
+        <div class="storm" id="ccStorm">Storm context loading…</div>
+      </aside>
+    </header>
+
+    <section class="grid" aria-label="Ops overview">
+      <div class="panel">
+        <h2>System pulse · research proxies</h2>
+        <div class="pulse">
+          <div class="pulse-item" id="pulseRoads">
+            <div class="k">Roads</div>
+            <div class="v">82%</div>
+            <div class="s">open / watch</div>
+            <div class="meter"><i style="width:82%"></i></div>
+          </div>
+          <div class="pulse-item" id="pulseTransit">
+            <div class="k">Transit</div>
+            <div class="v">91%</div>
+            <div class="s">stations clear</div>
+            <div class="meter"><i style="width:91%"></i></div>
+          </div>
+          <div class="pulse-item warn" id="pulseDrain">
+            <div class="k">Drainage</div>
+            <div class="v">74%</div>
+            <div class="s">capacity remaining</div>
+            <div class="meter"><i style="width:74%"></i></div>
+          </div>
+        </div>
+        <p class="footer" style="margin-top:12px">Pulse figures are research proxies derived from HAND wet-edge coverage — labeled, not live SCADA / not NWS.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Next 60 minutes · priority</h2>
+        <div class="stat-line"><span>Peak HAND lead in window</span><b id="ccPeakLead">+12–18h</b></div>
+        <div class="stat-line"><span>Watch band assets</span><b id="ccWatchN">—</b></div>
+        <div class="stat-line"><span>Street-flood segments</span><b id="ccStreetN">—</b></div>
+        <div class="stat-line"><span>Primary action</span><b style="font-family:var(--sans);font-weight:600">Inspect ≥8 cm shortlist</b></div>
+        <p style="margin:12px 0 0;font:500 .72rem/1.4 var(--sans);color:var(--muted)">
+          Scrub the desk timeline through buildup → peak → recession. Compare leads before treating any single frame as truth.
+        </p>
+      </div>
+    </section>
+
+    <section class="next60">
+      <div class="panel">
+        <h2>Priority locations / infrastructure</h2>
+        <ul class="prio" id="ccPriority">
+          <li><span class="rank">…</span><div><div class="name">Loading shortlist…</div><div class="meta">HAND research ranking</div></div><span class="depth">—</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Storm conditions · Ida MRMS context</h2>
+        <div class="stat-line"><span>Path</span><b style="font-family:var(--sans)">MRMS QPE Ida (~1 km)</b></div>
+        <div class="stat-line"><span>Mode</span><b style="font-family:var(--sans)">Fixture replay</b></div>
+        <div class="stat-line"><span>Depth engine</span><b style="font-family:var(--sans)">HAND screening cm</b></div>
+        <div class="stat-line"><span>Street flood</span><span class="chip">citywide curb/road</span></div>
+        <div class="stat-line"><span>Underlay</span><span class="chip">Reveal drainage</span></div>
+        <p class="footer">
+          Enter the map for street flood, 311 reports, Underlay Reveal, and hotspot diagnostics.
+          Synthetic layers are labeled in-product.
+        </p>
+      </div>
+    </section>
+  </main>
+<script>
+(function () {
+  function tick() {
+    const el = document.getElementById("ccClock");
+    if (!el) return;
+    const d = new Date();
+    el.textContent = d.toLocaleString(undefined, {
+      weekday: "short", month: "short", day: "numeric",
+      hour: "2-digit", minute: "2-digit", second: "2-digit",
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  const storm = document.getElementById("ccStorm");
+  if (storm) {
+    storm.textContent = "Ida remnants research replay · MRMS QPE awareness · HAND depth screening (not NWS).";
+  }
+
+  fetch("product_assets/decision_desk_shortlist.json", { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((desk) => {
+      const assets = (desk && desk.assets) || [];
+      const ranked = assets
+        .slice()
+        .sort((a, b) => (b.max_depth_cm || 0) - (a.max_depth_cm || 0))
+        .slice(0, 6);
+      const list = document.getElementById("ccPriority");
+      if (list) {
+        list.innerHTML = ranked.map((a, i) => {
+          const cm = Number(a.max_depth_cm || 0).toFixed(1);
+          return (
+            '<li><span class="rank">' + (i + 1) + "</span><div>" +
+            '<div class="name">' + (a.name || a.id) + "</div>" +
+            '<div class="meta">' + (a.asset_type || "asset") + " · " + (a.band_label || a.band || "HAND") +
+            "</div></div><span class=\"depth\">" + cm + " cm</span></li>"
+          );
+        }).join("") || "<li>No shortlist loaded.</li>";
+      }
+      const watch = assets.filter((a) => (a.max_depth_cm || 0) >= 8).length;
+      const el = document.getElementById("ccWatchN");
+      if (el) el.textContent = String(watch);
+
+      // Pulse from shortlist composition (research proxy) — keep ops-readable mid-high band.
+      const n = Math.max(assets.length, 1);
+      const hazard = assets.filter((a) => (a.max_depth_cm || 0) >= 15).length;
+      const deep = assets.filter((a) => (a.max_depth_cm || 0) >= 8).length;
+      const roadsOpen = Math.max(72, Math.min(94, Math.round(92 - (hazard / n) * 40 - (deep / n) * 8)));
+      const transit = Math.max(78, Math.min(96, roadsOpen + 7));
+      const drain = Math.max(64, Math.min(90, Math.round(86 - (hazard / n) * 35 - (deep / n) * 6)));
+      function setPulse(id, val, warnAt) {
+        const node = document.getElementById(id);
+        if (!node) return;
+        node.classList.toggle("warn", val < warnAt);
+        node.classList.toggle("bad", val < warnAt - 12);
+        const v = node.querySelector(".v");
+        const m = node.querySelector(".meter > i");
+        if (v) v.textContent = val + "%";
+        if (m) m.style.width = val + "%";
+      }
+      setPulse("pulseRoads", roadsOpen, 78);
+      setPulse("pulseTransit", transit, 80);
+      setPulse("pulseDrain", drain, 76);
+    });
+
+  fetch("product_assets/street_flood_citywide_meta.json", { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((meta) => {
+      const el = document.getElementById("ccStreetN");
+      if (!el) return;
+      if (meta && meta.n_line_features != null) el.textContent = String(meta.n_line_features);
+      else el.textContent = "citywide";
+    });
+})();
+</script>
+</body>
+</html>

@@ -1038,9 +1038,12 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
 
 <div class="map-stage" id="mapStage">
   <div class="pane-label" id="leftLabel">Decision Desk · Ida</div>
-  <div class="view-mode-toggle" role="group" aria-label="Map view mode">
-    <button type="button" id="viewMode2d" aria-pressed="true" title="Leaflet 2D map with precip and depth">2D</button>
-    <button type="button" id="viewMode3d" aria-pressed="false" title="Street-level research 3D for selected hotspot">3D</button>
+  <div class="mode-chip-row">
+    <div class="view-mode-toggle" role="group" aria-label="Map view mode">
+      <button type="button" id="viewMode2d" aria-pressed="true" title="Leaflet 2D map with precip and depth">2D</button>
+      <button type="button" id="viewMode3d" aria-pressed="false" title="Street-level research 3D for selected hotspot">3D</button>
+    </div>
+    <button type="button" class="underlay-btn" id="btnUnderlayReveal" aria-pressed="false" title="Fade surface and reveal drainage, basins, flow pathways">Underlay Reveal</button>
   </div>
   <div class="kbd-hint" aria-hidden="true"><kbd>c</kbd> compare · <kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear · <kbd>2</kbd>/<kbd>3</kbd> view</div>
   <div class="sfincs-peer-banner" id="sfincsPeerBanner">SFINCS on — non-peer metres vs HAND cm. HAND auto-dimmed. No SWMM.</div>
@@ -1209,6 +1212,7 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
 <script src="vendor/leaflet/1.9.4/leaflet.js"></script>
 <script src="vendor/maplibre/3.6.2/maplibre-gl.js"></script>
 <script src="product_street_view_3d.js"></script>
+<script src="product_desk_ux.js"></script>
 <script>
 const EVENTS = {json.dumps(EVENTS)};
 const EXTENTS = {json.dumps(EXTENTS)};

@@ -212,15 +212,26 @@
     return Math.max(0.03, base * (ringScale || 1));
   }
 
+  function waterTint(cm) {
+    // Depth-tinted water: pale cyan → mid steel → deep indigo.
+    if (cm >= 15) return "#042f6b";
+    if (cm >= 10) return "#0b4f8c";
+    if (cm >= 6) return "#1d6fa5";
+    if (cm >= 3) return "#3d8ec0";
+    if (cm >= 1) return "#7eb6d9";
+    return "#b7d4ea";
+  }
+
   function applyDepthPaint(cm) {
     const map = STATE.map;
     if (!map) return;
-    const color = depthColor(cm);
+    const color = waterTint(cm);
+    const foam = cm >= 8 ? "#e8f4ff" : "#d5e8f6";
     const wet = cm >= 0.45;
-    // Curb (fringe) lighter / shallower; street center (core) deepest.
-    const fringeOp = wet ? Math.min(0.48, 0.14 + cm / 38) : 0.04;
-    const midOp = wet ? Math.min(0.68, 0.22 + cm / 30) : 0.06;
-    const coreOp = wet ? Math.min(0.9, 0.36 + cm / 20) : 0.08;
+    // Curb (fringe) lighter / shallower; street center (core) deepest. Opacity by depth.
+    const fringeOp = wet ? Math.min(0.52, 0.16 + cm / 34) : 0.04;
+    const midOp = wet ? Math.min(0.74, 0.24 + cm / 26) : 0.06;
+    const coreOp = wet ? Math.min(0.94, 0.4 + cm / 18) : 0.08;
 
     const paint = [
       ["sv-depth-fringe", RING_SCALES.fringe, fringeOp, color],
@@ -239,9 +250,23 @@
       map.setPaintProperty(
         "sv-depth-sheen",
         "fill-opacity",
-        wet ? Math.min(0.58, 0.2 + cm / 24) : 0.04
+        wet ? Math.min(0.62, 0.22 + cm / 22) : 0.04
       );
       map.setPaintProperty("sv-depth-sheen", "fill-color", color);
+    }
+    // Edge foam / sheen line along curb fringe.
+    if (map.getLayer("sv-depth-foam")) {
+      map.setPaintProperty(
+        "sv-depth-foam",
+        "line-opacity",
+        wet ? Math.min(0.9, 0.28 + cm / 20) : 0.05
+      );
+      map.setPaintProperty("sv-depth-foam", "line-color", foam);
+      map.setPaintProperty(
+        "sv-depth-foam",
+        "line-width",
+        wet ? Math.min(3.2, 1.2 + cm / 12) : 0.6
+      );
     }
     if (map.getLayer("sv-roads-line")) {
       map.setPaintProperty(
@@ -433,9 +458,9 @@
         };
       map.setLight({
         anchor: light.anchor || "viewport",
-        color: light.color || "#f2f0ea",
-        intensity: light.intensity != null ? light.intensity : 0.42,
-        position: light.position || [1.15, 210, 35],
+        color: light.color || "#f4efe6",
+        intensity: light.intensity != null ? light.intensity : 0.55,
+        position: light.position || [1.25, 215, 40],
       });
     } catch (err) {
       console.warn("setLight unavailable", err);
@@ -550,9 +575,11 @@
       "sv-depth-mid",
       "sv-depth-fringe",
       "sv-depth-sheen",
+      "sv-depth-foam",
       "sv-roads-line",
       "sv-roads-casing",
       "sv-buildings-extrusion",
+      "sv-buildings-ao",
       "sv-buildings-outline",
       "sv-pin",
       "sv-pin-halo",
@@ -588,6 +615,16 @@
     }
 
     map.addSource("sv-buildings", { type: "geojson", data: buildings });
+    // Soft AO plinth — darker ground contact so extrusions read as buildings, not floating boxes.
+    map.addLayer({
+      id: "sv-buildings-ao",
+      type: "fill",
+      source: "sv-buildings",
+      paint: {
+        "fill-color": "#1c1917",
+        "fill-opacity": 0.22,
+      },
+    });
     map.addLayer({
       id: "sv-buildings-extrusion",
       type: "fill-extrusion",
@@ -596,23 +633,39 @@
         "fill-extrusion-color": [
           "interpolate",
           ["linear"],
-          ["coalesce", ["to-number", ["get", "extrusion_m"]], 12],
-          6,
-          "#b9c0c9",
-          18,
-          "#9aa3ae",
-          36,
-          "#7d8794",
+          ["coalesce", ["to-number", ["get", "facade_tone"]], 0.5],
+          0.3,
+          "#c4b8a8",
+          0.45,
+          "#a8a29e",
+          0.6,
+          "#8a919c",
+          0.75,
+          "#6b7280",
         ],
         "fill-extrusion-height": [
-          "coalesce",
-          ["to-number", ["get", "extrusion_m"]],
-          ["to-number", ["get", "height_roof"]],
-          12,
+          "*",
+          [
+            "coalesce",
+            ["to-number", ["get", "extrusion_m"]],
+            ["to-number", ["get", "height_roof"]],
+            12,
+          ],
+          1.05,
         ],
-        "fill-extrusion-base": 0,
-        "fill-extrusion-opacity": 0.92,
+        "fill-extrusion-base": ["coalesce", ["to-number", ["get", "base_m"]], 0],
+        "fill-extrusion-opacity": 0.94,
         "fill-extrusion-vertical-gradient": true,
+      },
+    });
+    map.addLayer({
+      id: "sv-buildings-outline",
+      type: "line",
+      source: "sv-buildings",
+      paint: {
+        "line-color": "#292524",
+        "line-width": 0.7,
+        "line-opacity": 0.35,
       },
     });
 
@@ -625,7 +678,7 @@
       source: "sv-depth",
       filter: ["==", ["get", "ring"], "fringe"],
       paint: {
-        "fill-color": depthColor(0),
+        "fill-color": waterTint(0),
         "fill-opacity": 0.04,
       },
     });
@@ -638,13 +691,31 @@
         source: "sv-depth",
         filter: ["==", ["get", "ring"], ring],
         paint: {
-          "fill-extrusion-color": depthColor(0),
+          "fill-extrusion-color": waterTint(0),
           "fill-extrusion-height": 0.04,
           "fill-extrusion-base": 0,
           "fill-extrusion-opacity": 0.08,
           "fill-extrusion-vertical-gradient": true,
         },
       });
+    });
+
+    // Edge foam / sheen along curb fringe perimeter.
+    map.addLayer({
+      id: "sv-depth-foam",
+      type: "line",
+      source: "sv-depth",
+      filter: ["==", ["get", "ring"], "fringe"],
+      paint: {
+        "line-color": "#e8f4ff",
+        "line-width": 1.2,
+        "line-opacity": 0.05,
+        "line-blur": 0.4,
+      },
+      layout: {
+        "line-cap": "round",
+        "line-join": "round",
+      },
     });
 
     // Fallback: single-polygon legacy assets without ring property.

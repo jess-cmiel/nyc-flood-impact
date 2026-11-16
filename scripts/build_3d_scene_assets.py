@@ -421,34 +421,68 @@ def main() -> Path:
     hand = smith["depth_series_cm"]
     fn_by_id = {f["properties"]["sensor_id"]: f for f in fn["features"]}
 
-    hotspots: list[dict] = [
-        {
-            "id": "stations:gtfs:F22",
-            "kind": "shortlist_station",
-            "name": "Smith-9 Sts",
-            "label": "Smith–9",
-            "lon": smith["lon"],
-            "lat": smith["lat"],
-            "band": smith.get("band"),
-            "max_depth_cm": smith.get("max_depth_cm"),
-            "depth_series_leads_h": leads,
-            "depth_series_cm": hand,
+    def _slug(aid: str) -> str:
+        return (
+            aid.replace(":", "-")
+            .replace("/", "-")
+            .replace(" ", "-")
+            .lower()
+        )
+
+    def _shortlist_hotspot(asset: dict) -> dict:
+        aid = asset["id"]
+        slug = "smith9" if aid == "stations:gtfs:F22" else _slug(aid)
+        label = asset.get("name") or aid
+        if aid == "stations:gtfs:F22":
+            label = "Smith–9"
+        return {
+            "id": aid,
+            "kind": "shortlist_" + (asset.get("asset_type") or "asset"),
+            "name": asset.get("name") or aid,
+            "label": label,
+            "lon": asset["lon"],
+            "lat": asset["lat"],
+            "band": asset.get("band"),
+            "max_depth_cm": asset.get("max_depth_cm"),
+            "depth_series_leads_h": asset.get("depth_series_leads_h") or leads,
+            "depth_series_cm": asset.get("depth_series_cm") or hand,
             "camera": {
-                "center": [smith["lon"], smith["lat"]],
-                "zoom": 17.35,
+                "center": [asset["lon"], asset["lat"]],
+                "zoom": 17.25,
                 "pitch": 62,
-                "bearing": -28,
+                "bearing": -28 if asset["lon"] < -73.98 else 22,
             },
-            "buildings": "3d_scenes/smith9_buildings.geojson",
-            "depth_polygon": "3d_scenes/smith9_depth.geojson",
-            "roads": "3d_scenes/smith9_roads.geojson",
+            "buildings": f"3d_scenes/{slug}_buildings.geojson",
+            "depth_polygon": f"3d_scenes/{slug}_depth.geojson",
+            "roads": f"3d_scenes/{slug}_roads.geojson",
             "honesty": (
                 "HAND cm research screening along curb/street buffers − building "
                 "footprints — not photogrammetry street-truth; FloodNet metres "
                 "are a separate sensor product."
             ),
         }
-    ]
+
+    # Smith–9 first, then top wet shortlist assets (citywide street flood coverage).
+    ranked = sorted(
+        [a for a in desk.get("assets") or [] if a.get("lon") is not None and a.get("lat") is not None],
+        key=lambda a: float(a.get("max_depth_cm") or 0),
+        reverse=True,
+    )
+    seen: set[str] = set()
+    hotspots: list[dict] = []
+    for a in ranked:
+        if a["id"] in seen:
+            continue
+        # Always include Smith–9; otherwise take top wet assets.
+        if a["id"] != "stations:gtfs:F22" and len(hotspots) >= 24:
+            break
+        if a["id"] != "stations:gtfs:F22" and float(a.get("max_depth_cm") or 0) < 2.0 and len(hotspots) >= 12:
+            continue
+        hotspots.append(_shortlist_hotspot(a))
+        seen.add(a["id"])
+    if "stations:gtfs:F22" not in seen:
+        hotspots.insert(0, _shortlist_hotspot(smith))
+        seen.add(smith["id"])
 
     for sid in FN_PRIORITY:
         f = fn_by_id[sid]
@@ -499,7 +533,7 @@ def main() -> Path:
         else:
             source = "nyc_building_footprints_sample"
             feats = []
-            for f in near:
+            for bi, f in enumerate(near):
                 ff = deepcopy(f)
                 props = dict(ff.get("properties") or {})
                 try:
@@ -508,8 +542,14 @@ def main() -> Path:
                     height = 12.0
                 if height < 4:
                     height = 8.0
-                props["height_roof"] = height
-                props["extrusion_m"] = height
+                # Mild per-building variation so streets read as a twin, not flat boxes.
+                seed = str(props.get("name") or props.get("base_bbl") or bi)
+                jitter = 0.85 + ((hash(seed) % 30) / 100.0)
+                height = max(5.0, height * jitter)
+                props["height_roof"] = round(height, 2)
+                props["extrusion_m"] = round(height, 2)
+                props["base_m"] = 0.0
+                props["facade_tone"] = 0.35 + ((hash(seed + ":tone") % 40) / 100.0)
                 props["role"] = "street_view_context"
                 ff["properties"] = props
                 feats.append(ff)
@@ -581,24 +621,36 @@ def main() -> Path:
 
     scene = {
         "product": "decision_desk_street_view_3d",
-        "schema_version": "1.2.0",
+        "schema_version": "1.3.0",
         "engine": "maplibre_gl",
         "inspired_by_pattern": "street-level 3D hotspot drill-down from 2D map (research UI pattern)",
         "flood_model": {
             "kind": "hand_lead_x_road_buffer_minus_buildings",
             "description": (
-                "At each hotspot, buffer nearby LION wet-edge (or synthetic) road "
-                "segments into curb/lane/center bands, subtract building footprints, "
-                "and extrude by Decision Desk HAND lead cm. Not a 2D SWE free surface."
+                "At each hotspot (expanded shortlist + FloodNet), buffer nearby "
+                "LION wet-edge (or synthetic) road segments into curb/lane/center "
+                "bands, subtract building footprints, and extrude by Decision Desk "
+                "HAND lead cm. Citywide 2D companion: street_flood_citywide.geojson. "
+                "Not a 2D SWE free surface."
             ),
             "inputs": [
                 "corridor_wet_edges.geojson (LION × HAND)",
                 "building_footprints_sample.geojson (or synthetic blocks)",
                 "decision_desk HAND depth_series_cm by lead",
+                "street_flood_citywide.geojson (2D citywide)",
             ],
             "honesty": (
                 "Research curb/street screening geometry — NOT photogrammetry, "
                 "NOT hydraulic routing, NOT NWS."
+            ),
+        },
+        "digital_twin": {
+            "kind": "maplibre_extrusion_plus_openfreemap",
+            "nvidia_model": None,
+            "note": (
+                "Best achievable this pass: MapLibre fill-extrusion buildings with "
+                "vertical gradient + OpenFreeMap liberty streets. No NVIDIA Omniverse / "
+                "kaolin digital twin installed — upgrade path documented in command-center-ux.md."
             ),
         },
         "honesty": (

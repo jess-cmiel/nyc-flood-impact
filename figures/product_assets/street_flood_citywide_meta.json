@@ -1,0 +1,15 @@
+{
+  "product": "street_flood_citywide",
+  "polygon": "street_flood_citywide.geojson",
+  "lines": "street_flood_citywide_lines.geojson",
+  "n_polygon_features": 11319,
+  "n_line_features": 3773,
+  "n_real_segments": 3773,
+  "n_synthetic": 0,
+  "band_half_width_m": {
+    "core": 3.8,
+    "mid": 7.5,
+    "fringe": 12.0
+  },
+  "honesty": "Citywide curb/street HAND \u00d7 LION wet-edge buffers for Decision Desk. Research screening \u2014 NOT NWS / NOT street-truth photogrammetry."
+}

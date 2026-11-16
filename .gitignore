@@ -23,6 +23,8 @@ __pycache__/
 !/figures/ida_v0_assets/**
 !/figures/product_map.html
 !/figures/product_street_view_3d.js
+!/figures/product_desk_ux.js
+!/figures/command_center.html
 !/figures/PRODUCT_README.md
 !/figures/product_assets/
 !/figures/product_assets/**

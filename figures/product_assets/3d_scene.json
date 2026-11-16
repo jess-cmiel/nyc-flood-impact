@@ -1,17 +1,23 @@
 {
   "product": "decision_desk_street_view_3d",
-  "schema_version": "1.2.0",
+  "schema_version": "1.3.0",
   "engine": "maplibre_gl",
   "inspired_by_pattern": "street-level 3D hotspot drill-down from 2D map (research UI pattern)",
   "flood_model": {
     "kind": "hand_lead_x_road_buffer_minus_buildings",
-    "description": "At each hotspot, buffer nearby LION wet-edge (or synthetic) road segments into curb/lane/center bands, subtract building footprints, and extrude by Decision Desk HAND lead cm. Not a 2D SWE free surface.",
+    "description": "At each hotspot (expanded shortlist + FloodNet), buffer nearby LION wet-edge (or synthetic) road segments into curb/lane/center bands, subtract building footprints, and extrude by Decision Desk HAND lead cm. Citywide 2D companion: street_flood_citywide.geojson. Not a 2D SWE free surface.",
     "inputs": [
       "corridor_wet_edges.geojson (LION \u00d7 HAND)",
       "building_footprints_sample.geojson (or synthetic blocks)",
-      "decision_desk HAND depth_series_cm by lead"
+      "decision_desk HAND depth_series_cm by lead",
+      "street_flood_citywide.geojson (2D citywide)"
     ],
     "honesty": "Research curb/street screening geometry \u2014 NOT photogrammetry, NOT hydraulic routing, NOT NWS."
+  },
+  "digital_twin": {
+    "kind": "maplibre_extrusion_plus_openfreemap",
+    "nvidia_model": null,
+    "note": "Best achievable this pass: MapLibre fill-extrusion buildings with vertical gradient + OpenFreeMap liberty streets. No NVIDIA Omniverse / kaolin digital twin installed \u2014 upgrade path documented in command-center-ux.md."
   },
   "honesty": "Research HAND/MRMS lead-frame screening in MapLibre 3D curb/street buffers. NOT photogrammetry street-truth. NOT official guidance. HAND cm \u2260 FloodNet sensor metres. SFINCS remains optional Advanced / non-peer.",
   "official_nws": false,
@@ -68,6 +74,1046 @@
   "default_hotspot_id": "stations:gtfs:F22",
   "hotspots": [
     {
+      "id": "road:5710920",
+      "kind": "shortlist_road",
+      "name": "West Shore Expressway",
+      "label": "West Shore Expressway",
+      "lon": -74.17360895254446,
+      "lat": 40.6200207627476,
+      "band": "hazard",
+      "max_depth_cm": 15.5,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.43,
+        14.55,
+        15.07,
+        14.48,
+        13.83,
+        13.19,
+        12.59,
+        12.05,
+        11.56
+      ],
+      "camera": {
+        "center": [
+          -74.17360895254446,
+          40.6200207627476
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-5710920_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-5710920_depth.geojson",
+      "roads": "3d_scenes/road-5710920_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:38077183",
+      "kind": "shortlist_road",
+      "name": "Dr. Martin Luther King Jr. Expressway",
+      "label": "Dr. Martin Luther King Jr. Expressway",
+      "lon": -74.15317682931895,
+      "lat": 40.61416394779741,
+      "band": "deep_ponding",
+      "max_depth_cm": 14.9,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.42,
+        13.77,
+        14.32,
+        13.64,
+        12.95,
+        12.31,
+        11.74,
+        11.2,
+        10.65
+      ],
+      "camera": {
+        "center": [
+          -74.15317682931895,
+          40.61416394779741
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-38077183_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-38077183_depth.geojson",
+      "roads": "3d_scenes/road-38077183_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:dec013545ad18ef6d1d6fe59bc11c26b",
+      "kind": "shortlist_facility",
+      "name": "Staten Island Borough Command/Squad 8",
+      "label": "Staten Island Borough Command/Squad 8",
+      "lon": -74.1804796832,
+      "lat": 40.5978776231,
+      "band": "deep_ponding",
+      "max_depth_cm": 14.8,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.73,
+        13.79,
+        14.28,
+        13.62,
+        12.95,
+        12.31,
+        11.74,
+        11.22,
+        10.69
+      ],
+      "camera": {
+        "center": [
+          -74.1804796832,
+          40.5978776231
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/facilities-uid-dec013545ad18ef6d1d6fe59bc11c26b_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-dec013545ad18ef6d1d6fe59bc11c26b_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-dec013545ad18ef6d1d6fe59bc11c26b_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:d31fe44470d65b532bf44241101965c6",
+      "kind": "shortlist_facility",
+      "name": "Engine 158",
+      "label": "Engine 158",
+      "lon": -74.1599559062,
+      "lat": 40.6352719117,
+      "band": "deep_ponding",
+      "max_depth_cm": 14.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.09,
+        12.71,
+        13.3,
+        12.49,
+        11.75,
+        11.01,
+        10.28,
+        9.54,
+        8.81
+      ],
+      "camera": {
+        "center": [
+          -74.1599559062,
+          40.6352719117
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/facilities-uid-d31fe44470d65b532bf44241101965c6_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-d31fe44470d65b532bf44241101965c6_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-d31fe44470d65b532bf44241101965c6_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:568c019d68935a9ed3d196e3e48bd545",
+      "kind": "shortlist_facility",
+      "name": "Engine 166/Ladder 86",
+      "label": "Engine 166/Ladder 86",
+      "lon": -74.1581128458,
+      "lat": 40.6142548488,
+      "band": "deep_ponding",
+      "max_depth_cm": 12.2,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.81,
+        11.44,
+        12.18,
+        10.97,
+        9.8,
+        8.62,
+        7.44,
+        6.26,
+        5.09
+      ],
+      "camera": {
+        "center": [
+          -74.1581128458,
+          40.6142548488
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/facilities-uid-568c019d68935a9ed3d196e3e48bd545_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-568c019d68935a9ed3d196e3e48bd545_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-568c019d68935a9ed3d196e3e48bd545_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:7455a9d08a1dd82b70eb60ff0c138e10",
+      "kind": "shortlist_facility",
+      "name": "Engine 168",
+      "label": "Engine 168",
+      "lon": -74.2132017663,
+      "lat": 40.5538440412,
+      "band": "deep_ponding",
+      "max_depth_cm": 12.2,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.85,
+        11.33,
+        12.06,
+        10.97,
+        9.88,
+        8.8,
+        7.71,
+        6.63,
+        5.54
+      ],
+      "camera": {
+        "center": [
+          -74.2132017663,
+          40.5538440412
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/facilities-uid-7455a9d08a1dd82b70eb60ff0c138e10_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-7455a9d08a1dd82b70eb60ff0c138e10_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-7455a9d08a1dd82b70eb60ff0c138e10_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:f7be842fe8ef9c32c47bac02ce86e6de",
+      "kind": "shortlist_facility",
+      "name": "121St Precinct",
+      "label": "121St Precinct",
+      "lon": -74.150808,
+      "lat": 40.623609,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.8,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.47,
+        11.01,
+        11.77,
+        10.65,
+        9.53,
+        8.42,
+        7.3,
+        6.18,
+        5.06
+      ],
+      "camera": {
+        "center": [
+          -74.150808,
+          40.623609
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/facilities-uid-f7be842fe8ef9c32c47bac02ce86e6de_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-f7be842fe8ef9c32c47bac02ce86e6de_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-f7be842fe8ef9c32c47bac02ce86e6de_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "stations:gtfs:S17",
+      "kind": "shortlist_station",
+      "name": "Annadale",
+      "label": "Annadale",
+      "lon": -74.178217,
+      "lat": 40.54046,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.6,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.67,
+        10.9,
+        11.61,
+        10.34,
+        9.07,
+        7.8,
+        6.53,
+        5.26,
+        3.99
+      ],
+      "camera": {
+        "center": [
+          -74.178217,
+          40.54046
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/stations-gtfs-s17_buildings.geojson",
+      "depth_polygon": "3d_scenes/stations-gtfs-s17_depth.geojson",
+      "roads": "3d_scenes/stations-gtfs-s17_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:5710902",
+      "kind": "shortlist_road",
+      "name": "West Shore Expressway",
+      "label": "West Shore Expressway",
+      "lon": -74.2225911464931,
+      "lat": 40.52677002275923,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.6,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.5,
+        10.44,
+        11.1,
+        10.39,
+        9.68,
+        8.97,
+        8.26,
+        7.55,
+        6.84
+      ],
+      "camera": {
+        "center": [
+          -74.2225911464931,
+          40.52677002275923
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-5710902_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-5710902_depth.geojson",
+      "roads": "3d_scenes/road-5710902_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:32056669",
+      "kind": "shortlist_road",
+      "name": "Korean War Veterans Parkway",
+      "label": "Korean War Veterans Parkway",
+      "lon": -74.224487225717,
+      "lat": 40.52618981101578,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.5,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.47,
+        10.38,
+        11.06,
+        10.33,
+        9.61,
+        8.88,
+        8.15,
+        7.43,
+        6.7
+      ],
+      "camera": {
+        "center": [
+          -74.224487225717,
+          40.52618981101578
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-32056669_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-32056669_depth.geojson",
+      "roads": "3d_scenes/road-32056669_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:42709375",
+      "kind": "shortlist_road",
+      "name": "New England Thruway",
+      "label": "New England Thruway",
+      "lon": -73.78550234434479,
+      "lat": 40.911377020592624,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.4,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.63,
+        10.85,
+        10.22,
+        9.65,
+        9.12,
+        8.59,
+        8.06,
+        7.53
+      ],
+      "camera": {
+        "center": [
+          -73.78550234434479,
+          40.911377020592624
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": 22
+      },
+      "buildings": "3d_scenes/road-42709375_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-42709375_depth.geojson",
+      "roads": "3d_scenes/road-42709375_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:60727821",
+      "kind": "shortlist_road",
+      "name": "East Edgar Road",
+      "label": "East Edgar Road",
+      "lon": -74.24475983977659,
+      "lat": 40.62489745598579,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.4,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.44,
+        10.18,
+        10.82,
+        10.16,
+        9.57,
+        8.99,
+        8.41,
+        7.83,
+        7.25
+      ],
+      "camera": {
+        "center": [
+          -74.24475983977659,
+          40.62489745598579
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-60727821_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-60727821_depth.geojson",
+      "roads": "3d_scenes/road-60727821_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:60730829",
+      "kind": "shortlist_road",
+      "name": "East Edgar Road",
+      "label": "East Edgar Road",
+      "lon": -74.24316469984355,
+      "lat": 40.626858509662505,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.3,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.39,
+        10.13,
+        10.78,
+        10.12,
+        9.5,
+        8.89,
+        8.28,
+        7.67,
+        7.06
+      ],
+      "camera": {
+        "center": [
+          -74.24316469984355,
+          40.626858509662505
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-60730829_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-60730829_depth.geojson",
+      "roads": "3d_scenes/road-60730829_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:60730778",
+      "kind": "shortlist_road",
+      "name": "East Edgar Road",
+      "label": "East Edgar Road",
+      "lon": -74.24220725,
+      "lat": 40.62764145,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.3,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.36,
+        10.08,
+        10.75,
+        10.08,
+        9.45,
+        8.81,
+        8.18,
+        7.55,
+        6.91
+      ],
+      "camera": {
+        "center": [
+          -74.24220725,
+          40.62764145
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-60730778_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-60730778_depth.geojson",
+      "roads": "3d_scenes/road-60730778_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:32056646",
+      "kind": "shortlist_road",
+      "name": "Korean War Veterans Parkway",
+      "label": "Korean War Veterans Parkway",
+      "lon": -74.17428560365539,
+      "lat": 40.55841014218203,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.2,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.67,
+        10.41,
+        11.17,
+        9.56,
+        7.94,
+        6.32,
+        4.7,
+        3.09,
+        1.47
+      ],
+      "camera": {
+        "center": [
+          -74.17428560365539,
+          40.55841014218203
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-32056646_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-32056646_depth.geojson",
+      "roads": "3d_scenes/road-32056646_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:d2629a8174b1bee3311353a2a5251379",
+      "kind": "shortlist_facility",
+      "name": "Engine 167/Ladder 87",
+      "label": "Engine 167/Ladder 87",
+      "lon": -74.1754760406,
+      "lat": 40.5542126283,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.2,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.76,
+        10.39,
+        11.15,
+        9.53,
+        7.92,
+        6.3,
+        4.68,
+        3.07,
+        1.45
+      ],
+      "camera": {
+        "center": [
+          -74.1754760406,
+          40.5542126283
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/facilities-uid-d2629a8174b1bee3311353a2a5251379_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-d2629a8174b1bee3311353a2a5251379_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-d2629a8174b1bee3311353a2a5251379_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
       "id": "stations:gtfs:F22",
       "kind": "shortlist_station",
       "name": "Smith-9 Sts",
@@ -111,7 +1157,7 @@
           -73.995959,
           40.67358
         ],
-        "zoom": 17.35,
+        "zoom": 17.25,
         "pitch": 62,
         "bearing": -28
       },
@@ -124,6 +1170,461 @@
         "road_source": "lion_wet_edges",
         "n_road_segments": 70,
         "n_buildings_subtracted": 90,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:60727823",
+      "kind": "shortlist_road",
+      "name": "East Edgar Road",
+      "label": "East Edgar Road",
+      "lon": -74.24533935,
+      "lat": 40.62427265,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.1,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.28,
+        9.94,
+        10.6,
+        9.94,
+        9.31,
+        8.68,
+        8.04,
+        7.41,
+        6.78
+      ],
+      "camera": {
+        "center": [
+          -74.24533935,
+          40.62427265
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-60727823_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-60727823_depth.geojson",
+      "roads": "3d_scenes/road-60727823_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:42708898",
+      "kind": "shortlist_road",
+      "name": "North Avenue",
+      "label": "North Avenue",
+      "lon": -73.78386551603118,
+      "lat": 40.91353677790829,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.1,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.31,
+        10.56,
+        9.91,
+        9.31,
+        8.71,
+        8.11,
+        7.51,
+        6.91
+      ],
+      "camera": {
+        "center": [
+          -73.78386551603118,
+          40.91353677790829
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": 22
+      },
+      "buildings": "3d_scenes/road-42708898_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-42708898_depth.geojson",
+      "roads": "3d_scenes/road-42708898_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "facilities:uid:39435311267b2bacfe9a5d97447f871f",
+      "kind": "shortlist_facility",
+      "name": "Calvary Hospital Inc",
+      "label": "Calvary Hospital Inc",
+      "lon": -73.8439176564,
+      "lat": 40.8479383062,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.23,
+        10.43,
+        9.83,
+        9.29,
+        8.78,
+        8.28,
+        7.78,
+        7.28
+      ],
+      "camera": {
+        "center": [
+          -73.8439176564,
+          40.8479383062
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": 22
+      },
+      "buildings": "3d_scenes/facilities-uid-39435311267b2bacfe9a5d97447f871f_buildings.geojson",
+      "depth_polygon": "3d_scenes/facilities-uid-39435311267b2bacfe9a5d97447f871f_depth.geojson",
+      "roads": "3d_scenes/facilities-uid-39435311267b2bacfe9a5d97447f871f_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "stations:gtfs:603",
+      "kind": "shortlist_station",
+      "name": "Middletown Rd",
+      "label": "Middletown Rd",
+      "lon": -73.836322,
+      "lat": 40.843863,
+      "band": "deep_ponding",
+      "max_depth_cm": 11.0,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.19,
+        10.42,
+        9.83,
+        9.28,
+        8.79,
+        8.31,
+        7.82,
+        7.33
+      ],
+      "camera": {
+        "center": [
+          -73.836322,
+          40.843863
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": 22
+      },
+      "buildings": "3d_scenes/stations-gtfs-603_buildings.geojson",
+      "depth_polygon": "3d_scenes/stations-gtfs-603_depth.geojson",
+      "roads": "3d_scenes/stations-gtfs-603_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:38068831",
+      "kind": "shortlist_road",
+      "name": "Richmond Avenue",
+      "label": "Richmond Avenue",
+      "lon": -74.16816159903105,
+      "lat": 40.5878855053118,
+      "band": "deep_ponding",
+      "max_depth_cm": 10.9,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.51,
+        10.17,
+        10.89,
+        9.27,
+        7.65,
+        6.04,
+        4.42,
+        2.8,
+        1.18
+      ],
+      "camera": {
+        "center": [
+          -74.16816159903105,
+          40.5878855053118
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-38068831_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-38068831_depth.geojson",
+      "roads": "3d_scenes/road-38068831_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "stations:gtfs:R13",
+      "kind": "shortlist_station",
+      "name": "5 Av/59 St",
+      "label": "5 Av/59 St",
+      "lon": -73.973347,
+      "lat": 40.764811,
+      "band": "deep_ponding",
+      "max_depth_cm": 10.9,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.91,
+        9.23,
+        10.34,
+        9.75,
+        9.22,
+        8.73,
+        8.25,
+        7.76,
+        7.28
+      ],
+      "camera": {
+        "center": [
+          -73.973347,
+          40.764811
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": 22
+      },
+      "buildings": "3d_scenes/stations-gtfs-r13_buildings.geojson",
+      "depth_polygon": "3d_scenes/stations-gtfs-r13_depth.geojson",
+      "roads": "3d_scenes/stations-gtfs-r13_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
+        "clip_radius_m": 230.0,
+        "band_half_width_m": {
+          "core": 4.5,
+          "mid": 9.0,
+          "fringe": 14.0
+        }
+      }
+    },
+    {
+      "id": "road:60727808",
+      "kind": "shortlist_road",
+      "name": "East Edgar Road",
+      "label": "East Edgar Road",
+      "lon": -74.24548625,
+      "lat": 40.62435145,
+      "band": "deep_ponding",
+      "max_depth_cm": 10.9,
+      "depth_series_leads_h": [
+        0.0,
+        3.0,
+        6.0,
+        9.0,
+        12.0,
+        15.0,
+        18.0,
+        21.0,
+        24.0,
+        27.0,
+        30.0,
+        33.0,
+        36.0
+      ],
+      "depth_series_cm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.15,
+        9.74,
+        10.44,
+        9.75,
+        9.07,
+        8.39,
+        7.71,
+        7.03,
+        6.35
+      ],
+      "camera": {
+        "center": [
+          -74.24548625,
+          40.62435145
+        ],
+        "zoom": 17.25,
+        "pitch": 62,
+        "bearing": -28
+      },
+      "buildings": "3d_scenes/road-60727808_buildings.geojson",
+      "depth_polygon": "3d_scenes/road-60727808_depth.geojson",
+      "roads": "3d_scenes/road-60727808_roads.geojson",
+      "honesty": "HAND cm research screening along curb/street buffers \u2212 building footprints \u2014 not photogrammetry street-truth; FloodNet metres are a separate sensor product.",
+      "flood_model": {
+        "model": "road_buffer_minus_buildings",
+        "road_source": "synthetic_street_axes",
+        "n_road_segments": 2,
+        "n_buildings_subtracted": 20,
         "clip_radius_m": 230.0,
         "band_half_width_m": {
           "core": 4.5,

@@ -492,22 +492,19 @@ body.street-view-open .map-key-float,
 body.street-view-open .sfincs-peer-banner { display:none !important; }
 /* 2D|3D toggle must stay ALWAYS visible above HUD / inspector / 3D panel */
 .view-mode-toggle {
-  position:absolute; z-index:1400; top:10px; right:10px;
+  position:relative; z-index:1; top:auto; right:auto;
   display:inline-flex; gap:0; border-radius:var(--radius);
   border:1px solid rgba(255,255,255,.12); background:rgba(18,20,24,.92);
   backdrop-filter:blur(6px); overflow:hidden;
   pointer-events:auto;
   box-shadow:0 4px 14px rgba(0,0,0,.28);
 }
-body.has-selection .view-mode-toggle {
-  right:calc(var(--dock-w) + 10px);
-}
-body.street-view-open .view-mode-toggle,
-body.view-3d .view-mode-toggle {
+body.street-view-open .mode-chip-row,
+body.view-3d .mode-chip-row {
   z-index:1400; right:10px;
 }
 @media (max-width:980px) {
-  body.has-selection .view-mode-toggle { right:10px; }
+  body.has-selection .mode-chip-row { right:10px; }
 }
 .view-mode-toggle button {
   border:0; background:transparent; color:#9aa3ae; cursor:pointer;
@@ -803,6 +800,92 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
 .floodnet-list .asset-row .name { font-weight:600; }
 .floodnet-list .asset-row .depth { font:600 .7rem var(--mono); color:var(--accent-deep); }
 .floodnet-list .asset-row .meta { margin-top:2px; display:flex; flex-wrap:wrap; gap:4px; font-size:.62rem; color:var(--muted); }
+/* —— Command-center UX pass —— */
+.brand-cc-link {
+  display:inline-block; margin-top:8px; font:600 .68rem var(--sans); color:var(--brand-fg);
+  text-decoration:underline; text-underline-offset:3px; opacity:.88;
+}
+.brand-cc-link:hover { opacity:1; }
+.hotspot-diag {
+  margin-top:8px; padding:8px 9px; border:1px solid var(--line); border-radius:var(--radius);
+  background:rgba(20,22,26,.03);
+}
+.hotspot-diag.compact { margin:6px 8px 0; background:rgba(18,20,24,.72); border-color:rgba(238,240,242,.12); color:#eef0f2; }
+.hotspot-diag .diag-title { font:600 .58rem var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.hotspot-diag.compact .diag-title { color:rgba(238,240,242,.62); }
+.hotspot-diag .diag-title em { font-style:normal; font-weight:500; letter-spacing:0; text-transform:none; opacity:.8; }
+.diag-row { display:grid; grid-template-columns:1fr 1.2fr 28px; gap:6px; align-items:center; margin:3px 0; font:500 .62rem var(--sans); }
+.diag-k { color:var(--muted); }
+.hotspot-diag.compact .diag-k { color:rgba(238,240,242,.55); }
+.diag-v { font:600 .62rem var(--mono); text-align:right; color:var(--ink-soft); }
+.hotspot-diag.compact .diag-v { color:#eef0f2; }
+.diag-meter { height:6px; border-radius:3px; background:rgba(20,22,26,.08); overflow:hidden; }
+.hotspot-diag.compact .diag-meter { background:rgba(238,240,242,.12); }
+.diag-meter > i { display:block; height:100%; border-radius:3px; background:#0e7490; }
+.diag-meter[data-tone="rain"] > i { background:#0369a1; }
+.diag-meter[data-tone="drain"] > i { background:#b45309; }
+.diag-meter[data-tone="wet"] > i { background:#0f766e; }
+.diag-meter[data-tone="terrain"] > i { background:#57534e; }
+.diag-fail { margin:8px 0 4px; font:500 .68rem/1.35 var(--sans); color:var(--ink); }
+.hotspot-diag.compact .diag-fail { color:#eef0f2; }
+.diag-fail strong { font-weight:700; }
+.diag-note { margin:0; font:500 .58rem/1.3 var(--sans); color:var(--muted); }
+.hotspot-diag.compact .diag-note { color:rgba(238,240,242,.5); }
+.storm-load-bar {
+  position:absolute; z-index:1350; left:50%; top:14px; transform:translateX(-50%);
+  width:min(420px, calc(100% - 28px)); pointer-events:none;
+  transition:opacity .35s var(--ease), transform .35s var(--ease);
+}
+.storm-load-bar.done { opacity:.85; }
+.storm-load-bar.hidden { opacity:0; transform:translateX(-50%) translateY(-8px); }
+.storm-load-inner {
+  background:var(--hud); color:#eef0f2; border:1px solid rgba(238,240,242,.12);
+  border-radius:10px; padding:8px 12px; box-shadow:0 10px 28px rgba(0,0,0,.28);
+}
+.storm-load-label { font:600 .62rem var(--sans); letter-spacing:.04em; }
+.storm-load-track { margin-top:6px; height:5px; border-radius:3px; background:rgba(238,240,242,.14); overflow:hidden; }
+.storm-load-track > i { display:block; height:100%; width:0; background:linear-gradient(90deg,#ea580c,#fdba74); transition:width .15s linear; }
+.storm-load-meta { display:block; margin-top:4px; font:500 .58rem var(--mono); color:rgba(238,240,242,.55); }
+.view-mode-toggle { display:flex; gap:0; }
+.mode-chip-row {
+  position:absolute; z-index:1400; top:12px; right:12px; display:flex; flex-direction:column; gap:6px; align-items:flex-end;
+}
+body.has-selection .mode-chip-row { right: calc(12px + var(--dock-w, 320px)); }
+.underlay-btn {
+  border:1px solid rgba(20,22,26,.16); background:rgba(247,248,250,.94); color:var(--ink);
+  font:600 .64rem var(--sans); padding:6px 10px; border-radius:8px; cursor:pointer;
+  box-shadow:0 6px 18px rgba(20,22,26,.08);
+}
+.underlay-btn:hover { border-color:rgba(20,22,26,.28); }
+.underlay-btn.active, .underlay-btn[aria-pressed="true"] {
+  background:#14161a; color:#eef0f2; border-color:#14161a;
+}
+body.underlay-reveal .leaflet-tile-pane { opacity: calc(0.38 * var(--underlay-surface-fade, 1)); filter: grayscale(.35) brightness(.92); }
+body.underlay-reveal .leaflet-image-layer.precip-radar,
+body.underlay-reveal .leaflet-image-layer.depth-radar { opacity: .35 !important; }
+body.underlay-reveal #mapLeft::after {
+  content:"Underlay Reveal · catch basins · drainage · flow pathways · research only";
+  position:absolute; left:12px; bottom:86px; z-index:650; pointer-events:none;
+  font:600 .62rem var(--sans); letter-spacing:.04em; color:#0f766e;
+  background:rgba(247,248,250,.92); border:1px solid rgba(15,118,110,.25); padding:5px 8px; border-radius:6px;
+}
+.leaflet-streetFloodPane-pane .street-flood-line {
+  filter: drop-shadow(0 0 1.2px rgba(226,240,255,.65));
+}
+.leaflet-streetFloodPane-pane .street-flood-poly.ring-fringe {
+  filter: drop-shadow(0 0 2px rgba(255,255,255,.45));
+}
+/* Blend on panes — keeps ImageOverlay CSS transform georef stable on zoom. */
+.leaflet-rasterPane-pane { mix-blend-mode: multiply; }
+.leaflet-depthPane-pane { mix-blend-mode: multiply; }
+.leaflet-suscPane-pane { mix-blend-mode: multiply; }
+.leaflet-image-layer.precip-radar,
+.leaflet-image-layer.depth-radar,
+.leaflet-image-layer.susc-radar {
+  mix-blend-mode: normal !important;
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+}
 </style>
 </head>
 <body>
@@ -811,6 +894,7 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
     <div class="brand-kicker">Ida research replay</div>
     <div class="brand-mark">Asset Decision Desk</div>
     <div class="brand-tag">Select a briefing card → inspect on the map.</div>
+    <a class="brand-cc-link" href="command_center.html">← Ops command center</a>
   </div>
   <div class="rail-scroll">
   <p class="honesty-line">Research only · NOT NWS · cm-scale HAND ranking, not street-truth depths.</p>
@@ -901,8 +985,10 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
       <div class="storm-toggles">
         <label class="layer-btn"><input id="lyDepthTot" type="checkbox" checked>Depth</label>
         <label class="layer-btn"><input id="lyE2" type="checkbox" checked>Precip</label>
+        <label class="layer-btn"><input id="lyStreetFlood" type="checkbox" checked>Street flood</label>
         <label class="layer-btn"><input id="lyStreets" type="checkbox" checked>Online streets</label>
       </div>
+      <p class="drawer-note">Street flood = citywide curb/road HAND × LION wet edges (research screening, not street-truth).</p>
       <p class="drawer-note">Streets need network. Paper basemap + vendored Leaflet/fonts work offline for fixtures.</p>
       <div class="opacity-row"><span>Precip</span><input id="opPrecip" type="range" min="10" max="92" value="34"><span id="opPrecipVal">34%</span></div>
       <div class="opacity-row"><span>Depth</span><input id="opDepth" type="range" min="15" max="92" value="70"><span id="opDepthVal">70%</span></div>
@@ -987,8 +1073,10 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
           <label class="layer-btn"><input id="lySta" type="checkbox">Stations (MTA)</label>
           <label class="layer-btn"><input id="lyRoads" type="checkbox">Roads</label>
           <label class="layer-btn"><input id="lyFac" type="checkbox">Facilities (city DB)</label>
-          <label class="layer-btn"><input id="ly311" type="checkbox">311</label>
+          <label class="layer-btn"><input id="ly311" type="checkbox">311 reports</label>
+          <label class="layer-btn"><input id="ly311Extent" type="checkbox">311 extent proxy</label>
         </div>
+        <p class="drawer-note">311 points = flood-related complaints. Extent = ~90 m research buffer (not surveyed inundation). Synthetic fallback is labeled.</p>
       </details>
       <details class="drawer">
         <summary>Context GIS</summary>
@@ -1011,9 +1099,12 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
 
 <div class="map-stage" id="mapStage">
   <div class="pane-label" id="leftLabel">Decision Desk · Ida</div>
-  <div class="view-mode-toggle" role="group" aria-label="Map view mode">
-    <button type="button" id="viewMode2d" aria-pressed="true" title="Leaflet 2D map with precip and depth">2D</button>
-    <button type="button" id="viewMode3d" aria-pressed="false" title="Street-level research 3D for selected hotspot">3D</button>
+  <div class="mode-chip-row">
+    <div class="view-mode-toggle" role="group" aria-label="Map view mode">
+      <button type="button" id="viewMode2d" aria-pressed="true" title="Leaflet 2D map with precip and depth">2D</button>
+      <button type="button" id="viewMode3d" aria-pressed="false" title="Street-level research 3D for selected hotspot">3D</button>
+    </div>
+    <button type="button" class="underlay-btn" id="btnUnderlayReveal" aria-pressed="false" title="Fade surface and reveal drainage, basins, flow pathways">Underlay Reveal</button>
   </div>
   <div class="kbd-hint" aria-hidden="true"><kbd>c</kbd> compare · <kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear · <kbd>2</kbd>/<kbd>3</kbd> view</div>
   <div class="sfincs-peer-banner" id="sfincsPeerBanner">SFINCS on — non-peer metres vs HAND cm. HAND auto-dimmed. No SWMM.</div>
@@ -1054,6 +1145,7 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
           <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to timeline"></svg>
           <div class="spark-readout" id="selSparkReadout">—</div>
         </div>
+        <div id="selDiagnostic" class="hotspot-diag-host" hidden></div>
       </div>
       <div class="sel-block">
         <div class="sel-block-label">Access · signals</div>
@@ -1098,6 +1190,7 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
           </div>
           <div class="sv-hud-ramp" title="HAND cm risk ramp"><span id="sv3dRampFill"></span></div>
           <div class="sv-hud-note">Curb/street HAND · road buffers − footprints · not hydraulic free surface</div>
+          <div id="sv3dDiagnostic"></div>
         </div>
       </div>
     </div>
@@ -1182,6 +1275,7 @@ body.compare-on .compare-controls { display:flex; flex-wrap:wrap; }
 <script src="vendor/leaflet/1.9.4/leaflet.js"></script>
 <script src="vendor/maplibre/3.6.2/maplibre-gl.js"></script>
 <script src="product_street_view_3d.js"></script>
+<script src="product_desk_ux.js"></script>
 <script>
 const EVENTS = {"ida-2021": {"id": "ida-2021", "label": "Hurricane Ida remnants (2021-09-01)", "init_time": "2021-09-01T12:00:00", "start": "2021-09-01T00:00:00", "end": "2021-09-02T23:00:00", "default_extent": "metro", "notes": "Primary case study. Flash Flood Emergency for NYC. Decision Desk + MRMS awareness.", "available": true, "desk_key": "ida-2021"}, "henri-2021": {"id": "henri-2021", "label": "Tropical Storm Henri remnants (2021-08-21)", "init_time": "2021-08-21T18:00:00", "start": "2021-08-21T18:00:00", "end": "2021-08-22T18:00:00", "default_extent": "metro", "notes": "Second-storm Decision Desk with MRMS radar + official inventory (scripts/build_henri_parity.py). Research only \u2014 not peer-calibrated to Ida.", "available": false, "desk_key": "henri-2021"}, "placeholder-future": {"id": "placeholder-future", "label": "Future event (placeholder)", "init_time": null, "start": null, "end": null, "default_extent": "metro", "notes": "Hook for additional storms \u2014 not loaded yet.", "available": false}};
 const EXTENTS = {"citywide": {"id": "citywide", "label": "NYC five-borough (legacy data domain)", "bounds": {"xmin": -74.28, "ymin": 40.48, "xmax": -73.68, "ymax": 40.93}, "role": "legacy_data_domain"}, "metro": {"id": "metro", "label": "NYC metro continuous", "bounds": {"xmin": -74.45, "ymin": 40.4, "xmax": -73.5, "ymax": 41.05}, "role": "data_domain_and_map_frame"}, "south_queens": {"id": "south_queens", "label": "South Queens / Jamaica Bay (SFINCS spike)", "bounds": {"xmin": -74.12, "ymin": 40.55, "xmax": -73.72, "ymax": 40.73}, "role": "sfincs_spike"}};
@@ -1682,7 +1776,30 @@ function setLead(i) {
     if (!mapLeft.hasLayer(e2Total)) e2Total.addTo(mapLeft);
   }
   leadIndex = i;
-  try { window.leadIndex = leadIndex; window.frames = frames; } catch (err) {}
+  try {
+    window.leadIndex = leadIndex;
+    window.frames = frames;
+    window.depthCumFrames = depthCumFrames;
+    window.e2Layers = e2Layers;
+    window.suscLayers = suscLayers;
+    window.depthLayers = depthLayers;
+    window.activeE2 = activeE2;
+    window.activeSusc = activeSusc;
+    window.activeDepth = activeDepth;
+    window.fadeE2 = fadeE2;
+    window.fadeSusc = fadeSusc;
+    window.fadeDepth = fadeDepth;
+    window.e2Total = e2Total;
+    window.depthTotal = depthTotal;
+    window.compareLeftLayer = compareLeftLayer;
+    window.compareRightLayer = compareRightLayer;
+    window.activeOverlayBounds = activeOverlayBounds;
+    window.desk = desk;
+    window.setLead = setLead;
+    window.setPlaying = setPlaying;
+    window.reassertOverlayBounds = reassertOverlayBounds;
+    window.dataDomainBounds = dataDomainBounds;
+  } catch (err) {}
   const scrub = document.getElementById("hudScrub");
   if (scrub) { scrub.max = Math.max(frames.length - 1, 0); scrub.value = String(i); }
   const clock = (f.valid_time || "").replace("T", " ");
@@ -2071,6 +2188,9 @@ function selectAsset(id) {
   renderCompareStrip(a);
   appendDecisionLog(a, "select");
   setSelectionChrome(true);
+  if (window.DeskUX) {
+    try { window.DeskUX.updateInspectorDiagnostic(a); } catch (err) {}
+  }
   if (window.StreetView3D) {
     try {
       window.selectedId = selectedId;
@@ -3095,11 +3215,7 @@ function loadOptionalLayers() {
       pointToLayer: (f,ll) => L.circleMarker(ll, { radius:6, fillColor:"#c45c26", color:"#7c2d12", weight:1, fillOpacity:0.95, pane:"pointPane" })
     }));
   }).catch(()=>{});
-  fetchGeoJSON(manifest.reports?.geojson || "observed_311.geojson").then(geo => {
-    bindToggle("ly311", L.geoJSON(geo, {
-      pointToLayer: (f,ll) => L.circleMarker(ll, { radius:4, fillColor:"#ff3b5c", color:"#7f0020", weight:1, fillOpacity:0.85, pane:"pointPane" })
-    }));
-  }).catch(()=>{});
+  // 311 points + extent proxy are wired by product_desk_ux.js (enhanced viz).
   fetchGeoJSON("fema_nfhl.geojson").then(geo => {
     bindToggle("lyFema", L.geoJSON(geo, { style: { color:"#1d4ed8", weight:1, fillOpacity:0.15 } }));
   }).catch(()=>{});
@@ -4132,7 +4248,20 @@ loadOptionalLayers();
 loadOfficialInventoryOverlays();
 loadCorridorImpassability();
 loadArchiveOpenLayers();
-setPlaying(true);
+// Multi-frame / multi-loop load: DeskUX prefetches frames then starts play with progressive reveal.
+// Keep a fallback play if DeskUX is unavailable.
+if (!(window.DeskUX && typeof window.DeskUX.preloadStormFrames === "function")) {
+  setPlaying(true);
+}
+try {
+  window.mapLeft = mapLeft;
+  window.reassertOverlayBounds = reassertOverlayBounds;
+  window.dataDomainBounds = dataDomainBounds;
+  window.setLead = setLead;
+  window.setPlaying = setPlaying;
+  window.frames = frames;
+  window.depthCumFrames = depthCumFrames;
+} catch (err) {}
 </script>
 </body>
 </html>
