@@ -56,8 +56,9 @@ ci-guard: test
 	$(ACTIVATE) && python scripts/relativize_product_paths.py
 
 # Annotated local tag for demo pack (does not push). See docs/RELEASE.md.
+# Ignores untracked local data/outputs; fails only on modified/staged tracked files.
 demo-tag:
-	@test -z "$$(git status --porcelain)" || (echo "Working tree dirty — commit or stash before tagging."; exit 1)
+	@test -z "$$(git status --porcelain --untracked-files=no)" || (echo "Tracked files dirty — commit or stash before tagging."; exit 1)
 	@git rev-parse "$(DEMO_TAG)" >/dev/null 2>&1 && (echo "Tag $(DEMO_TAG) already exists locally."; exit 1) || true
 	git tag -a "$(DEMO_TAG)" -m "Ida Decision Desk demo pack v1 (research fixtures + vendored UI)"
 	@echo "Created annotated tag $(DEMO_TAG). Publish with: git push origin $(DEMO_TAG)"
