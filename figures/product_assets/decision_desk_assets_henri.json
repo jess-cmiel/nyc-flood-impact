@@ -20,7 +20,7 @@
     "id": "pysheds_hand_bathtub_v2",
     "role": "primary_research_depth",
     "label": "pysheds HAND/bathtub (metro \u00b7 MRMS QPE Henri)",
-    "depth_tif": "/home/jesscmiel/projects/nyc-flood-impact/data/processed/inundation/depth_metro_mrms_qpe_henri_storm_total_m.tif",
+    "depth_tif": "data/processed/inundation/depth_metro_mrms_qpe_henri_storm_total_m.tif",
     "note": "Primary research depth for metro asset ranking. Unified pysheds HAND/bathtub on metro DEM \u00d7 spatial MRMS QPE Ida."
   },
   "depth_engines_reconcile": {
@@ -10834,5 +10834,7 @@
     ],
     "note": "Demo ranking demotes New Jersey Turnpike / non-NYC mainland noise so All-mode tops stay NYC-memorable. Depths unchanged."
   },
-  "listed_n": 447
+  "listed_n": 447,
+  "schema_version": "1.1.0",
+  "git_sha": "7449d13"
 }

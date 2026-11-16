@@ -1,0 +1,1680 @@
+{
+  "id": "ida_access_signals_v2",
+  "fixture_pack": "ida_v1",
+  "replay": "Hurricane Ida remnants 2021-09-01 (research fixture)",
+  "synthetic": true,
+  "honesty": "Labeled synthetic Ida replay pack (DOT / 511-style / MTA) + research HAND depth \u2014 NOT official closures. Synthetic timestamps / joins marked synthetic:true.",
+  "sources": [
+    "nyc_dot_speeds",
+    "nysdot_511_events",
+    "mta_alerts"
+  ],
+  "buffer_m": 100,
+  "min_joins_target": 40,
+  "dot_speeds": [
+    {
+      "id": "dot:van_wyck_queens",
+      "label": "Van Wyck Expwy \u00b7 speed \u226a free-flow (research replay)",
+      "lon": -73.8371,
+      "lat": 40.7401,
+      "speed_mph": 8,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Van Wyck Expressway"
+    },
+    {
+      "id": "dot:myrtle_bk",
+      "label": "Myrtle Ave \u00b7 slowed arterial (research replay)",
+      "lon": -73.98045,
+      "lat": 40.69354,
+      "speed_mph": 6,
+      "free_flow_mph": 25,
+      "speed_ratio": 0.24,
+      "link_name": "Myrtle Avenue"
+    },
+    {
+      "id": "dot:synth:road_5710920",
+      "label": "West Shore Expressway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.17360895254446,
+      "lat": 40.6200207627476,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "West Shore Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_38077183",
+      "label": "Dr. Martin Luther King Jr. Expressway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.15317682931895,
+      "lat": 40.61416394779741,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Dr. Martin Luther King Jr. Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_5710902",
+      "label": "West Shore Expressway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.2225911464931,
+      "lat": 40.52677002275923,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "West Shore Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_32056669",
+      "label": "Korean War Veterans Parkway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.224487225717,
+      "lat": 40.52618981101578,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Korean War Veterans Parkway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_42709375",
+      "label": "New England Thruway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.78550234434479,
+      "lat": 40.911377020592624,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "New England Thruway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_60727821",
+      "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.24475983977659,
+      "lat": 40.62489745598579,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_60730829",
+      "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.24316469984355,
+      "lat": 40.626858509662505,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_60730778",
+      "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.24220725,
+      "lat": 40.62764145,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_32056646",
+      "label": "Korean War Veterans Parkway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.17428560365539,
+      "lat": 40.55841014218203,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Korean War Veterans Parkway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_60727823",
+      "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.24533935,
+      "lat": 40.62427265,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_42708898",
+      "label": "North Avenue \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.78386551603118,
+      "lat": 40.91353677790829,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "North Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_38068831",
+      "label": "Richmond Avenue \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.16816159903105,
+      "lat": 40.5878855053118,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Richmond Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_60727808",
+      "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.24548625,
+      "lat": 40.62435145,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_42708897",
+      "label": "North Avenue \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.78457735553845,
+      "lat": 40.91466632145101,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "North Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_32056784",
+      "label": "Dr. Martin Luther King Jr. Expressway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.1463369,
+      "lat": 40.6249203,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Dr. Martin Luther King Jr. Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_23506195",
+      "label": "Cross County Parkway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.81140491553509,
+      "lat": 40.92834445326392,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Cross County Parkway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_23465401",
+      "label": "Cross County Parkway (local lanes) \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.83963009948579,
+      "lat": 40.927495194676965,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Cross County Parkway (local lanes)",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_32341745",
+      "label": "Roemer Avenue \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -74.02405697264734,
+      "lat": 40.91618391005713,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Roemer Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_23537605",
+      "label": "South Columbus Avenue \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.82171891723397,
+      "lat": 40.90307004108284,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "South Columbus Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_42700906",
+      "label": "New England Thruway \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.79684984314231,
+      "lat": 40.89819098483257,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "New England Thruway",
+      "synthetic": true
+    },
+    {
+      "id": "dot:synth:road_23529454",
+      "label": "Mount Vernon Avenue \u00b7 synthetic Ida speed stress (research replay)",
+      "lon": -73.84713397779058,
+      "lat": 40.91204192380763,
+      "speed_mph": 8.1,
+      "free_flow_mph": 45,
+      "speed_ratio": 0.18,
+      "link_name": "Mount Vernon Avenue",
+      "synthetic": true
+    }
+  ],
+  "events_511": [
+    {
+      "id": "511:van_wyck_ponding",
+      "label": "511-style \u00b7 lanes affected near Van Wyck (research replay)",
+      "lon": -73.8371,
+      "lat": 40.7401,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Van Wyck Expressway"
+    },
+    {
+      "id": "511:siuh_access",
+      "label": "511-style \u00b7 local access watch near SIUH (research replay)",
+      "lon": -74.1,
+      "lat": 40.585,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Seaview Avenue area"
+    },
+    {
+      "id": "511:synth:road_5710920",
+      "label": "511-style \u00b7 synthetic ponding near West Shore Expressway (research replay)",
+      "lon": -74.17360895254446,
+      "lat": 40.6200207627476,
+      "closure": true,
+      "event_type": "incident",
+      "road": "West Shore Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_38077183",
+      "label": "511-style \u00b7 synthetic ponding near Dr. Martin Luther King Jr. Expressway (research replay)",
+      "lon": -74.15317682931895,
+      "lat": 40.61416394779741,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Dr. Martin Luther King Jr. Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_dec013545ad18ef6d1d6fe59bc11c26b",
+      "label": "511-style \u00b7 synthetic access watch near Staten Island Borough Command/Squad 8 (research replay)",
+      "lon": -74.1804796832,
+      "lat": 40.5978776231,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Staten Island Borough Command/Squad 8",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_d31fe44470d65b532bf44241101965c6",
+      "label": "511-style \u00b7 synthetic access watch near Engine 158 (research replay)",
+      "lon": -74.1599559062,
+      "lat": 40.6352719117,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Engine 158",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_568c019d68935a9ed3d196e3e48bd545",
+      "label": "511-style \u00b7 synthetic access watch near Engine 166/Ladder 86 (research replay)",
+      "lon": -74.1581128458,
+      "lat": 40.6142548488,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Engine 166/Ladder 86",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_7455a9d08a1dd82b70eb60ff0c138e10",
+      "label": "511-style \u00b7 synthetic access watch near Engine 168 (research replay)",
+      "lon": -74.2132017663,
+      "lat": 40.5538440412,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Engine 168",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_f7be842fe8ef9c32c47bac02ce86e6de",
+      "label": "511-style \u00b7 synthetic access watch near 121St Precinct (research replay)",
+      "lon": -74.150808,
+      "lat": 40.623609,
+      "closure": false,
+      "event_type": "alert",
+      "road": "121St Precinct",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_5710902",
+      "label": "511-style \u00b7 synthetic ponding near West Shore Expressway (research replay)",
+      "lon": -74.2225911464931,
+      "lat": 40.52677002275923,
+      "closure": true,
+      "event_type": "incident",
+      "road": "West Shore Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_32056669",
+      "label": "511-style \u00b7 synthetic ponding near Korean War Veterans Parkway (research replay)",
+      "lon": -74.224487225717,
+      "lat": 40.52618981101578,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Korean War Veterans Parkway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_42709375",
+      "label": "511-style \u00b7 synthetic ponding near New England Thruway (research replay)",
+      "lon": -73.78550234434479,
+      "lat": 40.911377020592624,
+      "closure": true,
+      "event_type": "incident",
+      "road": "New England Thruway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_60727821",
+      "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+      "lon": -74.24475983977659,
+      "lat": 40.62489745598579,
+      "closure": true,
+      "event_type": "incident",
+      "road": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_60730829",
+      "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+      "lon": -74.24316469984355,
+      "lat": 40.626858509662505,
+      "closure": true,
+      "event_type": "incident",
+      "road": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_60730778",
+      "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+      "lon": -74.24220725,
+      "lat": 40.62764145,
+      "closure": true,
+      "event_type": "incident",
+      "road": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_32056646",
+      "label": "511-style \u00b7 synthetic ponding near Korean War Veterans Parkway (research replay)",
+      "lon": -74.17428560365539,
+      "lat": 40.55841014218203,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Korean War Veterans Parkway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_d2629a8174b1bee3311353a2a5251379",
+      "label": "511-style \u00b7 synthetic access watch near Engine 167/Ladder 87 (research replay)",
+      "lon": -74.1754760406,
+      "lat": 40.5542126283,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Engine 167/Ladder 87",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_60727823",
+      "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+      "lon": -74.24533935,
+      "lat": 40.62427265,
+      "closure": true,
+      "event_type": "incident",
+      "road": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_42708898",
+      "label": "511-style \u00b7 synthetic ponding near North Avenue (research replay)",
+      "lon": -73.78386551603118,
+      "lat": 40.91353677790829,
+      "closure": true,
+      "event_type": "incident",
+      "road": "North Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_39435311267b2bacfe9a5d97447f871f",
+      "label": "511-style \u00b7 synthetic access watch near Calvary Hospital Inc (research replay)",
+      "lon": -73.8439176564,
+      "lat": 40.8479383062,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Calvary Hospital Inc",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_38068831",
+      "label": "511-style \u00b7 synthetic ponding near Richmond Avenue (research replay)",
+      "lon": -74.16816159903105,
+      "lat": 40.5878855053118,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Richmond Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_60727808",
+      "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+      "lon": -74.24548625,
+      "lat": 40.62435145,
+      "closure": true,
+      "event_type": "incident",
+      "road": "East Edgar Road",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_42708897",
+      "label": "511-style \u00b7 synthetic ponding near North Avenue (research replay)",
+      "lon": -73.78457735553845,
+      "lat": 40.91466632145101,
+      "closure": true,
+      "event_type": "incident",
+      "road": "North Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_335b283e2c9d402fa294b677716e36cb",
+      "label": "511-style \u00b7 synthetic access watch near Engine 164/Ladder 84 (research replay)",
+      "lon": -74.1960566975,
+      "lat": 40.535419238,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Engine 164/Ladder 84",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_32056784",
+      "label": "511-style \u00b7 synthetic ponding near Dr. Martin Luther King Jr. Expressway (research replay)",
+      "lon": -74.1463369,
+      "lat": 40.6249203,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Dr. Martin Luther King Jr. Expressway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_a20ce4d58480494184d39406c34a9c31",
+      "label": "511-style \u00b7 synthetic access watch near Jacobi Med Ctr/49Th Pct/Ems 20 (research replay)",
+      "lon": -73.84661,
+      "lat": 40.855466,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Jacobi Med Ctr/49Th Pct/Ems 20",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_baf0b0d518349997bb2e6d7224fd78a9",
+      "label": "511-style \u00b7 synthetic access watch near Jacobi Medical Center (research replay)",
+      "lon": -73.847549146,
+      "lat": 40.8564867516,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Jacobi Medical Center",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_ec4f9668773eb0fa542645ada9472292",
+      "label": "511-style \u00b7 synthetic access watch near Jacobi Medical Center (research replay)",
+      "lon": -73.847549146,
+      "lat": 40.8564867516,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Jacobi Medical Center",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_23506195",
+      "label": "511-style \u00b7 synthetic ponding near Cross County Parkway (research replay)",
+      "lon": -73.81140491553509,
+      "lat": 40.92834445326392,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Cross County Parkway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_23465401",
+      "label": "511-style \u00b7 synthetic ponding near Cross County Parkway (local lanes) (research replay)",
+      "lon": -73.83963009948579,
+      "lat": 40.927495194676965,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Cross County Parkway (local lanes)",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_32341745",
+      "label": "511-style \u00b7 synthetic ponding near Roemer Avenue (research replay)",
+      "lon": -74.02405697264734,
+      "lat": 40.91618391005713,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Roemer Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_23537605",
+      "label": "511-style \u00b7 synthetic ponding near South Columbus Avenue (research replay)",
+      "lon": -73.82171891723397,
+      "lat": 40.90307004108284,
+      "closure": true,
+      "event_type": "incident",
+      "road": "South Columbus Avenue",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_42700906",
+      "label": "511-style \u00b7 synthetic ponding near New England Thruway (research replay)",
+      "lon": -73.79684984314231,
+      "lat": 40.89819098483257,
+      "closure": true,
+      "event_type": "incident",
+      "road": "New England Thruway",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:facilities_uid_c076af3dcfc526fad6bfdc25d418f1de",
+      "label": "511-style \u00b7 synthetic access watch near Battalion 22/Ladder 79 (research replay)",
+      "lon": -74.1219949448,
+      "lat": 40.6344254265,
+      "closure": false,
+      "event_type": "alert",
+      "road": "Battalion 22/Ladder 79",
+      "synthetic": true
+    },
+    {
+      "id": "511:synth:road_23529454",
+      "label": "511-style \u00b7 synthetic ponding near Mount Vernon Avenue (research replay)",
+      "lon": -73.84713397779058,
+      "lat": 40.91204192380763,
+      "closure": true,
+      "event_type": "incident",
+      "road": "Mount Vernon Avenue",
+      "synthetic": true
+    }
+  ],
+  "mta_alerts": [
+    {
+      "id": "mta:smith9_suspend",
+      "label": "MTA alert \u00b7 Smith\u20139th Streets entrance / service stress (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Smith-9 Sts",
+        "Smith\u20139th Streets",
+        "Smith-9th Streets"
+      ],
+      "asset_ids": [
+        "stations:gtfs:F22"
+      ],
+      "effect": "station_access_limited"
+    },
+    {
+      "id": "mta:myrtle_wyckoff_delay",
+      "label": "MTA alert \u00b7 delays near Myrtle corridor (research replay)",
+      "access": "watch",
+      "station_names": [],
+      "asset_ids": [],
+      "effect": "line_delay"
+    },
+    {
+      "id": "mta:synth:stations_gtfs_S17",
+      "label": "MTA alert \u00b7 synthetic access stress at Annadale (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Annadale"
+      ],
+      "asset_ids": [
+        "stations:gtfs:S17"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_603",
+      "label": "MTA alert \u00b7 synthetic access stress at Middletown Rd (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Middletown Rd"
+      ],
+      "asset_ids": [
+        "stations:gtfs:603"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_R13",
+      "label": "MTA alert \u00b7 synthetic access stress at 5 Av/59 St (research replay)",
+      "access": "limited",
+      "station_names": [
+        "5 Av/59 St"
+      ],
+      "asset_ids": [
+        "stations:gtfs:R13"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_S16",
+      "label": "MTA alert \u00b7 synthetic access stress at Huguenot (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Huguenot"
+      ],
+      "asset_ids": [
+        "stations:gtfs:S16"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_612",
+      "label": "MTA alert \u00b7 synthetic access stress at Whitlock Av (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Whitlock Av"
+      ],
+      "asset_ids": [
+        "stations:gtfs:612"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_S20",
+      "label": "MTA alert \u00b7 synthetic access stress at Bay Terrace (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Bay Terrace"
+      ],
+      "asset_ids": [
+        "stations:gtfs:S20"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_S18",
+      "label": "MTA alert \u00b7 synthetic access stress at Eltingville (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Eltingville"
+      ],
+      "asset_ids": [
+        "stations:gtfs:S18"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_213",
+      "label": "MTA alert \u00b7 synthetic access stress at E 180 St (research replay)",
+      "access": "limited",
+      "station_names": [
+        "E 180 St"
+      ],
+      "asset_ids": [
+        "stations:gtfs:213"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_S15",
+      "label": "MTA alert \u00b7 synthetic access stress at Prince's Bay (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Prince's Bay"
+      ],
+      "asset_ids": [
+        "stations:gtfs:S15"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_214",
+      "label": "MTA alert \u00b7 synthetic access stress at West Farms Sq-E Tremont Av (research replay)",
+      "access": "limited",
+      "station_names": [
+        "West Farms Sq-E Tremont Av"
+      ],
+      "asset_ids": [
+        "stations:gtfs:214"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_A22",
+      "label": "MTA alert \u00b7 synthetic access stress at 72 St (research replay)",
+      "access": "limited",
+      "station_names": [
+        "72 St"
+      ],
+      "asset_ids": [
+        "stations:gtfs:A22"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_A18",
+      "label": "MTA alert \u00b7 synthetic access stress at 103 St (research replay)",
+      "access": "limited",
+      "station_names": [
+        "103 St"
+      ],
+      "asset_ids": [
+        "stations:gtfs:A18"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    },
+    {
+      "id": "mta:synth:stations_gtfs_702",
+      "label": "MTA alert \u00b7 synthetic access stress at Mets-Willets Point (research replay)",
+      "access": "limited",
+      "station_names": [
+        "Mets-Willets Point"
+      ],
+      "asset_ids": [
+        "stations:gtfs:702"
+      ],
+      "effect": "station_access_limited",
+      "synthetic": true
+    }
+  ],
+  "joins": [
+    {
+      "asset_id": "stations:gtfs:F22",
+      "access": "limited",
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:smith9_suspend",
+          "label": "MTA alert \u00b7 Smith\u20139th Streets entrance / service stress (research replay)",
+          "access": "limited"
+        }
+      ]
+    },
+    {
+      "asset_id": "road:25430129",
+      "access": "limited",
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:van_wyck_queens",
+          "label": "Van Wyck Expwy \u00b7 speed \u226a free-flow (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited"
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:van_wyck_ponding",
+          "label": "511-style \u00b7 lanes affected near Van Wyck (research replay)",
+          "access": "limited"
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:a464e8e63eb8b2c92ab1995735cfd284",
+      "access": "watch",
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:siuh_access",
+          "label": "511-style \u00b7 local access watch near Brooklyn Hospital corridor (research replay)",
+          "access": "watch"
+        }
+      ]
+    },
+    {
+      "asset_id": "road:37394898",
+      "access": "watch",
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:myrtle_bk",
+          "label": "Myrtle Ave \u00b7 slowed arterial (research replay)",
+          "speed_ratio": 0.24,
+          "access": "watch"
+        }
+      ]
+    },
+    {
+      "asset_id": "road:5710920",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_5710920",
+          "label": "West Shore Expressway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_5710920",
+          "label": "511-style \u00b7 synthetic ponding near West Shore Expressway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:38077183",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_38077183",
+          "label": "Dr. Martin Luther King Jr. Expressway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_38077183",
+          "label": "511-style \u00b7 synthetic ponding near Dr. Martin Luther King Jr. Expressway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:dec013545ad18ef6d1d6fe59bc11c26b",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_dec013545ad18ef6d1d6fe59bc11c26b",
+          "label": "511-style \u00b7 synthetic access watch near Staten Island Borough Command/Squad 8 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:d31fe44470d65b532bf44241101965c6",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_d31fe44470d65b532bf44241101965c6",
+          "label": "511-style \u00b7 synthetic access watch near Engine 158 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:568c019d68935a9ed3d196e3e48bd545",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_568c019d68935a9ed3d196e3e48bd545",
+          "label": "511-style \u00b7 synthetic access watch near Engine 166/Ladder 86 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:7455a9d08a1dd82b70eb60ff0c138e10",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_7455a9d08a1dd82b70eb60ff0c138e10",
+          "label": "511-style \u00b7 synthetic access watch near Engine 168 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:f7be842fe8ef9c32c47bac02ce86e6de",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_f7be842fe8ef9c32c47bac02ce86e6de",
+          "label": "511-style \u00b7 synthetic access watch near 121St Precinct (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:S17",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_S17",
+          "label": "MTA alert \u00b7 synthetic access stress at Annadale (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:5710902",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_5710902",
+          "label": "West Shore Expressway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_5710902",
+          "label": "511-style \u00b7 synthetic ponding near West Shore Expressway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:32056669",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_32056669",
+          "label": "Korean War Veterans Parkway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_32056669",
+          "label": "511-style \u00b7 synthetic ponding near Korean War Veterans Parkway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:42709375",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_42709375",
+          "label": "New England Thruway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_42709375",
+          "label": "511-style \u00b7 synthetic ponding near New England Thruway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:60727821",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_60727821",
+          "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_60727821",
+          "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:60730829",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_60730829",
+          "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_60730829",
+          "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:60730778",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_60730778",
+          "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_60730778",
+          "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:32056646",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_32056646",
+          "label": "Korean War Veterans Parkway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_32056646",
+          "label": "511-style \u00b7 synthetic ponding near Korean War Veterans Parkway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:d2629a8174b1bee3311353a2a5251379",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_d2629a8174b1bee3311353a2a5251379",
+          "label": "511-style \u00b7 synthetic access watch near Engine 167/Ladder 87 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:60727823",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_60727823",
+          "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_60727823",
+          "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:42708898",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_42708898",
+          "label": "North Avenue \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_42708898",
+          "label": "511-style \u00b7 synthetic ponding near North Avenue (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:39435311267b2bacfe9a5d97447f871f",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_39435311267b2bacfe9a5d97447f871f",
+          "label": "511-style \u00b7 synthetic access watch near Calvary Hospital Inc (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:603",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_603",
+          "label": "MTA alert \u00b7 synthetic access stress at Middletown Rd (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:38068831",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_38068831",
+          "label": "Richmond Avenue \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_38068831",
+          "label": "511-style \u00b7 synthetic ponding near Richmond Avenue (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:R13",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_R13",
+          "label": "MTA alert \u00b7 synthetic access stress at 5 Av/59 St (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:60727808",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_60727808",
+          "label": "East Edgar Road \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_60727808",
+          "label": "511-style \u00b7 synthetic ponding near East Edgar Road (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:42708897",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_42708897",
+          "label": "North Avenue \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_42708897",
+          "label": "511-style \u00b7 synthetic ponding near North Avenue (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:S16",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_S16",
+          "label": "MTA alert \u00b7 synthetic access stress at Huguenot (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:612",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_612",
+          "label": "MTA alert \u00b7 synthetic access stress at Whitlock Av (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:S20",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_S20",
+          "label": "MTA alert \u00b7 synthetic access stress at Bay Terrace (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:335b283e2c9d402fa294b677716e36cb",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_335b283e2c9d402fa294b677716e36cb",
+          "label": "511-style \u00b7 synthetic access watch near Engine 164/Ladder 84 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:32056784",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_32056784",
+          "label": "Dr. Martin Luther King Jr. Expressway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_32056784",
+          "label": "511-style \u00b7 synthetic ponding near Dr. Martin Luther King Jr. Expressway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:a20ce4d58480494184d39406c34a9c31",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_a20ce4d58480494184d39406c34a9c31",
+          "label": "511-style \u00b7 synthetic access watch near Jacobi Med Ctr/49Th Pct/Ems 20 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:baf0b0d518349997bb2e6d7224fd78a9",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_baf0b0d518349997bb2e6d7224fd78a9",
+          "label": "511-style \u00b7 synthetic access watch near Jacobi Medical Center (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:ec4f9668773eb0fa542645ada9472292",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_ec4f9668773eb0fa542645ada9472292",
+          "label": "511-style \u00b7 synthetic access watch near Jacobi Medical Center (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:S18",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_S18",
+          "label": "MTA alert \u00b7 synthetic access stress at Eltingville (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:23506195",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_23506195",
+          "label": "Cross County Parkway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_23506195",
+          "label": "511-style \u00b7 synthetic ponding near Cross County Parkway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:23465401",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_23465401",
+          "label": "Cross County Parkway (local lanes) \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_23465401",
+          "label": "511-style \u00b7 synthetic ponding near Cross County Parkway (local lanes) (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:213",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_213",
+          "label": "MTA alert \u00b7 synthetic access stress at E 180 St (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:S15",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_S15",
+          "label": "MTA alert \u00b7 synthetic access stress at Prince's Bay (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:214",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_214",
+          "label": "MTA alert \u00b7 synthetic access stress at West Farms Sq-E Tremont Av (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:A22",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_A22",
+          "label": "MTA alert \u00b7 synthetic access stress at 72 St (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:A18",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_A18",
+          "label": "MTA alert \u00b7 synthetic access stress at 103 St (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:32341745",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_32341745",
+          "label": "Roemer Avenue \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_32341745",
+          "label": "511-style \u00b7 synthetic ponding near Roemer Avenue (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "stations:gtfs:702",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "mta_alerts",
+          "id": "mta:synth:stations_gtfs_702",
+          "label": "MTA alert \u00b7 synthetic access stress at Mets-Willets Point (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:23537605",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_23537605",
+          "label": "South Columbus Avenue \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_23537605",
+          "label": "511-style \u00b7 synthetic ponding near South Columbus Avenue (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:42700906",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_42700906",
+          "label": "New England Thruway \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_42700906",
+          "label": "511-style \u00b7 synthetic ponding near New England Thruway (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "facilities:uid:c076af3dcfc526fad6bfdc25d418f1de",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:facilities_uid_c076af3dcfc526fad6bfdc25d418f1de",
+          "label": "511-style \u00b7 synthetic access watch near Battalion 22/Ladder 79 (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    },
+    {
+      "asset_id": "road:23529454",
+      "access": "limited",
+      "synthetic": true,
+      "signals": [
+        {
+          "source": "nyc_dot_speeds",
+          "id": "dot:synth:road_23529454",
+          "label": "Mount Vernon Avenue \u00b7 synthetic Ida speed stress (research replay)",
+          "speed_ratio": 0.18,
+          "access": "limited",
+          "synthetic": true
+        },
+        {
+          "source": "nysdot_511_events",
+          "id": "511:synth:road_23529454",
+          "label": "511-style \u00b7 synthetic ponding near Mount Vernon Avenue (research replay)",
+          "access": "limited",
+          "synthetic": true
+        }
+      ]
+    }
+  ]
+}
