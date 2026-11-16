@@ -36,402 +36,387 @@ def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
 <link rel="stylesheet" href="vendor/leaflet/1.9.4/leaflet.css">
 <style>
 :root {{
-  --ink:#06131a; --ink-soft:#17303c; --muted:#5f7584; --paper:#e8f0f3;
-  --rail:#f4f8fa; --line:rgba(8,40,52,.12); --line-soft:rgba(8,40,52,.07);
-  --accent:#0d8f9c; --accent-deep:#066470; --accent-glow:rgba(13,143,156,.22);
-  --sea:#052833; --sea-2:#0a5460; --sea-3:#117988;
-  --warn:#9a4a12; --warn-bg:rgba(154,74,18,.08); --warn-line:rgba(154,74,18,.28);
-  --band-3:#a16207; --band-8:#c2410c; --band-15:#b91c1c;
-  --hud:#071820ee; --ease:cubic-bezier(.22,.8,.28,1);
+  --ink:#0a1a22; --ink-soft:#1a3340; --muted:#617788; --paper:#eef3f5;
+  --rail:#f7fafb; --line:rgba(10,32,42,.11); --line-soft:rgba(10,32,42,.06);
+  --accent:#0a7f8a; --accent-deep:#065a63; --accent-glow:rgba(10,127,138,.16);
+  --sea:#0b2c36; --sea-2:#0e4550;
+  --warn:#8a4518; --warn-bg:rgba(138,69,24,.07); --warn-line:rgba(138,69,24,.22);
+  --band-3:#8a6a12; --band-8:#b45309; --band-15:#a31b2e;
+  --hud:#0a161cee; --ease:cubic-bezier(.22,.8,.28,1);
 }}
 * {{ box-sizing:border-box; }}
-html,body {{ margin:0; height:100%; font-family:Figtree,system-ui,sans-serif; color:var(--ink);
-  background:
-    radial-gradient(1100px 640px at -8% -20%, rgba(17,121,136,.22), transparent 58%),
-    radial-gradient(900px 520px at 108% 8%, rgba(5,40,51,.16), transparent 50%),
-    linear-gradient(160deg, #edf4f7 0%, #d5e4ea 48%, #c9dbe3 100%);
+html,body {{
+  margin:0; height:100%; font-family:Figtree,system-ui,sans-serif; color:var(--ink);
+  background:linear-gradient(180deg, #eef4f6 0%, #e2ecef 100%);
 }}
-body {{ display:grid; grid-template-columns:minmax(300px,360px) 1fr; min-height:100%; }}
+body {{ display:grid; grid-template-columns:minmax(292px,340px) 1fr; min-height:100%; }}
 @media (max-width:980px) {{
   body {{ grid-template-columns:1fr; grid-template-rows:auto minmax(52vh,1fr); }}
   aside {{ max-height:48vh; border-right:0 !important; border-bottom:1px solid var(--line); }}
-  .asset-row {{ padding:12px 12px 12px 14px; min-height:52px; }}
-  .asset-list {{ max-height:min(58vh,520px); }}
-  .drawer:not(.keep-open-mobile) {{ /* mobile: drawers stay closed via missing open attr */ }}
-  #floodnetPeaksPanel .drawer-note.collapsed-metric {{ display:block; }}
+  .asset-row {{ padding:11px 10px 11px 12px; min-height:50px; }}
+  .asset-list {{ max-height:min(56vh,480px); }}
+  .brand {{ padding:16px 14px 14px; }}
+  .brand-mark {{ font-size:1.45rem; }}
+  .chip-row {{ gap:4px; }}
 }}
 aside {{
-  position:relative; overflow:auto; padding:0 0 20px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.72), rgba(244,248,250,.92)),
-    repeating-linear-gradient(-18deg, transparent, transparent 11px, rgba(8,59,72,.015) 11px, rgba(8,59,72,.015) 12px);
-  border-right:1px solid var(--line); backdrop-filter:blur(14px);
+  position:relative; overflow:auto; padding:0 0 18px;
+  background:var(--rail);
+  border-right:1px solid var(--line);
 }}
 .brand {{
-  position:relative; overflow:hidden; margin:0; padding:22px 18px 18px;
-  background:
-    radial-gradient(520px 220px at 88% 120%, rgba(255,255,255,.14), transparent 55%),
-    linear-gradient(145deg, var(--sea) 0%, var(--sea-2) 52%, var(--sea-3) 100%);
-  color:#e8f7f9;
+  position:relative; margin:0; padding:20px 16px 16px;
+  background:linear-gradient(165deg, var(--sea) 0%, var(--sea-2) 100%);
+  color:#e6f3f5;
 }}
-.brand::before {{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(105deg, transparent 40%, rgba(255,255,255,.05) 50%, transparent 60%);
-  animation: sweep 7.5s var(--ease) infinite; pointer-events:none;
-}}
-.brand::after {{
-  content:""; position:absolute; width:180px; height:180px; right:-36px; bottom:-70px;
-  border-radius:50%; border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 0 0 18px rgba(255,255,255,.04); pointer-events:none;
-  animation: pulseRing 5.5s ease-in-out infinite;
-}}
-@keyframes sweep {{ 0%,100% {{ transform:translateX(-12%); opacity:.35; }} 50% {{ transform:translateX(8%); opacity:.7; }} }}
-@keyframes pulseRing {{ 0%,100% {{ transform:scale(1); opacity:.55; }} 50% {{ transform:scale(1.08); opacity:.9; }} }}
-@keyframes riseIn {{ from {{ opacity:0; transform:translateY(8px); }} to {{ opacity:1; transform:none; }} }}
-@keyframes selectPulse {{ 0% {{ box-shadow:0 0 0 0 var(--accent-glow); }} 100% {{ box-shadow:0 0 0 14px transparent; }} }}
-@keyframes playGlow {{ 0%,100% {{ box-shadow:0 0 0 0 rgba(27,192,205,.35); }} 50% {{ box-shadow:0 0 0 10px transparent; }} }}
+@keyframes riseIn {{ from {{ opacity:0; transform:translateY(6px); }} to {{ opacity:1; transform:none; }} }}
+@keyframes selectPulse {{ 0% {{ box-shadow:0 0 0 0 var(--accent-glow); }} 100% {{ box-shadow:0 0 0 10px transparent; }} }}
 @media (prefers-reduced-motion: reduce) {{
-  .brand::before, .brand::after {{ animation:none !important; }}
-  .section {{ animation:none !important; }}
-  .radar-hud.playing .play {{ animation:none !important; }}
-  .asset-row, .chip, .selected-card {{ transition:none !important; }}
+  .selected-card {{ animation:none !important; }}
+  .asset-row, .chip {{ transition:none !important; }}
   * {{ scroll-behavior:auto !important; }}
 }}
 .coach-overlay {{
   position:fixed; inset:0; z-index:2000; pointer-events:none;
-  background:radial-gradient(ellipse at 18% 28%, rgba(5,40,51,.45), transparent 42%);
+  background:rgba(8,28,36,.18);
 }}
 .coach-card {{
-  pointer-events:auto; position:absolute; left:18px; top:210px; width:min(300px,86vw);
-  padding:14px 14px 12px; border-radius:12px;
-  background:rgba(4,34,39,.94); color:#e8f7f9; border:1px solid rgba(27,192,205,.35);
-  box-shadow:0 12px 40px rgba(0,0,0,.28); font:500 .78rem/1.4 Figtree,sans-serif;
+  pointer-events:auto; position:absolute; left:16px; top:188px; width:min(280px,84vw);
+  padding:12px 12px 10px; border-radius:8px;
+  background:#0c2a32; color:#e6f3f5; border:1px solid rgba(255,255,255,.1);
+  font:500 .76rem/1.4 Figtree,sans-serif;
 }}
-.coach-card strong {{ font:700 .72rem Syne,sans-serif; letter-spacing:.04em; display:block; margin-bottom:6px; }}
+.coach-card strong {{ font:700 .68rem Syne,sans-serif; letter-spacing:.03em; display:block; margin-bottom:5px; }}
 .coach-card button {{
-  margin-top:10px; border:0; border-radius:8px; padding:7px 10px; cursor:pointer;
-  background:#1bc0cd; color:#042227; font:700 .72rem Syne,sans-serif;
+  margin-top:8px; border:0; border-radius:6px; padding:6px 10px; cursor:pointer;
+  background:rgba(255,255,255,.12); color:#e6f3f5; font:650 .7rem Syne,sans-serif;
 }}
-.sel-chip.disagree {{ background:rgba(154,74,18,.16); color:var(--warn); border:1px solid var(--warn-line); }}
-.sel-chip.agree {{ background:rgba(13,143,156,.1); color:var(--accent-deep); }}
-.consequence-cap {{ font:650 .62rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase; color:#9eb8c0; margin:8px 0 4px; }}
-.consequence-line {{ font:500 .72rem/1.35 Figtree,sans-serif; color:#d7ecef; }}
-.brand-kicker {{ position:relative; font:700 .62rem Syne,sans-serif; letter-spacing:.16em; text-transform:uppercase; opacity:.7; margin-bottom:8px; }}
-.brand-mark {{ position:relative; font:800 clamp(1.55rem,3.4vw,1.9rem)/1.02 Syne,sans-serif; letter-spacing:-.045em; }}
-.brand-tag {{ position:relative; margin-top:8px; font-size:.8rem; line-height:1.35; max-width:28ch; opacity:.88; font-weight:500; }}
+.coach-card button:hover {{ background:rgba(255,255,255,.18); }}
+.sel-chip.disagree {{ background:rgba(138,69,24,.12); color:var(--warn); border:1px solid var(--warn-line); }}
+.sel-chip.agree {{ background:rgba(10,127,138,.08); color:var(--accent-deep); }}
+.consequence-cap {{
+  font:650 .58rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); margin:8px 0 3px;
+}}
+.consequence-line {{ font:500 .7rem/1.35 Figtree,sans-serif; color:var(--ink-soft); }}
+.brand-kicker {{
+  position:relative; font:700 .58rem Syne,sans-serif; letter-spacing:.14em;
+  text-transform:uppercase; opacity:.65; margin-bottom:6px;
+}}
+.brand-mark {{
+  position:relative; font:800 clamp(1.4rem,3vw,1.72rem)/1.05 Syne,sans-serif;
+  letter-spacing:-.04em;
+}}
+.brand-tag {{
+  position:relative; margin-top:6px; font-size:.76rem; line-height:1.35;
+  max-width:28ch; opacity:.82; font-weight:500;
+}}
 .honesty-line {{
-  position:sticky; top:0; z-index:5; margin:0; padding:9px 16px;
-  background:linear-gradient(180deg, rgba(255,246,236,.96), rgba(255,243,230,.9));
-  border-bottom:1px solid var(--warn-line); color:var(--warn);
-  font:600 .72rem/1.35 Figtree,sans-serif; backdrop-filter:blur(8px);
+  position:sticky; top:0; z-index:5; margin:0; padding:8px 14px;
+  background:rgba(255,248,240,.94); border-bottom:1px solid var(--warn-line);
+  color:var(--warn); font:600 .68rem/1.35 Figtree,sans-serif;
 }}
 .magnitude-chip {{
-  margin:8px 14px 0; padding:8px 11px; border-radius:10px;
-  background:rgba(255,255,255,.72); border:1px solid var(--warn-line);
-  color:var(--warn); font:600 .72rem/1.4 Figtree,sans-serif;
+  margin:8px 14px 0; padding:6px 9px; border-radius:6px;
+  background:transparent; border:1px solid var(--warn-line);
+  color:var(--warn); font:500 .68rem/1.35 Figtree,sans-serif;
 }}
-.magnitude-chip b {{ font:650 .72rem "IBM Plex Mono",monospace; color:var(--accent-deep); }}
+.magnitude-chip b {{ font:650 .68rem "IBM Plex Mono",monospace; color:var(--accent-deep); }}
 .access-fixture-badge {{
-  margin:6px 14px 0; padding:6px 10px; border-radius:8px; display:none;
-  background:rgba(13,143,156,.08); border:1px solid rgba(13,143,156,.22);
-  color:var(--accent-deep); font:600 .68rem/1.35 Figtree,sans-serif;
+  margin:6px 14px 0; padding:5px 8px; border-radius:6px; display:none;
+  background:transparent; border:1px solid var(--line-soft);
+  color:var(--muted); font:500 .64rem/1.35 Figtree,sans-serif;
 }}
 #assetBanner {{
-  margin:8px 14px 0; padding:9px 11px; border-radius:10px; display:none;
-  background:#3b0d0d; border:1px solid #7f1d1d; color:#fecaca; font-size:.74rem;
+  margin:8px 14px 0; padding:8px 10px; border-radius:6px; display:none;
+  background:#3b0d0d; border:1px solid #7f1d1d; color:#fecaca; font-size:.72rem;
 }}
 .sfincs-peer-banner {{
-  position:absolute; left:14px; right:14px; top:48px; z-index:650;
-  display:none; padding:8px 12px; border-radius:10px;
+  position:absolute; left:12px; right:12px; top:44px; z-index:650;
+  display:none; padding:7px 10px; border-radius:6px;
   background:rgba(59,13,13,.92); border:1px solid #7f1d1d; color:#fecaca;
-  font:650 .72rem/1.35 Figtree,sans-serif; pointer-events:none;
+  font:650 .7rem/1.35 Figtree,sans-serif; pointer-events:none;
 }}
 .hand-dimmed .leaflet-image-layer {{ filter:saturate(.35) opacity(.45); }}
-.section {{ padding:14px 16px 6px; animation:riseIn .45s var(--ease) both; }}
+.section {{ padding:12px 14px 4px; }}
 .section + .section {{ border-top:1px solid var(--line-soft); }}
 .section h2 {{
   display:flex; align-items:baseline; justify-content:space-between; gap:8px;
-  font:700 .66rem Syne,sans-serif; margin:0 0 10px;
-  text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+  font:700 .62rem Syne,sans-serif; margin:0 0 8px;
+  text-transform:uppercase; letter-spacing:.1em; color:var(--muted);
 }}
-.section h2 .hint {{ font:600 .66rem Figtree,sans-serif; letter-spacing:0; text-transform:none; color:#8aa0ad; }}
+.section h2 .hint {{ font:500 .64rem Figtree,sans-serif; letter-spacing:0; text-transform:none; color:#8aa0ad; }}
 .metric {{
   display:flex; justify-content:space-between; align-items:baseline; gap:10px;
-  font-size:.78rem; padding:0 0 10px; margin:0 0 8px; border-bottom:1px solid var(--line-soft);
+  font-size:.74rem; padding:0 0 8px; margin:0 0 6px; border-bottom:1px solid var(--line-soft);
 }}
-.metric b, .readout {{ font:600 .8rem "IBM Plex Mono",monospace; color:var(--accent-deep); }}
-label.caption {{ display:block; font-size:.68rem; color:var(--muted); font-weight:600; margin-bottom:4px; letter-spacing:.02em; }}
+.metric b, .readout {{ font:600 .76rem "IBM Plex Mono",monospace; color:var(--accent-deep); }}
+label.caption {{ display:block; font-size:.64rem; color:var(--muted); font-weight:600; margin-bottom:3px; letter-spacing:.02em; }}
 select, input[type=search] {{
-  width:100%; appearance:none; padding:8px 10px; border-radius:8px;
-  border:1px solid var(--line); background:rgba(255,255,255,.78);
-  font:500 .84rem Figtree,sans-serif; color:var(--ink);
-  transition:border-color .15s, box-shadow .15s, background .15s;
+  width:100%; appearance:none; padding:7px 9px; border-radius:6px;
+  border:1px solid var(--line); background:#fff;
+  font:500 .8rem Figtree,sans-serif; color:var(--ink);
+  transition:border-color .15s, box-shadow .15s;
 }}
-select:focus, input[type=search]:focus {{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); background:#fff; }}
-.filters {{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 10px; }}
-.chip-row {{ display:flex; flex-wrap:wrap; gap:5px; margin:0 0 8px; }}
+select:focus, input[type=search]:focus {{ outline:none; border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-glow); }}
+.filters {{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 8px; }}
+.chip-row {{ display:flex; flex-wrap:wrap; gap:4px; margin:0 0 7px; }}
 .chip {{
-  border:1px solid var(--line); background:rgba(255,255,255,.55); border-radius:8px;
-  padding:5px 9px; font:650 .68rem Syne,sans-serif; color:var(--muted); cursor:pointer;
-  transition:transform .14s var(--ease), background .14s, border-color .14s, color .14s;
+  border:1px solid var(--line); background:#fff; border-radius:6px;
+  padding:4px 8px; font:650 .64rem Syne,sans-serif; color:var(--muted); cursor:pointer;
+  transition:background .14s, border-color .14s, color .14s;
 }}
-.chip:hover {{ transform:translateY(-1px); color:var(--ink-soft); border-color:#9db4c2; }}
-.chip.active {{ background:rgba(13,143,156,.14); border-color:var(--accent); color:var(--accent-deep); }}
-.asset-list, .floodnet-list {{ display:flex; flex-direction:column; gap:4px; overflow:auto; padding-right:2px; }}
-.asset-list {{ max-height:min(46vh,460px); }}
+.chip:hover {{ color:var(--ink-soft); border-color:#9db4c2; }}
+.chip.active {{ background:rgba(10,127,138,.1); border-color:var(--accent); color:var(--accent-deep); }}
+.asset-list, .floodnet-list {{ display:flex; flex-direction:column; gap:2px; overflow:auto; padding-right:2px; }}
+.asset-list {{ max-height:min(48vh,480px); }}
 .floodnet-list {{ max-height:min(28vh,240px); margin-top:8px; }}
 .asset-row {{
-  position:relative; text-align:left; width:100%; border:0; border-radius:10px;
-  background:transparent; padding:9px 10px 9px 12px; cursor:pointer;
-  transition:background .16s var(--ease), transform .16s var(--ease);
+  position:relative; text-align:left; width:100%; border:0; border-radius:6px;
+  background:transparent; padding:8px 8px 8px 10px; cursor:pointer;
+  transition:background .14s var(--ease);
 }}
 .asset-row::before {{
-  content:""; position:absolute; left:0; top:10px; bottom:10px; width:2px; border-radius:2px;
-  background:transparent; transition:background .16s, transform .16s var(--ease);
+  content:""; position:absolute; left:0; top:8px; bottom:8px; width:2px; border-radius:1px;
+  background:transparent; transition:background .14s;
 }}
-.asset-row:hover {{ background:rgba(13,143,156,.07); transform:translateX(2px); }}
+.asset-row:hover {{ background:rgba(10,127,138,.05); }}
 .asset-row:hover::before {{ background:#9db4c2; }}
-.asset-row.top-hit {{ background:rgba(13,143,156,.09); }}
+.asset-row.top-hit {{ background:rgba(10,127,138,.06); }}
 .asset-row.top-hit::before {{ background:var(--accent); }}
-.asset-row.selected {{ background:linear-gradient(90deg, rgba(13,143,156,.16), rgba(13,143,156,.04)); }}
-.asset-row.selected::before {{ background:var(--accent); transform:scaleY(1.15); }}
+.asset-row.selected {{ background:rgba(10,127,138,.1); }}
+.asset-row.selected::before {{ background:var(--accent); }}
 .asset-row .top {{ display:flex; justify-content:space-between; gap:8px; align-items:baseline; }}
-.asset-row .name {{ font:700 .84rem Syne,sans-serif; letter-spacing:-.02em; }}
-.asset-row .depth {{ font:600 .78rem "IBM Plex Mono",monospace; color:var(--accent-deep); white-space:nowrap; }}
-.asset-row .meta {{ margin-top:3px; display:flex; flex-wrap:wrap; gap:5px; font-size:.68rem; color:var(--muted); }}
-.band {{ display:inline-flex; align-items:center; padding:1px 6px; border-radius:5px; font:700 .62rem Syne,sans-serif; }}
-.band.ponding {{ background:#fef3c7; color:var(--band-3); }}
-.band.deep_ponding {{ background:#ffedd5; color:var(--band-8); }}
-.band.hazard {{ background:#fee2e2; color:var(--band-15); }}
-.band.oom-ok {{ background:rgba(13,143,156,.16); color:var(--accent-deep); }}
-.band.oom-miss {{ background:#ffedd5; color:var(--band-8); }}
-.type-pill {{ display:inline-flex; padding:1px 6px; border-radius:5px; background:rgba(8,40,52,.06); font-weight:650; }}
-.legend-swatch {{ height:6px; border-radius:999px; margin:2px 0 8px; opacity:.9; }}
+.asset-row .name {{ font:700 .8rem Syne,sans-serif; letter-spacing:-.02em; }}
+.asset-row .depth {{ font:600 .74rem "IBM Plex Mono",monospace; color:var(--accent-deep); white-space:nowrap; }}
+.asset-row .meta {{ margin-top:2px; display:flex; flex-wrap:wrap; gap:4px; font-size:.64rem; color:var(--muted); }}
+.band {{ display:inline-flex; align-items:center; padding:1px 5px; border-radius:3px; font:700 .58rem Syne,sans-serif; }}
+.band.ponding {{ background:#f8f1d8; color:var(--band-3); }}
+.band.deep_ponding {{ background:#f6e6d6; color:var(--band-8); }}
+.band.hazard {{ background:#f6e0e4; color:var(--band-15); }}
+.band.oom-ok {{ background:rgba(10,127,138,.12); color:var(--accent-deep); }}
+.band.oom-miss {{ background:#f6e6d6; color:var(--band-8); }}
+.type-pill {{ display:inline-flex; padding:1px 5px; border-radius:3px; background:rgba(8,40,52,.05); font-weight:650; }}
+.legend-swatch {{ height:5px; border-radius:2px; margin:2px 0 8px; opacity:.85; }}
 .legend-swatch.precip {{ background:linear-gradient(90deg,#0b1d2a,#1a6f7a,#1ae4b6,#a2fc3c,#f9ba38,#e8332b); }}
 .legend-swatch.susc {{ background:linear-gradient(90deg,#fff7bc,#fec44f,#d95f0e,#7f2704); }}
 .legend-swatch.depth {{ background:linear-gradient(90deg,#f7fbff,#9ecae1,#4292c6,#08519c,#08306b); }}
-.opacity-row {{ display:grid; grid-template-columns:72px 1fr 36px; gap:8px; align-items:center; font-size:.72rem; margin:4px 0; color:var(--muted); }}
+.opacity-row {{ display:grid; grid-template-columns:64px 1fr 34px; gap:8px; align-items:center; font-size:.7rem; margin:4px 0; color:var(--muted); }}
 .opacity-row input[type=range] {{ width:100%; accent-color:var(--accent); }}
-.layer-grid {{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }}
-.group-label {{ grid-column:1 / -1; margin:6px 0 0; font:700 .62rem Syne,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:#7d91a1; }}
+.layer-grid {{ display:grid; grid-template-columns:1fr 1fr; gap:5px; }}
+.group-label {{ grid-column:1 / -1; margin:6px 0 0; font:700 .58rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase; color:#7d91a1; }}
 .layer-btn {{
-  position:relative; display:flex; align-items:center; gap:7px; min-height:34px;
-  padding:6px 8px 6px 28px; border-radius:8px; border:1px solid transparent;
-  background:rgba(255,255,255,.35); cursor:pointer; font-size:.72rem; font-weight:600;
+  position:relative; display:flex; align-items:center; gap:6px; min-height:30px;
+  padding:5px 7px 5px 26px; border-radius:6px; border:1px solid transparent;
+  background:transparent; cursor:pointer; font-size:.7rem; font-weight:600;
   transition:background .14s, border-color .14s, color .14s;
 }}
-.layer-btn input {{ position:absolute; left:8px; top:50%; transform:translateY(-50%); margin:0; accent-color:var(--accent); }}
-.layer-btn:hover {{ background:rgba(255,255,255,.7); }}
-.layer-btn:has(input:checked) {{ background:rgba(13,143,156,.12); border-color:rgba(13,143,156,.35); color:var(--accent-deep); }}
-.storm-toggles {{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:0 0 6px; }}
-details.drawer {{ font-size:.76rem; color:var(--muted); }}
+.layer-btn input {{ position:absolute; left:7px; top:50%; transform:translateY(-50%); margin:0; accent-color:var(--accent); }}
+.layer-btn:hover {{ background:rgba(8,40,52,.04); }}
+.layer-btn:has(input:checked) {{ background:rgba(10,127,138,.08); border-color:rgba(10,127,138,.25); color:var(--accent-deep); }}
+.storm-toggles {{ display:grid; grid-template-columns:1fr 1fr; gap:5px; margin:0 0 6px; }}
+details.drawer {{ font-size:.74rem; color:var(--muted); }}
 details.drawer > summary {{
-  cursor:pointer; list-style:none; font:700 .66rem Syne,sans-serif; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--ink-soft); padding:2px 0 8px;
+  cursor:pointer; list-style:none; font:700 .62rem Syne,sans-serif; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-soft); padding:2px 0 7px;
   display:flex; align-items:center; justify-content:space-between;
 }}
 details.drawer > summary::-webkit-details-marker {{ display:none; }}
-details.drawer > summary::after {{ content:"+"; font:700 .9rem "IBM Plex Mono",monospace; color:var(--accent); transition:transform .2s var(--ease); }}
+details.drawer > summary::after {{ content:"+"; font:650 .85rem "IBM Plex Mono",monospace; color:var(--muted); }}
 details.drawer[open] > summary::after {{ content:"–"; }}
-.drawer-note {{ margin:0 0 8px; font-size:.72rem; line-height:1.35; color:var(--muted); }}
+.drawer-note {{ margin:0 0 7px; font-size:.68rem; line-height:1.35; color:var(--muted); }}
 .map-stage {{
   position:relative; min-height:0; height:100%;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(8,59,72,.08), transparent 70%),
-    #0a1a22;
+  background:#0d1c24;
 }}
-.map-el {{ position:absolute; inset:0; background:#d5e4ea; }}
+.map-el {{ position:absolute; inset:0; background:#d7e2e7; }}
 .pane-label {{
-  position:absolute; z-index:1000; top:14px; left:54px; padding:7px 12px; border-radius:8px;
-  background:rgba(7,20,28,.78); color:#dff2f4; border:1px solid rgba(255,255,255,.08);
-  font:700 .7rem Syne,sans-serif; letter-spacing:.02em; backdrop-filter:blur(10px);
-  animation:riseIn .5s var(--ease) .1s both;
+  position:absolute; z-index:1000; top:12px; left:50px; padding:5px 9px; border-radius:5px;
+  background:rgba(10,22,28,.78); color:#dff2f4; border:1px solid rgba(255,255,255,.06);
+  font:650 .66rem Syne,sans-serif; letter-spacing:.02em;
 }}
 .radar-hud {{
-  position:absolute; z-index:1100; left:50%; bottom:14px; transform:translateX(-50%);
-  width:min(820px, calc(100% - 20px));
-  display:grid; grid-template-columns:auto 1fr auto; gap:12px 16px; align-items:center;
-  padding:12px 14px 10px; border-radius:16px;
-  background:linear-gradient(180deg, rgba(8,28,36,.94), rgba(5,16,22,.92));
-  color:#e7f3f5; border:1px solid rgba(255,255,255,.08); box-shadow:0 22px 56px rgba(0,0,0,.35);
-  backdrop-filter:blur(16px); animation:riseIn .55s var(--ease) .15s both;
+  position:absolute; z-index:1100; left:50%; bottom:12px; transform:translateX(-50%);
+  width:min(760px, calc(100% - 16px));
+  display:grid; grid-template-columns:auto 1fr auto; gap:10px 14px; align-items:center;
+  padding:10px 12px 8px; border-radius:10px;
+  background:var(--hud); color:#e7f3f5; border:1px solid rgba(255,255,255,.07);
+  box-shadow:0 8px 24px rgba(0,0,0,.22);
 }}
 .radar-hud .play {{
-  width:46px; height:46px; border-radius:12px; border:0; cursor:pointer;
-  background:linear-gradient(180deg,#22c9d4,#0e8f9c); color:#042227; font:700 .95rem Syne,sans-serif;
-  transition:transform .15s var(--ease), filter .15s;
+  width:40px; height:40px; border-radius:8px; border:0; cursor:pointer;
+  background:var(--accent); color:#042227; font:700 .9rem Syne,sans-serif;
+  transition:filter .15s;
 }}
-.radar-hud .play:hover {{ transform:scale(1.04); filter:brightness(1.05); }}
-.radar-hud.playing .play {{ animation:playGlow 1.6s ease-out infinite; }}
-.radar-hud .clock {{ font:750 .98rem Syne,sans-serif; letter-spacing:-.02em; }}
-.radar-hud .sub {{ font-size:.7rem; opacity:.72; margin-top:2px; font-weight:500; }}
-.radar-hud .legend {{ display:flex; flex-direction:column; gap:4px; align-items:flex-end; font-size:.66rem; opacity:.9; }}
-.radar-hud .bar {{ width:120px; height:7px; border-radius:999px; background:linear-gradient(90deg,#0b1d2a,#1a6f7a,#1ae4b6,#a2fc3c,#f9ba38,#e8332b); }}
+.radar-hud .play:hover {{ filter:brightness(1.06); }}
+.radar-hud .clock {{ font:700 .9rem Syne,sans-serif; letter-spacing:-.02em; }}
+.radar-hud .sub {{ font-size:.66rem; opacity:.7; margin-top:1px; font-weight:500; }}
+.radar-hud .legend {{ display:flex; flex-direction:column; gap:3px; align-items:flex-end; font-size:.62rem; opacity:.85; }}
+.radar-hud .bar {{ width:100px; height:5px; border-radius:2px; background:linear-gradient(90deg,#0b1d2a,#1a6f7a,#1ae4b6,#a2fc3c,#f9ba38,#e8332b); }}
 .radar-hud .bar.susc {{ background:linear-gradient(90deg,#fff7bc,#fec44f,#d95f0e,#7f2704); }}
 .radar-hud .scrub {{
-  grid-column:1 / -1; width:100%; accent-color:#1bc0cd; height:18px; cursor:pointer; margin:0;
+  grid-column:1 / -1; width:100%; accent-color:var(--accent); height:16px; cursor:pointer; margin:0;
 }}
 .selected-card {{
-  position:absolute; z-index:1050; top:54px; right:14px; width:min(300px,calc(100% - 28px));
-  background:rgba(255,255,255,.94); border:1px solid rgba(8,40,52,.1); border-radius:12px;
-  padding:12px 14px; box-shadow:0 16px 40px rgba(5,20,28,.22); display:none;
-  backdrop-filter:blur(12px); transform-origin:top right;
+  position:absolute; z-index:1050; top:48px; right:12px; width:min(292px,calc(100% - 24px));
+  background:rgba(255,255,255,.96); border:1px solid rgba(8,40,52,.1); border-radius:8px;
+  padding:12px 12px 10px; box-shadow:0 8px 22px rgba(5,20,28,.16); display:none;
 }}
-.selected-card.on {{ display:block; animation:riseIn .28s var(--ease), selectPulse .7s ease-out; }}
-.selected-card .sel-kicker {{ font:700 .6rem Syne,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }}
-.selected-card h3 {{ margin:0 0 4px; font:750 .95rem Syne,sans-serif; letter-spacing:-.02em; }}
-.selected-card p {{ margin:0; font-size:.76rem; color:var(--muted); line-height:1.4; }}
+.selected-card.on {{ display:block; animation:riseIn .22s var(--ease), selectPulse .55s ease-out; }}
+.selected-card .sel-kicker {{ font:700 .56rem Syne,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }}
+.selected-card h3 {{ margin:0 0 2px; font:750 .9rem Syne,sans-serif; letter-spacing:-.02em; }}
+.selected-card p {{ margin:0; font-size:.74rem; color:var(--muted); line-height:1.4; }}
 .selected-card .sel-close {{
-  position:absolute; top:8px; right:8px; width:26px; height:26px; border:0; border-radius:7px;
-  background:rgba(8,40,52,.06); color:var(--ink-soft); cursor:pointer; font:700 .8rem Figtree,sans-serif;
+  position:absolute; top:7px; right:7px; width:24px; height:24px; border:0; border-radius:5px;
+  background:rgba(8,40,52,.05); color:var(--ink-soft); cursor:pointer; font:700 .78rem Figtree,sans-serif;
 }}
-.selected-card .sel-close:hover {{ background:rgba(8,40,52,.12); }}
-.selected-card .sel-chips {{ display:flex; flex-wrap:wrap; gap:5px; margin:8px 0 6px; }}
+.selected-card .sel-close:hover {{ background:rgba(8,40,52,.1); }}
+.sel-block {{ margin-top:8px; padding-top:8px; border-top:1px solid var(--line-soft); }}
+.sel-block:first-of-type {{ margin-top:6px; }}
+.sel-block-label {{
+  font:700 .56rem Syne,sans-serif; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:4px;
+}}
+.selected-card .sel-chips {{ display:flex; flex-wrap:wrap; gap:4px; margin:0; }}
 .selected-card .sel-chip {{
-  font:600 .62rem "IBM Plex Mono",monospace; padding:3px 7px; border-radius:6px;
-  border:1px solid var(--line); background:rgba(8,40,52,.04); color:var(--ink-soft);
+  font:600 .6rem "IBM Plex Mono",monospace; padding:2px 6px; border-radius:4px;
+  border:1px solid var(--line); background:rgba(8,40,52,.03); color:var(--ink-soft);
 }}
-.selected-card .sel-chip.access-open {{ border-color:rgba(13,143,156,.35); color:var(--accent-deep); }}
-.selected-card .sel-chip.access-watch {{ border-color:rgba(154,74,18,.35); color:var(--warn); background:var(--warn-bg); }}
-.selected-card .sel-chip.access-limited {{ border-color:rgba(185,28,28,.4); color:#9f1239; background:rgba(185,28,28,.08); }}
+.selected-card .sel-chip.access-open {{ border-color:rgba(10,127,138,.3); color:var(--accent-deep); }}
+.selected-card .sel-chip.access-watch {{ border-color:rgba(138,69,24,.3); color:var(--warn); background:var(--warn-bg); }}
+.selected-card .sel-chip.access-limited {{ border-color:rgba(163,27,46,.35); color:#9f1239; background:rgba(163,27,46,.06); }}
 .selected-card .sel-hint {{
-  margin-top:6px; padding-top:6px; border-top:1px solid var(--line-soft);
-  font-size:.72rem; color:var(--ink-soft); line-height:1.4; font-weight:600;
+  margin-top:8px; padding-top:7px; border-top:1px solid var(--line-soft);
+  font-size:.7rem; color:var(--ink-soft); line-height:1.4; font-weight:600;
 }}
-.selected-card .sel-access-note {{ margin-top:4px; font-size:.66rem; color:var(--muted); line-height:1.35; }}
+.selected-card .sel-access-note {{ margin-top:3px; font-size:.64rem; color:var(--muted); line-height:1.35; }}
+.sel-access-line {{ font:600 .72rem Figtree,sans-serif; color:var(--ink-soft); }}
 .asset-row .meta .access-pill {{
-  font:600 .58rem "IBM Plex Mono",monospace; padding:1px 5px; border-radius:4px;
+  font:600 .56rem "IBM Plex Mono",monospace; padding:1px 4px; border-radius:3px;
   border:1px solid var(--line-soft); color:var(--muted);
 }}
-.asset-row .meta .access-pill.limited {{ color:#9f1239; border-color:rgba(185,28,28,.35); }}
-.asset-row .meta .access-pill.watch {{ color:var(--warn); border-color:rgba(154,74,18,.3); }}
-.empty {{ padding:16px 8px; text-align:center; color:var(--muted); font-size:.78rem; }}
+.asset-row .meta .access-pill.limited {{ color:#9f1239; border-color:rgba(185,28,28,.3); }}
+.asset-row .meta .access-pill.watch {{ color:var(--warn); border-color:rgba(154,74,18,.28); }}
+.empty {{ padding:14px 8px; text-align:center; color:var(--muted); font-size:.74rem; }}
 .leaflet-image-layer.precip-radar,
 .leaflet-image-layer.depth-radar,
 .leaflet-image-layer.susc-radar {{
-  -webkit-mask-image: radial-gradient(ellipse 96% 92% at 50% 50%, #000 62%, transparent 100%);
-  mask-image: radial-gradient(ellipse 96% 92% at 50% 50%, #000 62%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 96% 92% at 50% 50%, #000 64%, transparent 100%);
+  mask-image: radial-gradient(ellipse 96% 92% at 50% 50%, #000 64%, transparent 100%);
   image-rendering: auto;
-  filter: saturate(1.28) contrast(1.14) brightness(1.04);
-  transition:opacity .22s ease;
+  filter: saturate(1.08) contrast(1.06);
+  transition:opacity .2s ease;
 }}
 .leaflet-image-layer.precip-radar {{
   mix-blend-mode: screen;
-  filter: saturate(1.45) contrast(1.22) brightness(1.08);
+  filter: saturate(1.15) contrast(1.1) brightness(1.02);
 }}
 .leaflet-image-layer.depth-radar {{
   mix-blend-mode: soft-light;
-  filter: saturate(1.2) contrast(1.18);
+  filter: saturate(1.08) contrast(1.1);
 }}
-.leaflet-image-layer.susc-radar {{ mix-blend-mode: multiply; filter: saturate(1.35) contrast(1.18); }}
-.sparkline-wrap {{
-  margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,.12);
-}}
+.leaflet-image-layer.susc-radar {{ mix-blend-mode: multiply; filter: saturate(1.15) contrast(1.1); }}
+.sparkline-wrap {{ margin-top:6px; }}
 .sparkline-wrap .spark-cap {{
-  font:700 .58rem Syne,sans-serif; letter-spacing:.1em; text-transform:uppercase;
-  color:#9fd7de; margin-bottom:4px;
+  font:700 .56rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:3px;
 }}
-.sparkline-wrap svg {{ display:block; width:100%; height:44px; }}
+.sparkline-wrap svg {{ display:block; width:100%; height:40px; }}
 .sparkline-wrap .spark-readout {{
-  margin-top:2px; font:600 .66rem "IBM Plex Mono",monospace; color:#cfe8ec;
+  margin-top:2px; font:600 .62rem "IBM Plex Mono",monospace; color:var(--accent-deep);
 }}
 .shortlist-actions {{
-  display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 0;
+  display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0;
 }}
 .shortlist-actions button {{
-  border:1px solid var(--line); background:#fff; color:var(--ink-soft);
-  border-radius:8px; padding:6px 9px; font:600 .68rem Figtree,sans-serif; cursor:pointer;
+  border:0; background:transparent; color:var(--muted);
+  border-radius:0; padding:2px 0; font:600 .66rem Figtree,sans-serif; cursor:pointer;
+  text-decoration:underline; text-underline-offset:2px;
 }}
-.shortlist-actions button:hover {{ border-color:var(--accent); color:var(--accent-deep); }}
+.shortlist-actions button:hover {{ color:var(--accent-deep); }}
 .shortlist-actions .status {{
-  flex:1 1 100%; font-size:.64rem; color:var(--muted); min-height:1em;
+  flex:1 1 100%; font-size:.62rem; color:var(--muted); min-height:1em;
 }}
 .drawer .drawer {{
-  margin:8px 0 0; border:1px solid var(--line-soft); border-radius:10px; padding:0 8px 6px;
-  background:rgba(8,40,52,.03);
+  margin:8px 0 0; border:1px solid var(--line-soft); border-radius:6px; padding:0 8px 6px;
+  background:rgba(8,40,52,.02);
 }}
 .drawer .drawer > summary {{
-  font:700 .62rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase;
-  color:#7d91a1; padding:8px 2px;
+  font:700 .58rem Syne,sans-serif; letter-spacing:.06em; text-transform:uppercase;
+  color:#7d91a1; padding:7px 2px;
 }}
 @media print {{
   body {{ display:block; background:#fff; }}
   aside {{ max-height:none !important; border:0 !important; }}
-  .map-stage, .radar-hud, .map-key-float, .honesty-line, .brand::before, .brand::after {{ display:none !important; }}
+  .map-stage, .radar-hud, .map-key-float, .honesty-line {{ display:none !important; }}
   .print-snapshot {{ display:block !important; }}
 }}
 .print-snapshot {{ display:none; padding:16px; font:500 .85rem Figtree,sans-serif; }}
 .print-snapshot h1 {{ font:800 1.2rem Syne,sans-serif; margin:0 0 8px; }}
-.print-snapshot pre {{ white-space:pre-wrap; background:#f4f8fa; padding:12px; border-radius:8px; }}
-.leaflet-control-zoom a {{ border-radius:8px !important; }}
-.marker-key {{
-  margin:8px 0 0; padding:10px 11px; border-radius:12px; font-size:.68rem; line-height:1.35;
-  color:var(--muted); background:rgba(8,40,52,.04); border:1px solid var(--line-soft);
-}}
-.marker-key > b {{ display:block; color:var(--ink-soft); font:700 .62rem Syne,sans-serif;
-  letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }}
-.map-dot-toggles {{ display:grid; grid-template-columns:1fr 1fr; gap:5px; margin:0 0 10px; }}
-.map-dot-toggles .layer-btn {{ font-size:.7rem; padding:7px 8px 7px 26px; }}
-.map-legend-rows {{ display:flex; flex-direction:column; gap:6px; }}
-.map-legend-row {{ display:flex; align-items:center; gap:8px; color:var(--ink-soft); font-size:.7rem; }}
+.print-snapshot pre {{ white-space:pre-wrap; background:#f4f8fa; padding:12px; border-radius:6px; }}
+.leaflet-control-zoom a {{ border-radius:6px !important; }}
+.marker-key {{ margin:4px 0 0; }}
+.map-dot-toggles {{ display:grid; grid-template-columns:1fr 1fr; gap:4px; margin:0 0 8px; }}
+.map-dot-toggles .layer-btn {{ font-size:.68rem; padding:6px 7px 6px 24px; }}
+.map-legend-rows {{ display:flex; flex-direction:column; gap:5px; }}
+.map-legend-row {{ display:flex; align-items:center; gap:7px; color:var(--ink-soft); font-size:.66rem; }}
 .map-legend-row span {{ color:var(--muted); }}
-.leg-sw {{ flex:0 0 auto; width:18px; height:18px; position:relative; }}
-.leg-sw svg {{ display:block; width:18px; height:18px; }}
+.leg-sw {{ flex:0 0 auto; width:16px; height:16px; position:relative; }}
+.leg-sw svg {{ display:block; width:16px; height:16px; }}
 .access-legend {{
-  margin-top:8px; padding-top:8px; border-top:1px dashed var(--line-soft);
-  display:flex; flex-direction:column; gap:5px;
+  margin-top:6px; padding-top:6px; border-top:1px solid var(--line-soft);
+  display:flex; flex-direction:column; gap:4px;
 }}
 .access-legend .cap {{
-  font:700 .58rem Syne,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:#7d91a1;
+  font:700 .56rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase; color:#7d91a1;
 }}
 .map-key-float {{
-  position:absolute; z-index:650; left:12px; bottom:86px; max-width:min(280px, calc(100% - 24px));
-  padding:10px 12px; border-radius:12px; background:rgba(7,24,32,.88); color:#d7eef2;
-  border:1px solid rgba(255,255,255,.12); box-shadow:0 10px 28px rgba(0,0,0,.28);
-  font-size:.68rem; line-height:1.35; backdrop-filter:blur(10px);
-  animation:riseIn .4s var(--ease);
+  position:absolute; z-index:650; left:10px; bottom:78px; max-width:min(220px, calc(100% - 20px));
+  padding:8px 10px; border-radius:7px; background:rgba(10,22,28,.86); color:#d7eef2;
+  border:1px solid rgba(255,255,255,.08); font-size:.64rem; line-height:1.35;
 }}
 .map-key-float.collapsed .map-key-float-body {{ display:none; }}
 .map-key-float-head {{
   display:flex; align-items:center; justify-content:space-between; gap:8px;
-  font:700 .62rem Syne,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:#9fd7de;
+  font:700 .58rem Syne,sans-serif; letter-spacing:.08em; text-transform:uppercase; color:#9eb8c0;
 }}
 .map-key-float-head button {{
-  border:0; background:rgba(255,255,255,.08); color:#cfe8ec; border-radius:6px;
-  width:22px; height:22px; cursor:pointer; font:700 .75rem Figtree,sans-serif;
+  border:0; background:rgba(255,255,255,.06); color:#cfe8ec; border-radius:4px;
+  width:20px; height:20px; cursor:pointer; font:700 .7rem Figtree,sans-serif;
 }}
-.map-key-float-head button:hover {{ background:rgba(255,255,255,.16); }}
-.map-key-float-body {{ margin-top:8px; display:flex; flex-direction:column; gap:6px; }}
+.map-key-float-head button:hover {{ background:rgba(255,255,255,.12); }}
+.map-key-float-body {{ margin-top:6px; display:flex; flex-direction:column; gap:5px; }}
 .map-key-float .map-legend-row {{ color:#e8f7f9; }}
 .map-key-float .map-legend-row span {{ color:#9eb8c0; }}
 .leaflet-div-icon.access-div {{
-  background:transparent; border:0; width:24px !important; height:24px !important;
+  background:transparent; border:0; width:22px !important; height:22px !important;
 }}
 .access-marker {{
-  width:22px; height:22px; display:flex; align-items:center; justify-content:center;
-  font:700 .48rem Syne,sans-serif; letter-spacing:.04em; color:#fff;
-  border:2px solid; box-shadow:0 1px 4px rgba(0,0,0,.35); line-height:1;
+  width:20px; height:20px; display:flex; align-items:center; justify-content:center;
+  font:700 .46rem Syne,sans-serif; letter-spacing:.03em; color:#fff;
+  border:1.5px solid; line-height:1;
 }}
-.access-marker.dot {{ border-radius:4px; background:rgba(180,83,9,.94); border-color:#7c2d12; border-style:dashed; }}
-.access-marker.dot.limited {{ background:rgba(159,18,57,.94); border-color:#7f1d1d; }}
+.access-marker.dot {{ border-radius:3px; background:rgba(180,83,9,.9); border-color:#7c2d12; border-style:dashed; }}
+.access-marker.dot.limited {{ background:rgba(159,18,57,.9); border-color:#7f1d1d; }}
 .access-marker.ev511 {{
   clip-path:polygon(50% 6%, 94% 88%, 6% 88%); border:0; border-radius:0;
-  background:#b45309; box-shadow:none; font-size:.4rem; padding-top:7px;
+  background:#b45309; box-shadow:none; font-size:.38rem; padding-top:6px;
 }}
 .access-marker.ev511.limited {{ background:#9f1239; }}
-.access-marker.mta {{ border-radius:50%; background:rgba(13,143,156,.94); border-color:#045963; border-style:solid; }}
-.access-marker.mta.limited {{ background:rgba(159,18,57,.94); border-color:#7f1d1d; border-style:dashed; }}
-.access-marker.mta.watch {{ border-style:dashed; border-color:#b45309; background:rgba(180,83,9,.9); }}
+.access-marker.mta {{ border-radius:50%; background:rgba(10,127,138,.9); border-color:#045963; border-style:solid; }}
+.access-marker.mta.limited {{ background:rgba(159,18,57,.9); border-color:#7f1d1d; border-style:dashed; }}
+.access-marker.mta.watch {{ border-style:dashed; border-color:#b45309; background:rgba(180,83,9,.88); }}
 .compare-strip {{
-  margin:8px 0 4px; padding:8px 10px; border-radius:8px;
-  background:rgba(8,40,52,.06); border:1px solid rgba(8,40,52,.1);
-  font:500 .72rem/1.35 Figtree,sans-serif; color:var(--ink-muted);
+  margin:6px 0 0; padding:6px 8px; border-radius:5px;
+  background:rgba(8,40,52,.04); border:1px solid var(--line-soft);
+  font:500 .68rem/1.35 Figtree,sans-serif; color:var(--muted);
 }}
 .compare-strip b {{ color:var(--ink); font-weight:700; }}
 .compare-strip .compare-kicker {{
-  font:700 .62rem Syne,sans-serif; letter-spacing:.06em; text-transform:uppercase;
-  color:var(--accent-deep); margin-bottom:4px;
+  font:700 .56rem Syne,sans-serif; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--accent-deep); margin-bottom:3px;
 }}
+.rail-compact details.drawer > summary {{ padding-bottom:6px; }}
 </style>
 </head>
 <body>
@@ -482,21 +467,20 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       <button type="button" id="btnPrintSnapshot">Print / share</button>
       <div class="status" id="snapshotStatus" aria-live="polite"></div>
     </div>
-    <div class="marker-key" id="markerKey">
-      <b>Map layers</b>
-      <div class="map-dot-toggles" role="group" aria-label="Map dot toggles">
-        <label class="layer-btn"><input id="lyWet" type="checkbox" checked>Wet assets (top-N)</label>
-        <label class="layer-btn"><input id="lyTopHits" type="checkbox" checked>Top hits</label>
+    <details class="drawer rail-compact" id="mapLayersDrawer">
+      <summary>Map layers</summary>
+      <div class="map-dot-toggles" role="group" aria-label="Map layer toggles">
+        <label class="layer-btn"><input id="lyWet" type="checkbox" checked>Shortlist markers</label>
+        <label class="layer-btn"><input id="lyTopHits" type="checkbox">Top-hit rings</label>
         <label class="layer-btn"><input id="lyFloodNet" type="checkbox">FloodNet</label>
         <label class="layer-btn"><input id="lyAccess" type="checkbox">DOT / access</label>
       </div>
-      <label class="layer-btn" style="margin-top:6px"><input id="lyIncludeSchools" type="checkbox">All-mode: include schools / full inventory</label>
-      <p class="drawer-note" style="margin-top:8px">Legend lives on the map key. Default map paints shortlist + top decision-class hits — not all wet dots.</p>
-    </div>
+      <label class="layer-btn"><input id="lyIncludeSchools" type="checkbox">All-mode: include schools / full inventory</label>
+      <p class="drawer-note" style="margin-top:6px">Default map: depth + faint precip + shortlist. Access / FloodNet / corridors stay off until opted in.</p>
+    </details>
   </section>
 
   <section class="section" id="floodnetPeaksPanel">
-    <div class="metric" id="floodnetCollapsedMetric"><span>FloodNet OOM</span><b>5 posts · expand</b></div>
     <details class="drawer" id="floodnetDrawer">
       <summary>FloodNet peaks · all 5 Ida posts</summary>
       <p class="drawer-note">Post-level Ida OOM check — does not rescale citywide HAND. All five 2021 posts listed.</p>
@@ -504,7 +488,6 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       <div id="floodnetMeta" class="metric" style="display:none"><span>Primary HAND @ posts</span><b>—</b></div>
       <label class="layer-btn"><input id="lyModelWrong" type="checkbox">Where model is wrong (FloodNet residuals)</label>
       <p class="drawer-note">Residual mode highlights posts where HAND≪street peak — trust-building, not a rescaled depth product.</p>
-      <p class="drawer-note">Map toggle lives under <b>Map layers</b> above (FloodNet · off by default).</p>
       <div class="floodnet-list" id="floodnetList" aria-label="FloodNet Ida peak comparison"><div class="empty">Loading sensor peaks…</div></div>
       <details class="drawer" id="floodnetLaterDrawer">
         <summary>Later FloodNet events</summary>
@@ -518,16 +501,16 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   <section class="section">
     <details class="drawer">
       <summary>Storm layers</summary>
-      <div class="metric"><span>Path</span><b style="font-size:.68rem">MRMS QPE Ida</b></div>
-      <div class="metric" id="timeWindowMetric"><span>Window</span><b style="font-size:.62rem" id="timeWindowVal">+0…+36h</b></div>
+      <div class="metric"><span>Path</span><b style="font-size:.66rem">MRMS QPE Ida</b></div>
+      <div class="metric" id="timeWindowMetric"><span>Window</span><b style="font-size:.6rem" id="timeWindowVal">+0…+36h</b></div>
       <div class="storm-toggles">
         <label class="layer-btn"><input id="lyDepthTot" type="checkbox" checked>Depth</label>
         <label class="layer-btn"><input id="lyE2" type="checkbox" checked>Precip</label>
         <label class="layer-btn"><input id="lyStreets" type="checkbox" checked>Online streets</label>
       </div>
       <p class="drawer-note">Streets need network. Paper basemap + vendored Leaflet/fonts work offline for fixtures.</p>
-      <div class="opacity-row"><span>Precip</span><input id="opPrecip" type="range" min="10" max="92" value="52"><span id="opPrecipVal">52%</span></div>
-      <div class="opacity-row"><span>Depth</span><input id="opDepth" type="range" min="15" max="92" value="74"><span id="opDepthVal">74%</span></div>
+      <div class="opacity-row"><span>Precip</span><input id="opPrecip" type="range" min="10" max="92" value="34"><span id="opPrecipVal">34%</span></div>
+      <div class="opacity-row"><span>Depth</span><input id="opDepth" type="range" min="15" max="92" value="70"><span id="opDepthVal">70%</span></div>
       <div class="legend-swatch precip" title="Precip"></div>
       <div class="legend-swatch depth" title="Depth"></div>
       <span id="depthTimelineNote" hidden></span>
@@ -636,18 +619,28 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     <button type="button" class="sel-close" id="selClose" aria-label="Close">×</button>
     <div class="sel-kicker" id="selKicker">Selected asset</div>
     <h3 id="selName">—</h3>
-    <p id="selBody">—</p>
-    <div class="sel-chips" id="selChips"></div>
-    <div class="compare-strip" id="selCompareStrip" hidden role="status"></div>
-    <div class="sparkline-wrap" id="selSparkWrap" hidden>
-      <div class="spark-cap">Depth vs lead (HAND cm)</div>
-      <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to scrubber"></svg>
-      <div class="spark-readout" id="selSparkReadout">—</div>
+    <div class="sel-block">
+      <div class="sel-block-label">Depth</div>
+      <p id="selBody">—</p>
+      <div class="sparkline-wrap" id="selSparkWrap" hidden>
+        <div class="spark-cap">Depth vs lead (HAND cm)</div>
+        <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to scrubber"></svg>
+        <div class="spark-readout" id="selSparkReadout">—</div>
+      </div>
+    </div>
+    <div class="sel-block">
+      <div class="sel-block-label">Access</div>
+      <div class="sel-access-line" id="selAccessLine">—</div>
+      <div class="sel-access-note" id="selAccessNote"></div>
+    </div>
+    <div class="sel-block">
+      <div class="sel-block-label">Context</div>
+      <div class="sel-chips" id="selChips"></div>
+      <div class="compare-strip" id="selCompareStrip" hidden role="status"></div>
       <div class="consequence-cap">Consequence timeline (research)</div>
       <div class="consequence-line" id="selConsequence">—</div>
     </div>
     <div class="sel-hint" id="selHint"></div>
-    <div class="sel-access-note" id="selAccessNote"></div>
   </div>
   <div class="coach-overlay" id="coachOverlay" hidden>
     <div class="coach-card" role="dialog" aria-label="Decision Desk quick start">
@@ -656,27 +649,23 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       <button type="button" id="coachDismiss">Got it</button>
     </div>
   </div>
-  <div class="map-key-float" id="mapKeyFloat">
+  <div class="map-key-float collapsed" id="mapKeyFloat">
     <div class="map-key-float-head">
       <span>Map key</span>
-      <button type="button" id="mapKeyFloatToggle" aria-label="Collapse map key" aria-expanded="true">–</button>
+      <button type="button" id="mapKeyFloatToggle" aria-label="Expand map key" aria-expanded="false">+</button>
     </div>
     <div class="map-key-float-body">
       <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="6.5" fill="rgba(27,192,205,.15)" stroke="#1bc0cd" stroke-width="1.6" stroke-dasharray="3.2 2.4"/></svg></span>
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="6.5" fill="rgba(27,192,205,.12)" stroke="#1bc0cd" stroke-width="1.5" stroke-dasharray="3.2 2.4"/></svg></span>
         <span>Dashed = top hit</span>
       </div>
       <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="5.5" fill="#1bc0cd" stroke="#042227" stroke-width="2"/></svg></span>
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="5.5" fill="#0a7f8a" stroke="#042227" stroke-width="1.8"/></svg></span>
         <span>Filled = selected</span>
       </div>
       <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><line x1="2" y1="9" x2="16" y2="9" stroke="#7dd3de" stroke-width="3.2" stroke-linecap="round"/><line x1="3" y1="3" x2="15" y2="15" stroke="#1bc0cd" stroke-width="1.3"/></svg></span>
+        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><line x1="2" y1="9" x2="16" y2="9" stroke="#5eb8c2" stroke-width="3" stroke-linecap="round"/><line x1="3" y1="3" x2="15" y2="15" stroke="#0a7f8a" stroke-width="1.2"/></svg></span>
         <span>Line-through = selected road</span>
-      </div>
-      <div class="map-legend-row">
-        <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><rect x="3.5" y="3.5" width="11" height="11" rx="2" fill="#b45309" stroke="#fff" stroke-width="1" stroke-dasharray="2 1.5"/></svg></span>
-        <span>DOT square · 511 △ · MTA ○</span>
       </div>
     </div>
   </div>
@@ -732,9 +721,9 @@ const PaperBasemap = L.GridLayer.extend({{
     const tile = document.createElement("canvas");
     tile.width = tile.height = 256;
     const ctx = tile.getContext("2d");
-    ctx.fillStyle = "#d5e4ea";
+    ctx.fillStyle = "#d9e3e8";
     ctx.fillRect(0, 0, 256, 256);
-    ctx.strokeStyle = "rgba(8,40,52,.04)";
+    ctx.strokeStyle = "rgba(8,40,52,.03)";
     for (let i = 0; i < 256; i += 32) {{
       ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 256); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(256, i); ctx.stroke();
@@ -746,7 +735,7 @@ const paperBasemap = new PaperBasemap({{ attribution: "Local paper basemap · of
 paperBasemap.addTo(mapLeft);
 const streetsBasemap = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{{z}}/{{y}}/{{x}}",
-  {{ maxZoom: 19, attribution: "Tiles © Esri · optional online", opacity: 0.92 }}
+  {{ maxZoom: 19, attribution: "Tiles © Esri · optional online", opacity: 0.72 }}
 );
 // Online streets are optional; default on only when the browser reports online.
 if (typeof navigator === "undefined" || navigator.onLine !== false) {{
@@ -830,7 +819,7 @@ let frames = [], suscFrames = [], depthCumFrames = [], e2Layers = [], suscLayers
 let activeE2 = null, activeSusc = null, activeDepth = null, e2Total = null, depthTotal = null, sfincsLayer = null, sfincsNestedLayer = null;
 let fadeE2 = null, fadeDepth = null, fadeSusc = null, fadeTimer = null;
 let playing = false, playTimer = null, leadIndex = 0;
-let desk = null, wetLayer = null, selectedLayer = null, selectedId = null;
+let desk = null, deskGeoSource = null, wetLayer = null, selectedLayer = null, selectedId = null;
 let highlightLayer = null, highlightIds = [];
 let floodnetLayer = null, floodnetStations = [], selectedFloodnetId = null;
 let floodnetLaterLayer = null;
@@ -1136,14 +1125,21 @@ function filteredAssets() {{
 function mapPaintAssets() {{
   const byId = Object.fromEntries((desk.assets || []).map(a => [a.id, a]));
   const shortlist = DEMO_SHORTLIST.map(id => byId[id]).filter(Boolean);
-  const tops = (desk.assets || []).filter(isDecisionClassAsset).slice(0, MAP_PAINT_TOP_N);
   const seen = new Set();
   const out = [];
-  [...shortlist, ...tops].forEach(a => {{
+  // Default: shortlist markers only. Top-hit rings also unlock ranked wet top-N.
+  shortlist.forEach(a => {{
     if (!a || seen.has(a.id)) return;
     seen.add(a.id);
     out.push(a);
   }});
+  if (topHitsEnabled()) {{
+    (desk.assets || []).filter(isDecisionClassAsset).slice(0, MAP_PAINT_TOP_N).forEach(a => {{
+      if (!a || seen.has(a.id)) return;
+      seen.add(a.id);
+      out.push(a);
+    }});
+  }}
   if (selectedId && byId[selectedId] && !seen.has(selectedId)) out.push(byId[selectedId]);
   return out;
 }}
@@ -1217,11 +1213,11 @@ function renderSparkline(a) {{
   // Band thresholds as faint guides (3 / 8 / 15 cm)
   const guides = [3, 8, 15].filter(t => t < maxV).map(t => {{
     const y = h - pad - (t / maxV) * (h - pad * 2);
-    return `<line x1="${{pad}}" y1="${{y.toFixed(1)}}" x2="${{w - pad}}" y2="${{y.toFixed(1)}}" stroke="rgba(255,255,255,.14)" stroke-width="1"/>`;
+    return `<line x1="${{pad}}" y1="${{y.toFixed(1)}}" x2="${{w - pad}}" y2="${{y.toFixed(1)}}" stroke="rgba(8,40,52,.1)" stroke-width="1"/>`;
   }}).join("");
   svg.innerHTML = guides +
-    `<polyline fill="none" stroke="#1ae4b6" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" points="${{poly}}"/>` +
-    `<circle id="sparkCursor" cx="${{xs[0]}}" cy="${{ys[0]}}" r="3.6" fill="#f9ba38" stroke="#042227" stroke-width="1.4"/>`;
+    `<polyline fill="none" stroke="#0a7f8a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="${{poly}}"/>` +
+    `<circle id="sparkCursor" cx="${{xs[0]}}" cy="${{ys[0]}}" r="3.2" fill="#b45309" stroke="#fff" stroke-width="1.2"/>`;
   syncSparklineToScrubber();
 }}
 function syncSparklineToScrubber() {{
@@ -1262,35 +1258,34 @@ function selectAsset(id) {{
     }});
   }}
   if (geomLayer && geomLayer.feature && geomLayer.feature.geometry && geomLayer.feature.geometry.type !== "Point") {{
-    // Teal "line-through" selection: bright corridor stroke + darker underlay.
+    // Quiet line-through selection: dark underlay + accent stroke.
     selectedLayer = L.layerGroup([
       L.geoJSON(geomLayer.feature, {{
         pane: "selectPane",
-        style: {{ color:"#042227", weight:11, opacity:0.55, lineCap:"round", lineJoin:"round" }}
+        style: {{ color:"#0a1a22", weight:9, opacity:0.45, lineCap:"round", lineJoin:"round" }}
       }}),
       L.geoJSON(geomLayer.feature, {{
         pane: "selectPane",
-        style: {{ color:"#1bc0cd", weight:5.5, opacity:1, lineCap:"round", lineJoin:"round", dashArray:"10 6" }}
+        style: {{ color:"#0a7f8a", weight:4.5, opacity:1, lineCap:"round", lineJoin:"round", dashArray:"8 5" }}
       }}),
     ]).addTo(mapLeft);
   }} else {{
     selectedLayer = L.circleMarker(ll, {{
-      pane: "selectPane", radius: 11, color:"#042227", weight:3,
-      fillColor:"#1bc0cd", fillOpacity:0.95
+      pane: "selectPane", radius: 9, color:"#0a1a22", weight:2,
+      fillColor:"#0a7f8a", fillOpacity:0.95
     }}).addTo(mapLeft);
   }}
   const card = document.getElementById("selectedCard");
   const acc = accessStatus(a);
-  // Opt-in access overlay when the selected asset has a non-open research chip.
-  const lyAcc = document.getElementById("lyAccess");
-  if (lyAcc && (acc === "limited" || acc === "watch") && !lyAcc.checked) {{
-    lyAcc.checked = true;
-    rebuildAccessOverlay();
-  }}
+  // Access overlay stays opt-in (Map layers) — dock still shows access status.
   document.getElementById("selKicker").textContent = typeLabel(a.asset_type) + " · #" + (a.rank != null ? a.rank : "—");
   document.getElementById("selName").textContent = a.name;
   document.getElementById("selBody").innerHTML =
     "<b>" + Number(a.max_depth_cm || 0).toFixed(1) + " cm</b> · " + (a.band_label || a.band || "—") + " · " + leadLabel(a);
+  const accessLine = document.getElementById("selAccessLine");
+  if (accessLine) {{
+    accessLine.innerHTML = `<span class="sel-chip access-${{acc}}">${{accessChipLabel(acc)}}</span>`;
+  }}
   const extraChips = [];
   if (a.structure) extraChips.push(`<span class="sel-chip">Structure · ${{a.structure}}</span>`);
   if (a.stormwater_chip) extraChips.push(`<span class="sel-chip">${{a.stormwater_chip}}</span>`);
@@ -1301,16 +1296,15 @@ function selectAsset(id) {{
     const cls = ec.disagree ? "disagree" : "agree";
     extraChips.push(`<span class="sel-chip ${{cls}}" title="${{(ec.hover || "").replace(/"/g, "&quot;")}}">${{ec.chip}}</span>`);
   }}
-  document.getElementById("selChips").innerHTML =
-    `<span class="sel-chip access-${{acc}}">${{accessChipLabel(acc)}}</span>` +
-    `<span class="sel-chip">${{a.band_label}}</span>` +
-    extraChips.join("");
+  document.getElementById("selChips").innerHTML = extraChips.length
+    ? extraChips.join("")
+    : `<span class="sel-chip">${{a.band_label || "HAND context"}}</span>`;
   document.getElementById("selHint").textContent = a.action_hint ||
     "Research depth only — not an SOP trigger.";
   const sigs = (a.access_signals || []).map(s => s.label || s.source).filter(Boolean);
   document.getElementById("selAccessNote").textContent = sigs.length
     ? ("Signals: " + sigs.slice(0, 2).join(" · ") + " — not official closures.")
-    : "Open DOT/MTA signals + research depth — not official closures.";
+    : "Access overlay optional under Map layers — not official closures.";
   renderSparkline(a);
   renderConsequenceTimeline(a);
   renderCompareStrip(a);
@@ -1613,8 +1607,8 @@ function applyAutoHighlight(selectFirst) {{
   highlightLayer = L.geoJSON({{ type: "FeatureCollection", features: feats }}, {{
     pane: "selectPane",
     pointToLayer: (f, ll) => L.circleMarker(ll, {{
-      radius: 14, color: "#0d8f9c", weight: 2.5, dashArray: "5 4",
-      fillColor: "#1bc0cd", fillOpacity: 0.12, pane: "selectPane"
+      radius: 12, color: "#0a7f8a", weight: 2, dashArray: "4 3",
+      fillColor: "#0a7f8a", fillOpacity: 0.08, pane: "selectPane"
     }}),
     onEachFeature: (f, layer) => {{
       layer.bindTooltip("Top hit · " + (f.properties.name || ""));
@@ -1642,13 +1636,31 @@ function applyDeskPayload(json, geo, mode) {{
   const badge = document.getElementById("accessFixtureBadge");
   if (badge) {{
     const nJoin = accMeta.joined_assets != null ? accMeta.joined_assets : "—";
-    badge.style.display = "block";
-    badge.textContent = "Replay fixture (synthetic joins labeled) · ida_v1 · joined " + nJoin +
+    badge.dataset.fullText = "Replay fixture (synthetic joins labeled) · ida_v1 · joined " + nJoin +
       (accMeta.fixture_pack ? (" · " + accMeta.fixture_pack) : "");
+    badge.textContent = badge.dataset.fullText;
+    syncAccessFixtureBadge();
   }}
-  if (wetLayer) {{ mapLeft.removeLayer(wetLayer); wetLayer = null; }}
+  deskGeoSource = geo || null;
   renderAssetList();
-  const sourceFeats = (geo && geo.features) ? geo.features
+  rebuildWetLayer();
+  rebuildAccessOverlay();
+}}
+function syncAccessFixtureBadge() {{
+  const badge = document.getElementById("accessFixtureBadge");
+  if (!badge) return;
+  const on = document.getElementById("lyAccess") && document.getElementById("lyAccess").checked;
+  if (on && badge.dataset.fullText) {{
+    badge.style.display = "block";
+    badge.textContent = badge.dataset.fullText;
+  }} else {{
+    badge.style.display = "none";
+  }}
+}}
+function rebuildWetLayer() {{
+  if (!desk) return;
+  if (wetLayer) {{ mapLeft.removeLayer(wetLayer); wetLayer = null; }}
+  const sourceFeats = (deskGeoSource && deskGeoSource.features) ? deskGeoSource.features
     : (desk.assets || []).map(a => ({{
         type: "Feature",
         properties: a,
@@ -1663,15 +1675,15 @@ function applyDeskPayload(json, geo, mode) {{
     pane: "vectorPane",
     style: f => {{
       const band = f.properties && f.properties.band;
-      const color = band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
-      return {{ color, weight: 3.5, opacity: 0.85 }};
+      const color = band === "hazard" ? "#8f3a3a" : band === "deep_ponding" ? "#9a5a2a" : "#7a6a2e";
+      return {{ color, weight: 3, opacity: 0.72 }};
     }},
     pointToLayer: (f, ll) => {{
       const band = f.properties && f.properties.band;
       const ft = (f.properties && f.properties.facility_type) || "";
       const color = (ft === "school") ? "#94a3b8"
-        : band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
-      return L.circleMarker(ll, {{ radius:5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.9, pane:"pointPane" }});
+        : band === "hazard" ? "#8f3a3a" : band === "deep_ponding" ? "#9a5a2a" : "#7a6a2e";
+      return L.circleMarker(ll, {{ radius:4.5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.88, pane:"pointPane" }});
     }},
     onEachFeature: (f, layer) => {{
       layer.on("click", () => selectAsset(f.properties.id));
@@ -1679,7 +1691,6 @@ function applyDeskPayload(json, geo, mode) {{
     }}
   }});
   syncWetLayerVisibility();
-  rebuildAccessOverlay();
 }}
 function loadDecisionDesk() {{
   const mode = needsFullDesk() ? "full" : "shortlist";
@@ -2540,10 +2551,11 @@ document.getElementById("lyE2Tot").onchange = () => {{
 }};
 document.getElementById("lyAccess").onchange = () => {{
   rebuildAccessOverlay();
-  // Auto-enable access overlay when selecting limited/watch assets is handled in selectAsset.
+  syncAccessFixtureBadge();
 }};
 document.getElementById("lyWet").onchange = () => syncWetLayerVisibility();
 document.getElementById("lyTopHits").onchange = () => {{
+  rebuildWetLayer();
   if (!highlightLayer) return;
   if (topHitsEnabled()) {{
     if (!mapLeft.hasLayer(highlightLayer)) highlightLayer.addTo(mapLeft);
