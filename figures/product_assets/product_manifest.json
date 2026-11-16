@@ -5112,5 +5112,13 @@
     "mode": "feathered_boundary_exchange",
     "hand_rmse_m": 0.3200863301753998,
     "honesty": "Feathered nest\u2194coarse boundary exchange for Advanced SFINCS visualization. HAND stays primary; engines are non-peer; NOT SWMM / NOT DEP / NOT NWS."
+  },
+  "live_mrms": {
+    "status_json": "live_mrms_status.json",
+    "available": true,
+    "valid_time_utc": "2026-11-16T13:00:00+00:00",
+    "qpe_product": "MultiSensor_QPE_01H_Pass1_00.00",
+    "default_ux": "ida_fixture_replay",
+    "honesty": "Live MRMS QPE probe vs labeled Ida/Henri fixture loops \u2014 research latency path only. NOT NWS QPF watch/warning / NOT decision-grade ops."
   }
 }

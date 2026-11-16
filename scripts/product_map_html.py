@@ -558,6 +558,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
         <p class="drawer-note" id="eventPickerNote">Henri Event switch enabled when parity is built (radar + official inventory + shortlist).</p>
         <label class="caption" for="stormPathSelect" style="margin-top:6px">Scenario path</label>
         <select id="stormPathSelect" aria-label="Scenario path"></select>
+        <p class="drawer-note" id="liveMrmsNote">MRMS desk loops are fixture replay by default.</p>
       </details>
       <details class="drawer" id="corridorDetails">
         <summary>Corridor impassability (research)</summary>
@@ -2508,6 +2509,17 @@ function syncSfincsPeerMode() {{
   if (!ex.available) {{ el.textContent = ""; return; }}
   const rmse = ex.hand_rmse_m != null ? (" · non-peer HAND overlap RMSE " + Number(ex.hand_rmse_m).toFixed(2) + " m") : "";
   el.textContent = "Exchange: " + (ex.mode || "feathered") + rmse + " — research only, never blended into HAND ranks.";
+}})();
+(function fillLiveMrmsNote() {{
+  const el = document.getElementById("liveMrmsNote");
+  if (!el) return;
+  const live = manifest.live_mrms || {{}};
+  if (live.available && live.valid_time_utc) {{
+    el.textContent = "Live MRMS QPE probe reachable @ " + String(live.valid_time_utc).replace("T", " ") +
+      " — desk loops stay Ida/Henri fixtures (ops latency probe only, not NWS).";
+  }} else {{
+    el.textContent = "Live MRMS probe unavailable — desk uses labeled Ida/Henri fixture replay. See docs/live-mrms-qpf-path.md.";
+  }}
 }})();
 document.getElementById("lySfincsNested").onchange = () => {{
   if (!sfincsNestedLayer) return;

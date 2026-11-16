@@ -4,10 +4,10 @@ ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 DEMO_TAG ?= demo-ida-v1
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains nest-exchange relativize vendor test ci-guard demo-tag
+.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains nest-exchange live-mrms relativize vendor test ci-guard demo-tag
 
 help:
-	@echo "Decision Desk: desk html access-pack disagreement henri-parity corridor denser-drains vendor relativize test demo-tag"
+	@echo "Decision Desk: desk html henri-parity corridor denser-drains nest-exchange live-mrms vendor test demo-tag"
 	@echo "Legacy: validation live-ida live clean"
 	@echo "Earth2Studio is a dependency — use E2S_PYTHON for GPU forecasts."
 
@@ -105,3 +105,7 @@ clean:
 # P2.6 feathered nested SFINCS exchange + non-peer HAND calib (Advanced only)
 nest-exchange:
 	$(ACTIVATE) && python scripts/build_sfincs_nest_exchange.py
+
+# P2.7 live MRMS QPE probe + fixture honesty status
+live-mrms:
+	$(ACTIVATE) && python scripts/build_live_mrms_path.py
