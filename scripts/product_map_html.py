@@ -36,62 +36,79 @@ def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
 <link rel="stylesheet" href="vendor/leaflet/1.9.4/leaflet.css">
 <style>
 :root {{
-  --ink:#14161a; --ink-soft:#2c3138; --muted:#6b7280; --paper:#f3f4f6;
-  --rail:#fafafb; --line:rgba(20,22,26,.11); --line-soft:rgba(20,22,26,.06);
+  --ink:#14161a; --ink-soft:#2c3138; --muted:#6b7280; --paper:#eef0f3;
+  --rail:#f7f8fa; --line:rgba(20,22,26,.11); --line-soft:rgba(20,22,26,.06);
   --accent:#c2410c; --accent-deep:#9a3412; --accent-soft:rgba(194,65,12,.10);
   --brand:#16181c; --brand-fg:#eef0f2; --brand-muted:rgba(238,240,242,.68);
   --warn:#9a3412; --warn-bg:rgba(154,52,18,.06); --warn-line:rgba(154,52,18,.22);
   --band-3:#8a6a12; --band-8:#b45309; --band-15:#a31b2e;
-  --hud:rgba(22,24,28,.94); --ease:cubic-bezier(.22,.8,.28,1);
+  --hud:rgba(18,20,24,.94); --ease:cubic-bezier(.22,.8,.28,1);
   --sans:"DM Sans",ui-sans-serif,sans-serif;
   --serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
   --radius:4px;
+  --rail-w:268px;
+  --dock-w:320px;
 }}
 * {{ box-sizing:border-box; }}
 html,body {{
   margin:0; height:100%; font-family:var(--sans); color:var(--ink);
-  background:var(--paper);
+  background:#1a1c20;
   -webkit-font-smoothing:antialiased;
 }}
-body {{ display:grid; grid-template-columns:minmax(292px,336px) 1fr; min-height:100%; }}
-@media (max-width:980px) {{
-  body {{ grid-template-columns:1fr; grid-template-rows:auto minmax(52vh,1fr); }}
-  aside {{ max-height:48vh; border-right:0 !important; border-bottom:1px solid var(--line); }}
-  .asset-row {{ padding:11px 10px 11px 12px; min-height:50px; }}
-  .asset-list {{ max-height:min(56vh,480px); }}
-  .brand {{ padding:18px 16px 16px; }}
-  .brand-mark {{ font-size:1.42rem; }}
-  .chip-row {{ gap:4px; }}
+body {{
+  display:grid; grid-template-columns:var(--rail-w) minmax(0,1fr);
+  min-height:100%; height:100vh; overflow:hidden;
 }}
-aside {{
-  position:relative; overflow:auto; padding:0 0 18px;
-  background:var(--rail);
+body.has-selection {{ --dock-open:1; }}
+@media (max-width:980px) {{
+  body {{ grid-template-columns:1fr; grid-template-rows:minmax(42vh,48vh) minmax(0,1fr); height:100dvh; }}
+  aside.command-rail {{ max-height:48vh; border-right:0 !important; border-bottom:1px solid var(--line); }}
+  .inspector-dock {{ width:min(100%, var(--dock-w)); }}
+  .brand {{ padding:14px 14px 12px; }}
+  .brand-mark {{ font-size:1.28rem; }}
+}}
+aside.command-rail {{
+  position:relative; z-index:20; display:flex; flex-direction:column;
+  min-height:0; overflow:hidden; background:var(--rail);
   border-right:1px solid var(--line);
 }}
+.rail-scroll {{ flex:1 1 auto; min-height:0; overflow:auto; padding:0 0 16px; }}
 .brand {{
-  position:relative; margin:0; padding:22px 16px 18px;
-  background:var(--brand);
-  color:var(--brand-fg);
+  flex:0 0 auto; margin:0; padding:16px 14px 14px;
+  background:var(--brand); color:var(--brand-fg);
   border-bottom:1px solid rgba(255,255,255,.06);
 }}
-@keyframes riseIn {{ from {{ opacity:0; transform:translateY(4px); }} to {{ opacity:1; transform:none; }} }}
+@keyframes dockIn {{
+  from {{ opacity:0; transform:translateX(12px); }}
+  to {{ opacity:1; transform:none; }}
+}}
+@keyframes cardIn {{
+  from {{ opacity:0; transform:translateY(3px); }}
+  to {{ opacity:1; transform:none; }}
+}}
+@keyframes pulseLoad {{
+  0%,100% {{ opacity:.45; }} 50% {{ opacity:.9; }}
+}}
 @media (prefers-reduced-motion: reduce) {{
-  .selected-card {{ animation:none !important; }}
-  .asset-row, .chip {{ transition:none !important; }}
+  .inspector-dock, .briefing-card, .timeline-hud .play {{ transition:none !important; animation:none !important; }}
   * {{ scroll-behavior:auto !important; }}
 }}
 .coach-overlay {{
   position:fixed; inset:0; z-index:2000; pointer-events:none;
-  background:rgba(20,22,26,.22);
+  background:rgba(20,22,26,.18);
 }}
 .coach-card {{
-  pointer-events:auto; position:absolute; left:16px; top:188px; width:min(280px,84vw);
+  pointer-events:auto; position:absolute; left:calc(var(--rail-w) + 16px); top:56px; width:min(300px,84vw);
   padding:12px 12px 10px; border-radius:var(--radius);
   background:#1c1f24; color:var(--brand-fg); border:1px solid rgba(255,255,255,.08);
   font:500 .76rem/1.45 var(--sans);
 }}
 .coach-card strong {{ font:600 .68rem var(--sans); letter-spacing:.04em; text-transform:uppercase; display:block; margin-bottom:5px; color:#c4c9d0; }}
+.coach-card kbd {{
+  display:inline-block; padding:0 4px; border-radius:2px; border:1px solid rgba(255,255,255,.18);
+  font:600 .62rem var(--mono); color:#d7dbe0;
+}}
 .coach-card button {{
   margin-top:8px; border:0; border-radius:var(--radius); padding:6px 10px; cursor:pointer;
   background:rgba(255,255,255,.1); color:var(--brand-fg); font:600 .7rem var(--sans);
@@ -105,35 +122,35 @@ aside {{
 }}
 .consequence-line {{ font:500 .7rem/1.35 var(--sans); color:var(--ink-soft); }}
 .brand-kicker {{
-  position:relative; font:600 .58rem var(--sans); letter-spacing:.12em;
-  text-transform:uppercase; color:var(--brand-muted); margin-bottom:8px;
+  font:600 .56rem var(--sans); letter-spacing:.12em;
+  text-transform:uppercase; color:var(--brand-muted); margin-bottom:6px;
 }}
 .brand-mark {{
-  position:relative; font:700 clamp(1.38rem,2.8vw,1.68rem)/1.08 var(--serif);
+  font:700 clamp(1.2rem,2.2vw,1.42rem)/1.08 var(--serif);
   letter-spacing:-.02em;
 }}
 .brand-tag {{
-  position:relative; margin-top:8px; font-size:.76rem; line-height:1.4;
-  max-width:30ch; color:var(--brand-muted); font-weight:500;
+  margin-top:6px; font-size:.72rem; line-height:1.35;
+  max-width:28ch; color:var(--brand-muted); font-weight:500;
 }}
 .honesty-line {{
-  position:sticky; top:0; z-index:5; margin:0; padding:8px 14px;
-  background:rgba(255,250,246,.96); border-bottom:1px solid var(--warn-line);
-  color:var(--warn); font:600 .68rem/1.35 var(--sans);
+  position:sticky; top:0; z-index:5; margin:0; padding:7px 12px;
+  background:rgba(255,250,246,.97); border-bottom:1px solid var(--warn-line);
+  color:var(--warn); font:600 .64rem/1.35 var(--sans);
 }}
 .magnitude-chip {{
-  margin:8px 14px 0; padding:6px 9px; border-radius:var(--radius);
+  margin:8px 12px 0; padding:5px 8px; border-radius:var(--radius);
   background:transparent; border:1px solid var(--warn-line);
-  color:var(--warn); font:500 .68rem/1.35 var(--sans);
+  color:var(--warn); font:500 .64rem/1.35 var(--sans);
 }}
-.magnitude-chip b {{ font:600 .68rem var(--mono); color:var(--accent-deep); }}
+.magnitude-chip b {{ font:600 .64rem var(--mono); color:var(--accent-deep); }}
 .access-fixture-badge {{
-  margin:6px 14px 0; padding:5px 8px; border-radius:var(--radius); display:none;
+  margin:6px 12px 0; padding:5px 8px; border-radius:var(--radius); display:none;
   background:transparent; border:1px solid var(--line-soft);
-  color:var(--muted); font:500 .64rem/1.35 var(--sans);
+  color:var(--muted); font:500 .62rem/1.35 var(--sans);
 }}
 #assetBanner {{
-  margin:8px 14px 0; padding:8px 10px; border-radius:var(--radius); display:none;
+  margin:8px 12px 0; padding:8px 10px; border-radius:var(--radius); display:none;
   background:#3b0d0d; border:1px solid #7f1d1d; color:#fecaca; font-size:.72rem;
 }}
 .sfincs-peer-banner {{
@@ -142,59 +159,87 @@ aside {{
   background:rgba(59,13,13,.92); border:1px solid #7f1d1d; color:#fecaca;
   font:600 .7rem/1.35 var(--sans); pointer-events:none;
 }}
+body.has-selection .sfincs-peer-banner {{ right:calc(var(--dock-w) + 16px); }}
 .hand-dimmed .leaflet-image-layer {{ filter:saturate(.35) opacity(.45); }}
-.section {{ padding:12px 14px 4px; }}
+.section {{ padding:10px 12px 2px; }}
 .section + .section {{ border-top:1px solid var(--line-soft); }}
 .section h2 {{
   display:flex; align-items:baseline; justify-content:space-between; gap:8px;
-  font:600 .62rem var(--sans); margin:0 0 8px;
+  font:600 .6rem var(--sans); margin:0 0 8px;
   text-transform:uppercase; letter-spacing:.1em; color:var(--muted);
 }}
-.section h2 .hint {{ font:500 .64rem var(--sans); letter-spacing:0; text-transform:none; color:#9aa1ab; }}
+.section h2 .hint {{ font:500 .62rem var(--sans); letter-spacing:0; text-transform:none; color:#9aa1ab; }}
 .metric {{
   display:flex; justify-content:space-between; align-items:baseline; gap:10px;
-  font-size:.74rem; padding:0 0 8px; margin:0 0 6px; border-bottom:1px solid var(--line-soft);
+  font-size:.72rem; padding:0 0 7px; margin:0 0 6px; border-bottom:1px solid var(--line-soft);
 }}
-.metric b, .readout {{ font:600 .76rem var(--mono); color:var(--accent-deep); }}
-label.caption {{ display:block; font-size:.64rem; color:var(--muted); font-weight:600; margin-bottom:3px; letter-spacing:.02em; }}
+.metric b, .readout {{ font:600 .74rem var(--mono); color:var(--accent-deep); }}
+label.caption {{ display:block; font-size:.62rem; color:var(--muted); font-weight:600; margin-bottom:3px; letter-spacing:.02em; }}
 select, input[type=search] {{
-  width:100%; appearance:none; padding:7px 9px; border-radius:var(--radius);
+  width:100%; appearance:none; padding:6px 8px; border-radius:var(--radius);
   border:1px solid var(--line); background:#fff;
-  font:500 .8rem var(--sans); color:var(--ink);
+  font:500 .76rem var(--sans); color:var(--ink);
   transition:border-color .15s, box-shadow .15s;
 }}
-select:focus, input[type=search]:focus {{ outline:none; border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft); }}
-.filters {{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 8px; }}
-.chip-row {{ display:flex; flex-wrap:wrap; gap:4px; margin:0 0 7px; }}
-.chip {{
-  border:1px solid var(--line); background:#fff; border-radius:var(--radius);
-  padding:4px 8px; font:600 .64rem var(--sans); color:var(--muted); cursor:pointer;
-  transition:background .14s, border-color .14s, color .14s;
+select:focus, input[type=search]:focus, .briefing-card:focus-visible, .seg:focus-visible, .timeline-hud .play:focus-visible {{
+  outline:none; border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft);
 }}
-.chip:hover {{ color:var(--ink-soft); border-color:#b8bec8; }}
-.chip.active {{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent-deep); }}
-.asset-list, .floodnet-list {{ display:flex; flex-direction:column; gap:1px; overflow:auto; padding-right:2px; }}
-.asset-list {{ max-height:min(48vh,480px); }}
-.floodnet-list {{ max-height:min(28vh,240px); margin-top:8px; }}
-.asset-row {{
-  position:relative; text-align:left; width:100%; border:0; border-radius:var(--radius);
-  background:transparent; padding:8px 8px 8px 10px; cursor:pointer;
-  transition:background .14s var(--ease);
+.command-toolbar {{
+  display:flex; flex-direction:column; gap:6px; margin:0 0 8px;
 }}
-.asset-row::before {{
-  content:""; position:absolute; left:0; top:8px; bottom:8px; width:2px; border-radius:1px;
-  background:transparent; transition:background .14s;
+.seg-row {{
+  display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:0;
+  border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#fff;
 }}
-.asset-row:hover {{ background:rgba(20,22,26,.035); }}
-.asset-row:hover::before {{ background:#b8bec8; }}
-.asset-row.top-hit {{ background:var(--accent-soft); }}
-.asset-row.top-hit::before {{ background:var(--accent); }}
-.asset-row.selected {{ background:rgba(194,65,12,.14); }}
-.asset-row.selected::before {{ background:var(--accent); }}
-.asset-row .top {{ display:flex; justify-content:space-between; gap:8px; align-items:baseline; }}
-.asset-row .name {{ font:600 .8rem var(--sans); letter-spacing:-.01em; }}
-.asset-row .depth {{ font:600 .74rem var(--mono); color:var(--accent-deep); white-space:nowrap; }}
-.asset-row .meta {{ margin-top:2px; display:flex; flex-wrap:wrap; gap:4px; font-size:.64rem; color:var(--muted); }}
+.seg {{
+  border:0; border-right:1px solid var(--line); background:transparent;
+  padding:6px 4px; font:600 .62rem var(--sans); color:var(--muted); cursor:pointer;
+  transition:background .14s, color .14s;
+}}
+.seg:last-child {{ border-right:0; }}
+.seg:hover {{ color:var(--ink-soft); background:rgba(20,22,26,.03); }}
+.seg.active {{ background:var(--accent-soft); color:var(--accent-deep); }}
+.filters {{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:0; }}
+.chip-row {{ display:none; }}
+.chip {{ display:none; }}
+.asset-list, .floodnet-list {{ display:flex; flex-direction:column; gap:6px; overflow:auto; padding-right:2px; }}
+.asset-list {{ max-height:none; flex:1; min-height:120px; }}
+.assets-section {{ display:flex; flex-direction:column; min-height:0; flex:1; }}
+.floodnet-list {{ max-height:min(28vh,220px); margin-top:8px; }}
+.briefing-card {{
+  position:relative; text-align:left; width:100%; border:1px solid transparent;
+  border-radius:var(--radius); background:#fff; padding:9px 10px 8px;
+  cursor:pointer; box-shadow:0 0 0 1px var(--line-soft);
+  transition:background .14s var(--ease), border-color .14s, box-shadow .14s, transform .14s;
+  animation:cardIn .18s var(--ease);
+}}
+.briefing-card:hover {{
+  border-color:rgba(20,22,26,.14); background:#fff; box-shadow:0 1px 0 rgba(20,22,26,.04);
+}}
+.briefing-card:focus-visible {{ border-color:var(--accent); }}
+.briefing-card.is-hover {{ border-color:rgba(194,65,12,.28); }}
+.briefing-card.top-hit {{ box-shadow:inset 2px 0 0 var(--accent); }}
+.briefing-card.selected, .briefing-card[aria-selected="true"] {{
+  border-color:rgba(194,65,12,.45); background:rgba(194,65,12,.06);
+  box-shadow:inset 2px 0 0 var(--accent);
+}}
+.briefing-card .card-top {{
+  display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:start;
+}}
+.briefing-card .rank {{
+  font:600 .62rem var(--mono); color:var(--muted); min-width:1.6em; padding-top:2px;
+}}
+.briefing-card .name {{
+  font:600 .8rem/1.25 var(--sans); letter-spacing:-.01em; color:var(--ink);
+}}
+.briefing-card .depth {{
+  font:600 .78rem var(--mono); color:var(--accent-deep); white-space:nowrap;
+}}
+.briefing-card .card-meta {{
+  margin:5px 0 0 1.6em; display:flex; flex-wrap:wrap; gap:4px; align-items:center;
+  font-size:.62rem; color:var(--muted);
+}}
+.briefing-card .lead-bit {{ font:500 .62rem var(--mono); color:var(--ink-soft); }}
 .band {{ display:inline-flex; align-items:center; padding:1px 5px; border-radius:2px; font:600 .58rem var(--sans); }}
 .band.ponding {{ background:#f5f0dc; color:var(--band-3); }}
 .band.deep_ponding {{ background:#f3e6d8; color:var(--band-8); }}
@@ -222,87 +267,152 @@ select:focus, input[type=search]:focus {{ outline:none; border-color:var(--accen
 .storm-toggles {{ display:grid; grid-template-columns:1fr 1fr; gap:5px; margin:0 0 6px; }}
 details.drawer {{ font-size:.74rem; color:var(--muted); }}
 details.drawer > summary {{
-  cursor:pointer; list-style:none; font:600 .62rem var(--sans); letter-spacing:.08em;
+  cursor:pointer; list-style:none; font:600 .6rem var(--sans); letter-spacing:.08em;
   text-transform:uppercase; color:var(--ink-soft); padding:2px 0 7px;
   display:flex; align-items:center; justify-content:space-between;
 }}
 details.drawer > summary::-webkit-details-marker {{ display:none; }}
 details.drawer > summary::after {{ content:"+"; font:600 .85rem var(--mono); color:var(--muted); }}
 details.drawer[open] > summary::after {{ content:"–"; }}
-.drawer-note {{ margin:0 0 7px; font-size:.68rem; line-height:1.35; color:var(--muted); }}
+.drawer-note {{ margin:0 0 7px; font-size:.66rem; line-height:1.35; color:var(--muted); }}
 .map-stage {{
-  position:relative; min-height:0; height:100%;
-  background:#1a1c20;
+  position:relative; min-width:0; min-height:0; height:100%;
+  background:#1a1c20; overflow:hidden;
 }}
-.map-el {{ position:absolute; inset:0; background:#d8dce2; }}
+.map-el {{
+  position:absolute; inset:0; right:0; background:#d8dce2;
+  transition:right .22s var(--ease);
+}}
+body.has-selection .map-el {{ right:var(--dock-w); }}
+@media (max-width:980px) {{
+  body.has-selection .map-el {{ right:0; }}
+}}
 .pane-label {{
   position:absolute; z-index:1000; top:12px; left:50px; padding:5px 9px; border-radius:var(--radius);
   background:rgba(22,24,28,.86); color:#e8eaed; border:1px solid rgba(255,255,255,.06);
   font:600 .66rem var(--sans); letter-spacing:.02em;
+  transition:opacity .18s var(--ease);
 }}
-.radar-hud {{
+.kbd-hint {{
+  position:absolute; z-index:1000; top:12px; right:12px; padding:5px 8px; border-radius:var(--radius);
+  background:rgba(22,24,28,.72); color:#c4c9d0; border:1px solid rgba(255,255,255,.06);
+  font:500 .6rem/1.3 var(--sans); pointer-events:none;
+  transition:right .22s var(--ease), opacity .18s;
+}}
+body.has-selection .kbd-hint {{ right:calc(var(--dock-w) + 12px); opacity:.55; }}
+.kbd-hint kbd {{
+  display:inline-block; padding:0 3px; margin:0 1px; border-radius:2px;
+  border:1px solid rgba(255,255,255,.16); font:600 .56rem var(--mono);
+}}
+.timeline-hud {{
   position:absolute; z-index:1100; left:50%; bottom:12px; transform:translateX(-50%);
-  width:min(720px, calc(100% - 16px));
-  display:grid; grid-template-columns:auto 1fr auto; gap:10px 14px; align-items:center;
-  padding:9px 11px 7px; border-radius:var(--radius);
+  width:min(760px, calc(100% - 24px));
+  display:grid; grid-template-columns:auto 1fr auto; gap:8px 12px; align-items:center;
+  padding:10px 12px 8px; border-radius:var(--radius);
   background:var(--hud); color:#eef0f2; border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
+  box-shadow:0 8px 24px rgba(0,0,0,.22);
+  transition:width .22s var(--ease), transform .22s var(--ease);
 }}
-.radar-hud .play {{
-  width:36px; height:36px; border-radius:var(--radius); border:0; cursor:pointer;
+body.has-selection .timeline-hud {{
+  width:min(560px, calc(100% - var(--dock-w) - 28px));
+  transform:translateX(calc(-50% - var(--dock-w) / 2));
+}}
+@media (max-width:980px) {{
+  body.has-selection .timeline-hud {{ width:min(760px, calc(100% - 24px)); transform:translateX(-50%); }}
+}}
+.timeline-hud.playing .play {{ background:#9a3412; }}
+.timeline-hud .play {{
+  width:38px; height:38px; border-radius:var(--radius); border:0; cursor:pointer;
   background:var(--accent); color:#fff; font:600 .85rem var(--sans);
-  transition:filter .15s;
+  transition:background .15s, transform .15s;
 }}
-.radar-hud .play:hover {{ filter:brightness(1.05); }}
-.radar-hud .clock {{ font:600 .88rem var(--serif); letter-spacing:-.01em; }}
-.radar-hud .sub {{ font-size:.64rem; opacity:.72; margin-top:1px; font-weight:500; }}
-.radar-hud .legend {{ display:flex; flex-direction:column; gap:3px; align-items:flex-end; font-size:.62rem; opacity:.85; }}
-.radar-hud .bar {{ width:96px; height:4px; border-radius:1px; background:linear-gradient(90deg,#0b1d2a,#1a6f7a,#1ae4b6,#a2fc3c,#f9ba38,#e8332b); }}
-.radar-hud .bar.susc {{ background:linear-gradient(90deg,#fff7bc,#fec44f,#d95f0e,#7f2704); }}
-.radar-hud .scrub {{
-  grid-column:1 / -1; width:100%; accent-color:var(--accent); height:14px; cursor:pointer; margin:0;
+.timeline-hud .play:hover {{ filter:brightness(1.05); }}
+.timeline-hud .clock {{ font:600 .9rem var(--serif); letter-spacing:-.01em; }}
+.timeline-hud .sub {{ font-size:.62rem; opacity:.72; margin-top:1px; font-weight:500; }}
+.timeline-hud .legend {{ display:flex; flex-direction:column; gap:3px; align-items:flex-end; font-size:.6rem; opacity:.85; }}
+.timeline-hud .bar {{ width:96px; height:4px; border-radius:1px; background:linear-gradient(90deg,#0b1d2a,#1a6f7a,#1ae4b6,#a2fc3c,#f9ba38,#e8332b); }}
+.timeline-hud .bar.susc {{ background:linear-gradient(90deg,#fff7bc,#fec44f,#d95f0e,#7f2704); }}
+.timeline-track {{
+  grid-column:1 / -1; position:relative; padding:2px 0 0;
 }}
-.selected-card {{
-  position:absolute; z-index:1050; top:48px; right:12px; width:min(292px,calc(100% - 24px));
-  background:#fff; border:1px solid var(--line); border-radius:var(--radius);
-  padding:12px 12px 10px; box-shadow:0 8px 20px rgba(20,22,26,.12); display:none;
+.timeline-ticks {{
+  display:flex; justify-content:space-between; pointer-events:none;
+  margin:0 2px 2px; font:500 .52rem var(--mono); color:rgba(238,240,242,.55);
 }}
-.selected-card.on {{ display:block; animation:riseIn .2s var(--ease); }}
-.selected-card .sel-kicker {{ font:600 .56rem var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }}
-.selected-card h3 {{ margin:0 0 2px; font:700 .95rem var(--serif); letter-spacing:-.015em; }}
-.selected-card p {{ margin:0; font-size:.74rem; color:var(--muted); line-height:1.4; }}
-.selected-card .sel-close {{
-  position:absolute; top:7px; right:7px; width:24px; height:24px; border:0; border-radius:var(--radius);
-  background:rgba(20,22,26,.05); color:var(--ink-soft); cursor:pointer; font:600 .78rem var(--sans);
+.timeline-hud .scrub {{
+  width:100%; accent-color:var(--accent); height:16px; cursor:pointer; margin:0;
 }}
-.selected-card .sel-close:hover {{ background:rgba(20,22,26,.1); }}
-.sel-block {{ margin-top:8px; padding-top:8px; border-top:1px solid var(--line-soft); }}
-.sel-block:first-of-type {{ margin-top:6px; }}
+.inspector-dock {{
+  position:absolute; z-index:1050; top:0; right:0; bottom:0;
+  width:var(--dock-w); max-width:100%;
+  display:flex; flex-direction:column;
+  background:rgba(250,250,251,.98); border-left:1px solid var(--line);
+  box-shadow:-8px 0 24px rgba(0,0,0,.12);
+  transform:translateX(104%);
+  transition:transform .22s var(--ease);
+  pointer-events:none;
+}}
+.inspector-dock.open {{
+  transform:none; pointer-events:auto;
+  animation:dockIn .22s var(--ease);
+}}
+.inspector-dock .dock-head {{
+  flex:0 0 auto; padding:14px 14px 10px; border-bottom:1px solid var(--line-soft);
+  position:relative;
+}}
+.inspector-dock .sel-kicker {{ font:600 .56rem var(--sans); letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }}
+.inspector-dock h3 {{ margin:0; font:700 1.05rem/1.15 var(--serif); letter-spacing:-.015em; padding-right:28px; }}
+.inspector-dock .dock-body {{
+  flex:1 1 auto; min-height:0; overflow:auto; padding:4px 14px 16px;
+}}
+.inspector-dock .sel-close {{
+  position:absolute; top:10px; right:10px; width:28px; height:28px; border:0; border-radius:var(--radius);
+  background:rgba(20,22,26,.05); color:var(--ink-soft); cursor:pointer; font:600 .85rem var(--sans);
+}}
+.inspector-dock .sel-close:hover {{ background:rgba(20,22,26,.1); }}
+.inspector-empty {{
+  display:none; flex:1; align-items:center; justify-content:center; text-align:center;
+  padding:24px; color:var(--muted); font:500 .78rem/1.45 var(--sans);
+}}
+.inspector-dock:not(.open) .inspector-empty {{ display:flex; }}
+.inspector-dock:not(.open) .dock-head,
+.inspector-dock:not(.open) .dock-body {{ display:none; }}
+.sel-block {{ margin-top:10px; padding-top:10px; border-top:1px solid var(--line-soft); }}
+.sel-block:first-of-type {{ margin-top:8px; }}
 .sel-block-label {{
   font:600 .56rem var(--sans); letter-spacing:.1em; text-transform:uppercase;
-  color:var(--muted); margin-bottom:4px;
+  color:var(--muted); margin-bottom:5px;
 }}
-.selected-card .sel-chips {{ display:flex; flex-wrap:wrap; gap:4px; margin:0; }}
-.selected-card .sel-chip {{
-  font:600 .6rem var(--mono); padding:2px 6px; border-radius:2px;
+.sel-depth-hero {{
+  font:700 1.35rem/1 var(--mono); color:var(--accent-deep); letter-spacing:-.02em;
+}}
+.sel-depth-meta {{ margin-top:4px; font:500 .74rem/1.35 var(--sans); color:var(--muted); }}
+.inspector-dock .sel-chips {{ display:flex; flex-wrap:wrap; gap:4px; margin:0; }}
+.inspector-dock .sel-chip {{
+  font:600 .6rem var(--mono); padding:3px 7px; border-radius:2px;
   border:1px solid var(--line); background:rgba(20,22,26,.03); color:var(--ink-soft);
 }}
-.selected-card .sel-chip.access-open {{ border-color:rgba(194,65,12,.28); color:var(--accent-deep); }}
-.selected-card .sel-chip.access-watch {{ border-color:rgba(154,52,18,.3); color:var(--warn); background:var(--warn-bg); }}
-.selected-card .sel-chip.access-limited {{ border-color:rgba(163,27,46,.35); color:#9f1239; background:rgba(163,27,46,.06); }}
-.selected-card .sel-hint {{
-  margin-top:8px; padding-top:7px; border-top:1px solid var(--line-soft);
-  font-size:.7rem; color:var(--ink-soft); line-height:1.4; font-weight:600;
+.inspector-dock .sel-chip.access-open {{ border-color:rgba(194,65,12,.28); color:var(--accent-deep); }}
+.inspector-dock .sel-chip.access-watch {{ border-color:rgba(154,52,18,.3); color:var(--warn); background:var(--warn-bg); }}
+.inspector-dock .sel-chip.access-limited {{ border-color:rgba(163,27,46,.35); color:#9f1239; background:rgba(163,27,46,.06); }}
+.inspector-dock .sel-hint {{
+  margin-top:10px; padding:8px 9px; border-radius:var(--radius);
+  background:rgba(20,22,26,.03); border:1px solid var(--line-soft);
+  font-size:.72rem; color:var(--ink-soft); line-height:1.4; font-weight:600;
 }}
-.selected-card .sel-access-note {{ margin-top:3px; font-size:.64rem; color:var(--muted); line-height:1.35; }}
-.sel-access-line {{ font:600 .72rem var(--sans); color:var(--ink-soft); }}
-.asset-row .meta .access-pill {{
+.inspector-dock .sel-access-note {{ margin-top:4px; font-size:.64rem; color:var(--muted); line-height:1.35; }}
+.sel-access-line {{ font:600 .74rem var(--sans); color:var(--ink-soft); }}
+.briefing-card .access-pill {{
   font:600 .56rem var(--mono); padding:1px 4px; border-radius:2px;
   border:1px solid var(--line-soft); color:var(--muted);
 }}
-.asset-row .meta .access-pill.limited {{ color:#9f1239; border-color:rgba(185,28,28,.3); }}
-.asset-row .meta .access-pill.watch {{ color:var(--warn); border-color:rgba(154,74,18,.28); }}
-.empty {{ padding:14px 8px; text-align:center; color:var(--muted); font-size:.74rem; }}
+.briefing-card .access-pill.limited {{ color:#9f1239; border-color:rgba(185,28,28,.3); }}
+.briefing-card .access-pill.watch {{ color:var(--warn); border-color:rgba(154,74,18,.28); }}
+.empty {{
+  padding:18px 10px; text-align:center; color:var(--muted); font-size:.74rem; line-height:1.4;
+  border:1px dashed var(--line); border-radius:var(--radius); background:rgba(255,255,255,.55);
+}}
+.empty.loading {{ animation:pulseLoad 1.2s ease-in-out infinite; border-style:solid; }}
 .leaflet-image-layer.precip-radar,
 .leaflet-image-layer.depth-radar,
 .leaflet-image-layer.susc-radar {{
@@ -321,26 +431,26 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   filter: saturate(1.04) contrast(1.05);
 }}
 .leaflet-image-layer.susc-radar {{ mix-blend-mode: multiply; filter: saturate(1.05) contrast(1.04); }}
-.sparkline-wrap {{ margin-top:6px; }}
+.sparkline-wrap {{ margin-top:8px; }}
 .sparkline-wrap .spark-cap {{
   font:600 .56rem var(--sans); letter-spacing:.08em; text-transform:uppercase;
   color:var(--muted); margin-bottom:3px;
 }}
-.sparkline-wrap svg {{ display:block; width:100%; height:40px; }}
+.sparkline-wrap svg {{ display:block; width:100%; height:44px; }}
 .sparkline-wrap .spark-readout {{
   margin-top:2px; font:600 .62rem var(--mono); color:var(--accent-deep);
 }}
 .shortlist-actions {{
-  display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0;
+  display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; align-items:center;
 }}
 .shortlist-actions button {{
   border:0; background:transparent; color:var(--muted);
-  border-radius:0; padding:2px 0; font:600 .66rem var(--sans); cursor:pointer;
+  border-radius:0; padding:2px 0; font:600 .64rem var(--sans); cursor:pointer;
   text-decoration:underline; text-underline-offset:2px;
 }}
 .shortlist-actions button:hover {{ color:var(--accent-deep); }}
 .shortlist-actions .status {{
-  flex:1 1 100%; font-size:.62rem; color:var(--muted); min-height:1em;
+  flex:1 1 100%; font-size:.6rem; color:var(--muted); min-height:1em;
 }}
 .drawer .drawer {{
   margin:8px 0 0; border:1px solid var(--line-soft); border-radius:var(--radius); padding:0 8px 6px;
@@ -351,9 +461,9 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   color:#8b929c; padding:7px 2px;
 }}
 @media print {{
-  body {{ display:block; background:#fff; }}
-  aside {{ max-height:none !important; border:0 !important; }}
-  .map-stage, .radar-hud, .map-key-float, .honesty-line {{ display:none !important; }}
+  body {{ display:block; background:#fff; height:auto; overflow:visible; }}
+  aside.command-rail {{ max-height:none !important; border:0 !important; }}
+  .map-stage, .timeline-hud, .map-key-float, .honesty-line, .inspector-dock, .kbd-hint {{ display:none !important; }}
   .print-snapshot {{ display:block !important; }}
 }}
 .print-snapshot {{ display:none; padding:16px; font:500 .85rem var(--sans); }}
@@ -376,9 +486,10 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   font:600 .56rem var(--sans); letter-spacing:.08em; text-transform:uppercase; color:#8b929c;
 }}
 .map-key-float {{
-  position:absolute; z-index:650; left:10px; bottom:72px; max-width:min(220px, calc(100% - 20px));
+  position:absolute; z-index:650; left:10px; bottom:84px; max-width:min(200px, calc(100% - 20px));
   padding:8px 10px; border-radius:var(--radius); background:rgba(22,24,28,.9); color:#e4e7eb;
   border:1px solid rgba(255,255,255,.08); font-size:.64rem; line-height:1.35;
+  transition:bottom .22s var(--ease);
 }}
 .map-key-float.collapsed .map-key-float-body {{ display:none; }}
 .map-key-float-head {{
@@ -422,15 +533,28 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   color:var(--accent-deep); margin-bottom:3px;
 }}
 .rail-compact details.drawer > summary {{ padding-bottom:6px; }}
+.leaflet-interactive.is-hover {{ filter:brightness(1.08); }}
+.floodnet-list .asset-row {{
+  text-align:left; width:100%; border:1px solid var(--line-soft); border-radius:var(--radius);
+  background:#fff; padding:7px 8px; cursor:pointer; font:500 .7rem var(--sans);
+  transition:border-color .14s, background .14s;
+}}
+.floodnet-list .asset-row:hover {{ border-color:rgba(20,22,26,.18); }}
+.floodnet-list .asset-row.selected {{ border-color:rgba(194,65,12,.4); background:rgba(194,65,12,.06); }}
+.floodnet-list .asset-row .top {{ display:flex; justify-content:space-between; gap:8px; }}
+.floodnet-list .asset-row .name {{ font-weight:600; }}
+.floodnet-list .asset-row .depth {{ font:600 .7rem var(--mono); color:var(--accent-deep); }}
+.floodnet-list .asset-row .meta {{ margin-top:2px; display:flex; flex-wrap:wrap; gap:4px; font-size:.62rem; color:var(--muted); }}
 </style>
 </head>
 <body>
-<aside>
+<aside class="command-rail" aria-label="Decision Desk command rail">
   <div class="brand">
     <div class="brand-kicker">Ida research replay</div>
     <div class="brand-mark">Asset Decision Desk</div>
-    <div class="brand-tag">Ranked wet roads &amp; stations — click to inspect.</div>
+    <div class="brand-tag">Select a briefing card → inspect on the map.</div>
   </div>
+  <div class="rail-scroll">
   <p class="honesty-line">Research only · NOT NWS · cm-scale HAND ranking, not street-truth depths.</p>
   <div class="magnitude-chip" id="magnitudeChip" role="status">
     HAND screening <b>~cm</b> · FloodNet street peaks up to <b>~0.9 m</b> (n=5) — not the same scale.
@@ -438,35 +562,37 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   <div class="access-fixture-badge" id="accessFixtureBadge" role="status"></div>
   <div id="assetBanner"></div>
 
-  <section class="section" id="assetsSection">
-    <h2>Affected assets <span class="hint">click → fly</span></h2>
-    <div id="deskSummary" class="metric"><span>Loading…</span><b>—</b></div>
-    <div class="chip-row" id="listModeChips" role="group" aria-label="List mode">
-      <button type="button" class="chip active" data-mode="shortlist">Shortlist</button>
-      <button type="button" class="chip" data-mode="all">All</button>
-    </div>
-    <div class="chip-row" id="typeChips" role="group" aria-label="Asset type">
-      <button type="button" class="chip active" data-type="all">All</button>
-      <button type="button" class="chip" data-type="road">Roads</button>
-      <button type="button" class="chip" data-type="station">Stations</button>
-      <button type="button" class="chip" data-type="facility">Facilities</button>
-    </div>
-    <div class="filters">
-      <div>
-        <label class="caption" for="bandFilter">Depth band</label>
-        <select id="bandFilter">
-          <option value="all">All wet (≥3 cm)</option>
-          <option value="ponding">≥3 cm</option>
-          <option value="deep_ponding" selected>≥8 cm</option>
-          <option value="hazard">≥15 cm</option>
-        </select>
+  <section class="section assets-section" id="assetsSection">
+    <h2>Briefing shortlist <span class="hint">j/k · enter</span></h2>
+    <div id="deskSummary" class="metric"><span class="loading">Loading desk…</span><b>—</b></div>
+    <div class="command-toolbar">
+      <div class="seg-row" id="listModeChips" role="group" aria-label="List mode">
+        <button type="button" class="seg active" data-mode="shortlist">Shortlist</button>
+        <button type="button" class="seg" data-mode="all">All wet</button>
       </div>
-      <div>
-        <label class="caption" for="assetSearch">Search</label>
-        <input id="assetSearch" type="search" placeholder="Name / id…" autocomplete="off">
+      <div class="seg-row" id="typeChips" role="group" aria-label="Asset type">
+        <button type="button" class="seg active" data-type="all">All</button>
+        <button type="button" class="seg" data-type="road">Roads</button>
+        <button type="button" class="seg" data-type="station">Sta</button>
+        <button type="button" class="seg" data-type="facility">Fac</button>
+      </div>
+      <div class="filters">
+        <div>
+          <label class="caption" for="bandFilter">Depth band</label>
+          <select id="bandFilter">
+            <option value="all">All wet (≥3 cm)</option>
+            <option value="ponding">≥3 cm</option>
+            <option value="deep_ponding" selected>≥8 cm</option>
+            <option value="hazard">≥15 cm</option>
+          </select>
+        </div>
+        <div>
+          <label class="caption" for="assetSearch">Search</label>
+          <input id="assetSearch" type="search" placeholder="Name / id…" autocomplete="off">
+        </div>
       </div>
     </div>
-    <div class="asset-list" id="assetList" aria-label="Ranked wet assets"><div class="empty">Loading ranked assets…</div></div>
+    <div class="asset-list" id="assetList" role="listbox" aria-label="Ranked wet assets" aria-busy="true"><div class="empty loading">Loading briefing cards…</div></div>
     <div class="shortlist-actions" role="group" aria-label="Shortlist snapshot">
       <button type="button" id="btnShareSnapshot">Copy decision log</button>
       <button type="button" id="btnPrintSnapshot">Print / share</button>
@@ -614,43 +740,54 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     <h1>Asset Decision Desk · shortlist snapshot</h1>
     <pre id="printSnapshotBody"></pre>
   </div>
+  </div>
 </aside>
 
 <div class="map-stage" id="mapStage">
   <div class="pane-label" id="leftLabel">Decision Desk · Ida</div>
+  <div class="kbd-hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> scrub · <kbd>space</kbd> play · <kbd>esc</kbd> clear</div>
   <div class="sfincs-peer-banner" id="sfincsPeerBanner">SFINCS on — non-peer metres vs HAND cm. HAND auto-dimmed. No SWMM.</div>
   <div id="mapLeft" class="map-el"></div>
-  <div class="selected-card" id="selectedCard">
-    <button type="button" class="sel-close" id="selClose" aria-label="Close">×</button>
-    <div class="sel-kicker" id="selKicker">Selected asset</div>
-    <h3 id="selName">—</h3>
-    <div class="sel-block">
-      <div class="sel-block-label">Depth</div>
-      <p id="selBody">—</p>
-      <div class="sparkline-wrap" id="selSparkWrap" hidden>
-        <div class="spark-cap">Depth vs lead (HAND cm)</div>
-        <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to scrubber"></svg>
-        <div class="spark-readout" id="selSparkReadout">—</div>
+  <aside class="inspector-dock" id="selectedCard" aria-label="Selected asset inspector" aria-hidden="true">
+    <div class="inspector-empty" id="inspectorEmpty">
+      Select a briefing card to open the inspector.<br>
+      <span style="opacity:.75">Depth · Access · Context stay here — not a chip dump on the map.</span>
+    </div>
+    <div class="dock-head">
+      <button type="button" class="sel-close" id="selClose" aria-label="Close inspector">×</button>
+      <div class="sel-kicker" id="selKicker">Selected asset</div>
+      <h3 id="selName">—</h3>
+    </div>
+    <div class="dock-body">
+      <div class="sel-block">
+        <div class="sel-block-label">Depth</div>
+        <div class="sel-depth-hero" id="selDepthHero">—</div>
+        <div class="sel-depth-meta" id="selBody">—</div>
+        <div class="sparkline-wrap" id="selSparkWrap" hidden>
+          <div class="spark-cap">Depth vs lead (HAND cm)</div>
+          <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to timeline"></svg>
+          <div class="spark-readout" id="selSparkReadout">—</div>
+        </div>
       </div>
+      <div class="sel-block">
+        <div class="sel-block-label">Access</div>
+        <div class="sel-access-line" id="selAccessLine">—</div>
+        <div class="sel-access-note" id="selAccessNote"></div>
+      </div>
+      <div class="sel-block">
+        <div class="sel-block-label">Context</div>
+        <div class="sel-chips" id="selChips"></div>
+        <div class="compare-strip" id="selCompareStrip" hidden role="status"></div>
+        <div class="consequence-cap">Consequence timeline (research)</div>
+        <div class="consequence-line" id="selConsequence">—</div>
+      </div>
+      <div class="sel-hint" id="selHint"></div>
     </div>
-    <div class="sel-block">
-      <div class="sel-block-label">Access</div>
-      <div class="sel-access-line" id="selAccessLine">—</div>
-      <div class="sel-access-note" id="selAccessNote"></div>
-    </div>
-    <div class="sel-block">
-      <div class="sel-block-label">Context</div>
-      <div class="sel-chips" id="selChips"></div>
-      <div class="compare-strip" id="selCompareStrip" hidden role="status"></div>
-      <div class="consequence-cap">Consequence timeline (research)</div>
-      <div class="consequence-line" id="selConsequence">—</div>
-    </div>
-    <div class="sel-hint" id="selHint"></div>
-  </div>
+  </aside>
   <div class="coach-overlay" id="coachOverlay" hidden>
     <div class="coach-card" role="dialog" aria-label="Decision Desk quick start">
       <strong>15s start</strong>
-      Shortlist → click a row → read depth / access / hint. HAND cm ≠ FloodNet street metres. Stay out of Advanced for the demo.
+      Briefing card → fly + inspector dock. Timeline <kbd>←</kbd><kbd>→</kbd> · list <kbd>j</kbd>/<kbd>k</kbd>. HAND cm ≠ FloodNet street metres. Stay out of Advanced.
       <button type="button" id="coachDismiss">Got it</button>
     </div>
   </div>
@@ -674,18 +811,20 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       </div>
     </div>
   </div>
-  <div class="radar-hud" id="radarHud">
+  <div class="timeline-hud" id="radarHud" role="region" aria-label="Storm timeline">
     <button type="button" class="play" id="hudPlay" aria-label="Play or pause storm loop">▶</button>
     <div>
       <div class="clock" id="hudClock">—</div>
-      <!-- timing honesty injected into hudSub -->
       <div class="sub" id="hudSub">MRMS soft metro · +0…+36h · not NEXRAD</div>
     </div>
     <div class="legend">
       <span id="hudLegendLabel">Precip · context</span>
       <div class="bar" id="hudLegendBar"></div>
     </div>
-    <input class="scrub" id="hudScrub" type="range" min="0" max="{n - 1}" value="0" aria-label="Storm lead scrubber">
+    <div class="timeline-track">
+      <div class="timeline-ticks" id="timelineTicks" aria-hidden="true"></div>
+      <input class="scrub" id="hudScrub" type="range" min="0" max="{n - 1}" value="0" aria-label="Storm lead timeline">
+    </div>
   </div>
 </div>
 
@@ -840,8 +979,31 @@ let residualMode = false;
 let listMode = "shortlist";
 let activeEventId = "ida-2021";
 let compareStrip = null;
+let focusedAssetId = null;
+let hoverAssetId = null;
 const PLAY_MS = 380;
 const FADE_MS = 220;
+
+function setSelectionChrome(on) {{
+  document.body.classList.toggle("has-selection", !!on);
+  const dock = document.getElementById("selectedCard");
+  if (!dock) return;
+  dock.classList.toggle("open", !!on);
+  dock.setAttribute("aria-hidden", on ? "false" : "true");
+}}
+function renderTimelineTicks() {{
+  const el = document.getElementById("timelineTicks");
+  if (!el) return;
+  if (!frames.length) {{ el.innerHTML = ""; return; }}
+  const leads = frames.map(f => f.lead_hours).filter(h => h != null);
+  if (!leads.length) {{ el.innerHTML = ""; return; }}
+  const minL = leads[0], maxL = leads[leads.length - 1];
+  const marks = [minL];
+  const mid = Math.round((minL + maxL) / 2);
+  if (mid !== minL && mid !== maxL) marks.push(mid);
+  if (maxL !== minL) marks.push(maxL);
+  el.innerHTML = marks.map(h => "<span>+" + h + "h</span>").join("");
+}}
 
 function depthSetForPath(pathId) {{
   const inundation = manifest.inundation || null;
@@ -895,6 +1057,7 @@ function rebuildPathLayers() {{
   if (e2Total) mapLeft.removeLayer(e2Total);
   if (depthTotal && mapLeft.hasLayer(depthTotal)) mapLeft.removeLayer(depthTotal);
   frames = activePath.precip?.frames || [];
+  renderTimelineTicks();
   suscFrames = activePath.susceptibility?.frames || [];
   const precipBounds = overlayBoundsPreferMetro(activePath.precip && activePath.precip.bounds);
   const suscBounds = overlayBoundsPreferMetro((activePath.susceptibility && activePath.susceptibility.bounds) || precipBounds);
@@ -1053,8 +1216,13 @@ function setLead(i) {{
 
 function setPlaying(on) {{
   playing = on;
-  document.getElementById("hudPlay").textContent = on ? "❚❚" : "▶";
-  document.getElementById("radarHud").classList.toggle("playing", !!on);
+  const btn = document.getElementById("hudPlay");
+  if (btn) {{
+    btn.textContent = on ? "❚❚" : "▶";
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  }}
+  const hud = document.getElementById("radarHud");
+  if (hud) hud.classList.toggle("playing", !!on);
   if (playTimer) {{ clearInterval(playTimer); playTimer = null; }}
   if (!on || !frames.length) return;
   playTimer = setInterval(() => {{
@@ -1148,11 +1316,61 @@ function mapPaintAssets() {{
   if (selectedId && byId[selectedId] && !seen.has(selectedId)) out.push(byId[selectedId]);
   return out;
 }}
+function visibleBriefingRows() {{
+  return filteredAssets().slice(0, listMode === "shortlist" ? 12 : 120);
+}}
+function syncBriefingHover(id) {{
+  hoverAssetId = id || null;
+  document.querySelectorAll(".briefing-card").forEach(btn => {{
+    btn.classList.toggle("is-hover", !!id && btn.dataset.id === id);
+  }});
+  if (!wetLayer) return;
+  wetLayer.eachLayer(layer => {{
+    const lid = layer.feature && layer.feature.properties && layer.feature.properties.id;
+    const el = layer.getElement && layer.getElement();
+    if (el) el.classList.toggle("is-hover", !!id && lid === id);
+    if (typeof layer.setStyle !== "function") return;
+    if (layer instanceof L.CircleMarker) {{
+      const base = (lid === selectedId) ? 9 : 4.5;
+      layer.setRadius(!!id && lid === id ? base + 2.5 : base);
+    }}
+  }});
+}}
+function focusBriefing(id, opts) {{
+  const scroll = !opts || opts.scroll !== false;
+  focusedAssetId = id || null;
+  const cards = [...document.querySelectorAll(".briefing-card")];
+  cards.forEach(btn => {{
+    const on = btn.dataset.id === id;
+    btn.classList.toggle("is-focused", on);
+    if (on) btn.setAttribute("aria-selected", selectedId === id ? "true" : "false");
+    else if (btn.dataset.id !== selectedId) btn.removeAttribute("aria-selected");
+  }});
+  if (scroll && id) {{
+    const el = cards.find(c => c.dataset.id === id);
+    if (el && el.scrollIntoView) el.scrollIntoView({{ block: "nearest", behavior: "smooth" }});
+  }}
+}}
+function moveBriefingFocus(delta) {{
+  const rows = visibleBriefingRows();
+  if (!rows.length) return;
+  const ids = rows.map(a => a.id);
+  let idx = focusedAssetId ? ids.indexOf(focusedAssetId) : -1;
+  if (idx < 0 && selectedId) idx = ids.indexOf(selectedId);
+  if (idx < 0) idx = delta > 0 ? -1 : 0;
+  idx = Math.max(0, Math.min(ids.length - 1, idx + delta));
+  focusBriefing(ids[idx]);
+  syncBriefingHover(ids[idx]);
+}}
 function renderAssetList() {{
   const list = document.getElementById("assetList");
-  const rows = filteredAssets().slice(0, listMode === "shortlist" ? 12 : 120);
+  const rows = visibleBriefingRows();
+  list.setAttribute("aria-busy", "false");
   if (!rows.length) {{
-    list.innerHTML = '<div class="empty">No wet assets match. Clear band filter, switch to Shortlist, or enable schools / full inventory.</div>';
+    const loading = !desk;
+    list.innerHTML = loading
+      ? '<div class="empty loading">Loading briefing cards…</div>'
+      : '<div class="empty">No wet assets match.<br>Clear band filter, switch to Shortlist, or enable schools / full inventory.</div>';
     return;
   }}
   list.innerHTML = rows.map(a => {{
@@ -1160,23 +1378,32 @@ function renderAssetList() {{
     const accPill = (acc === "limited" || acc === "watch")
       ? `<span class="access-pill ${{acc}}">${{acc}}</span>` : "";
     const topHit = highlightIds.includes(a.id) ? " top-hit" : "";
+    const selected = selectedId === a.id ? " selected" : "";
+    const hovered = hoverAssetId === a.id ? " is-hover" : "";
+    const focused = focusedAssetId === a.id ? " is-focused" : "";
     return `
-    <button type="button" class="asset-row${{selectedId === a.id ? " selected" : ""}}${{topHit}}" data-id="${{a.id}}">
-      <div class="top">
-        <span class="name">#${{a.rank != null ? a.rank : "—"}} · ${{a.name}}</span>
+    <button type="button" role="option" class="briefing-card${{selected}}${{topHit}}${{hovered}}${{focused}}" data-id="${{a.id}}" aria-selected="${{selectedId === a.id ? "true" : "false"}}">
+      <div class="card-top">
+        <span class="rank">#${{a.rank != null ? a.rank : "—"}}</span>
+        <span class="name">${{a.name}}</span>
         <span class="depth">${{Number(a.max_depth_cm || 0).toFixed(1)}} cm</span>
       </div>
-      <div class="meta">
+      <div class="card-meta">
         <span class="type-pill">${{typeLabel(a.asset_type)}}</span>
         <span class="band ${{bandClass(a.band)}}">${{a.band_label}}</span>
-        <span>${{leadLabel(a)}}</span>
+        <span class="lead-bit">${{leadLabel(a)}}</span>
         ${{accPill}}
       </div>
     </button>`;
   }}).join("");
-  list.querySelectorAll(".asset-row").forEach(btn => {{
+  list.querySelectorAll(".briefing-card").forEach(btn => {{
     btn.addEventListener("click", () => selectAsset(btn.dataset.id));
+    btn.addEventListener("mouseenter", () => {{ focusBriefing(btn.dataset.id, {{ scroll: false }}); syncBriefingHover(btn.dataset.id); }});
+    btn.addEventListener("mouseleave", () => {{ if (hoverAssetId === btn.dataset.id) syncBriefingHover(null); }});
+    btn.addEventListener("focus", () => focusBriefing(btn.dataset.id, {{ scroll: false }}));
   }});
+  if (focusedAssetId && !rows.some(a => a.id === focusedAssetId)) focusedAssetId = null;
+  if (selectedId) focusBriefing(selectedId, {{ scroll: false }});
 }}
 function depthSeriesForAsset(a) {{
   if (!a) return {{ leads: [], vals: [] }};
@@ -1249,12 +1476,13 @@ function syncSparklineToScrubber() {{
 
 function selectAsset(id) {{
   selectedId = id;
+  focusedAssetId = id;
   const a = (desk.assets || []).find(x => x.id === id);
   if (!a) return;
   renderAssetList();
   if (selectedLayer) {{ mapLeft.removeLayer(selectedLayer); selectedLayer = null; }}
   const ll = [a.lat, a.lon];
-  mapLeft.flyTo(ll, Math.max(mapLeft.getZoom(), 14), {{ duration: 0.7 }});
+  mapLeft.flyTo(ll, Math.max(mapLeft.getZoom(), 14), {{ duration: 0.75 }});
   // Prefer geometry from wet layer if present
   let geomLayer = null;
   if (wetLayer) {{
@@ -1280,13 +1508,14 @@ function selectAsset(id) {{
       fillColor:"#c2410c", fillOpacity:0.95
     }}).addTo(mapLeft);
   }}
-  const card = document.getElementById("selectedCard");
   const acc = accessStatus(a);
   // Access overlay stays opt-in (Map layers) — dock still shows access status.
   document.getElementById("selKicker").textContent = typeLabel(a.asset_type) + " · #" + (a.rank != null ? a.rank : "—");
   document.getElementById("selName").textContent = a.name;
-  document.getElementById("selBody").innerHTML =
-    "<b>" + Number(a.max_depth_cm || 0).toFixed(1) + " cm</b> · " + (a.band_label || a.band || "—") + " · " + leadLabel(a);
+  const depthHero = document.getElementById("selDepthHero");
+  if (depthHero) depthHero.textContent = Number(a.max_depth_cm || 0).toFixed(1) + " cm";
+  document.getElementById("selBody").textContent =
+    (a.band_label || a.band || "—") + " · " + leadLabel(a) + " · HAND primary";
   const accessLine = document.getElementById("selAccessLine");
   if (accessLine) {{
     accessLine.innerHTML = `<span class="sel-chip access-${{acc}}">${{accessChipLabel(acc)}}</span>`;
@@ -1314,9 +1543,8 @@ function selectAsset(id) {{
   renderConsequenceTimeline(a);
   renderCompareStrip(a);
   appendDecisionLog(a, "select");
-  card.classList.remove("on");
-  void card.offsetWidth;
-  card.classList.add("on");
+  setSelectionChrome(true);
+  requestAnimationFrame(() => {{ try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}} }});
 }}
 function renderConsequenceTimeline(a) {{
   const el = document.getElementById("selConsequence");
@@ -1351,12 +1579,15 @@ function renderConsequenceTimeline(a) {{
 function clearSelection() {{
   selectedId = null;
   if (selectedLayer) {{ mapLeft.removeLayer(selectedLayer); selectedLayer = null; }}
-  document.getElementById("selectedCard").classList.remove("on");
+  setSelectionChrome(false);
   const wrap = document.getElementById("selSparkWrap");
   if (wrap) wrap.hidden = true;
   const cmp = document.getElementById("selCompareStrip");
   if (cmp) {{ cmp.hidden = true; cmp.innerHTML = ""; }}
+  const hero = document.getElementById("selDepthHero");
+  if (hero) hero.textContent = "—";
   renderAssetList();
+  requestAnimationFrame(() => {{ try {{ mapLeft.invalidateSize({{ animate: false }}); }} catch (err) {{}} }});
 }}
 
 function buildShortlistSnapshotText() {{
@@ -1691,7 +1922,10 @@ function rebuildWetLayer() {{
       return L.circleMarker(ll, {{ radius:4.5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.88, pane:"pointPane" }});
     }},
     onEachFeature: (f, layer) => {{
-      layer.on("click", () => selectAsset(f.properties.id));
+      const id = f.properties && f.properties.id;
+      layer.on("click", () => selectAsset(id));
+      layer.on("mouseover", () => {{ syncBriefingHover(id); focusBriefing(id, {{ scroll: true }}); }});
+      layer.on("mouseout", () => {{ if (hoverAssetId === id) syncBriefingHover(null); }});
       layer.bindTooltip((f.properties.name || "") + " · " + (f.properties.band_label || ""));
     }}
   }});
@@ -2355,10 +2589,10 @@ function loadArchiveOpenLayers() {{
 }}
 
 document.getElementById("listModeChips").addEventListener("click", e => {{
-  const btn = e.target.closest(".chip");
+  const btn = e.target.closest(".seg");
   if (!btn) return;
   listMode = btn.dataset.mode || "shortlist";
-  document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c === btn));
+  document.querySelectorAll("#listModeChips .seg").forEach(c => c.classList.toggle("active", c === btn));
   const after = () => {{
     if (listMode === "all" && !includeSchools()) {{
       const summary = document.getElementById("deskSummary");
@@ -2374,14 +2608,14 @@ document.getElementById("listModeChips").addEventListener("click", e => {{
   else after();
 }});
 document.getElementById("typeChips").addEventListener("click", e => {{
-  const btn = e.target.closest(".chip");
+  const btn = e.target.closest(".seg");
   if (!btn) return;
   typeFilter = btn.dataset.type;
-  document.querySelectorAll("#typeChips .chip").forEach(c => c.classList.toggle("active", c === btn));
+  document.querySelectorAll("#typeChips .seg").forEach(c => c.classList.toggle("active", c === btn));
   // Stations/facilities are sparse at ≥8 cm — open All wet + full list so the chip is usable.
   if (typeFilter === "station" || typeFilter === "facility") {{
     listMode = "all";
-    document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "all"));
+    document.querySelectorAll("#listModeChips .seg").forEach(c => c.classList.toggle("active", c.dataset.mode === "all"));
     const band = document.getElementById("bandFilter");
     if (band && band.value === "deep_ponding") {{
       band.value = "all";
@@ -2394,7 +2628,7 @@ document.getElementById("bandFilter").onchange = renderAssetList;
 document.getElementById("assetSearch").oninput = () => {{
   if ((document.getElementById("assetSearch").value || "").trim()) {{
     listMode = "all";
-    document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "all"));
+    document.querySelectorAll("#listModeChips .seg").forEach(c => c.classList.toggle("active", c.dataset.mode === "all"));
   }}
   if (needsFullDesk()) ensureFullDesk().then(() => renderAssetList()).catch(() => renderAssetList());
   else renderAssetList();
@@ -2406,16 +2640,37 @@ document.getElementById("hudScrub").oninput = (e) => {{
 }};
 document.getElementById("selClose").onclick = clearSelection;
 document.addEventListener("keydown", (e) => {{
-  if (e.key === "Escape") clearSelection();
-  if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || e.target.tagName === "TEXTAREA")) return;
+  const tag = e.target && e.target.tagName;
+  const typing = tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA";
+  if (e.key === "Escape") {{
+    clearSelection();
+    return;
+  }}
+  if (typing) return;
   if (e.key === "ArrowRight" || e.key === "ArrowLeft") {{
     e.preventDefault();
     setPlaying(false);
     const step = e.key === "ArrowRight" ? 1 : -1;
     if (!frames.length) return;
     setLead((leadIndex + step + frames.length) % frames.length);
+    return;
   }}
-  if (e.key === " " && e.target === document.body) {{
+  if (e.key === "j" || e.key === "J" || e.key === "ArrowDown") {{
+    e.preventDefault();
+    moveBriefingFocus(1);
+    return;
+  }}
+  if (e.key === "k" || e.key === "K" || e.key === "ArrowUp") {{
+    e.preventDefault();
+    moveBriefingFocus(-1);
+    return;
+  }}
+  if (e.key === "Enter" && focusedAssetId) {{
+    e.preventDefault();
+    selectAsset(focusedAssetId);
+    return;
+  }}
+  if (e.key === " " || e.code === "Space") {{
     e.preventDefault();
     setPlaying(!playing);
   }}
@@ -2430,7 +2685,7 @@ document.getElementById("eventSelect").onchange = () => {{
   }}
   activeEventId = ev.id;
   listMode = "shortlist";
-  document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "shortlist"));
+  document.querySelectorAll("#listModeChips .seg").forEach(c => c.classList.toggle("active", c.dataset.mode === "shortlist"));
   const band = document.getElementById("bandFilter");
   if (band) band.value = "all";
   clearSelection();
@@ -2626,12 +2881,12 @@ if (lyModelWrong) lyModelWrong.onchange = restyleFloodNetResiduals;
   const btn = document.getElementById("coachDismiss");
   if (!overlay || !btn) return;
   try {{
-    if (localStorage.getItem("nyc_flood_desk_coach_v1") === "1") return;
+    if (localStorage.getItem("nyc_flood_desk_coach_v2") === "1") return;
   }} catch (err) {{}}
   overlay.hidden = false;
   btn.onclick = () => {{
     overlay.hidden = true;
-    try {{ localStorage.setItem("nyc_flood_desk_coach_v1", "1"); }} catch (err) {{}}
+    try {{ localStorage.setItem("nyc_flood_desk_coach_v2", "1"); }} catch (err) {{}}
   }};
 }})();
 document.getElementById("lyAccessLive").onchange = () => {{
