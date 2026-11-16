@@ -9,6 +9,7 @@
   const STATE = {
     scene: null,
     map: null,
+    styleUrl: null,
     open: false,
     hotspotId: null,
     hotspot: null,
@@ -16,6 +17,8 @@
     depthCm: 0,
     leadH: 0,
   };
+
+  const DEFAULT_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
   function assetsBase() {
     if (typeof global.assets === "string" && global.assets) return global.assets;
@@ -61,6 +64,13 @@
     if (frames[li] && frames[li].lead_hours != null) return frames[li].lead_hours;
     const scrub = $("hudScrub");
     return scrub ? Number(scrub.value) || 0 : 0;
+  }
+
+  function desiredStyleUrl(scene) {
+    const raw = scene && scene.basemap && scene.basemap.style;
+    // demotiles is a countries demo (not streets) — never use it for street-level 3D.
+    if (!raw || /demotiles\.maplibre\.org/i.test(raw)) return DEFAULT_STYLE;
+    return raw;
   }
 
   async function ensureScene() {
@@ -141,14 +151,23 @@
     applyDepthExtrusion(d.cm);
   }
 
+  function destroyMap() {
+    if (!STATE.map) return;
+    try {
+      STATE.map.remove();
+    } catch (err) {
+      console.warn("MapLibre remove:", err);
+    }
+    STATE.map = null;
+    STATE.styleUrl = null;
+  }
+
   async function ensureMap(hotspot) {
     if (typeof maplibregl === "undefined") {
       throw new Error("MapLibre GL not loaded (vendor/maplibre)");
     }
     const scene = STATE.scene;
-    const styleUrl =
-      (scene.basemap && scene.basemap.style) ||
-      "https://demotiles.maplibre.org/style.json";
+    const styleUrl = desiredStyleUrl(scene);
     const cam = hotspot.camera || {
       center: [hotspot.lon, hotspot.lat],
       zoom: 17.2,
@@ -156,7 +175,7 @@
       bearing: 0,
     };
 
-    if (STATE.map) {
+    if (STATE.map && STATE.styleUrl === styleUrl) {
       STATE.map.jumpTo({
         center: cam.center,
         zoom: cam.zoom,
@@ -166,6 +185,8 @@
       return STATE.map;
     }
 
+    destroyMap();
+
     const map = new maplibregl.Map({
       container: "sv3dMap",
       style: styleUrl,
@@ -173,48 +194,49 @@
       zoom: cam.zoom,
       pitch: cam.pitch,
       bearing: cam.bearing,
-      maxPitch: 80,
+      maxPitch: 85,
       attributionControl: true,
       hash: false,
+      // Avoid blank first frame when the panel was just un-hidden.
+      preserveDrawingBuffer: false,
     });
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
     STATE.map = map;
+    STATE.styleUrl = styleUrl;
 
-    await new Promise((resolve, reject) => {
-      map.on("load", resolve);
+    await new Promise((resolve) => {
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        resolve();
+      };
+      map.on("load", finish);
       map.on("error", (e) => {
-        // Non-fatal style/tile errors should not block overlay.
         if (e && e.error) console.warn("MapLibre:", e.error);
       });
       // Safety timeout so UI never hangs forever offline.
-      setTimeout(resolve, 8000);
+      setTimeout(finish, 10000);
     });
 
-    // Optional terrain (demotiles). Fail soft if tiles blocked.
+    // Optional terrain only when explicitly enabled with a non-demotiles source.
+    // demotiles terrain 404s over NYC and can blank the street view.
     try {
-      const terrainUrl =
-        (scene.basemap && scene.basemap.terrain_source) ||
-        "https://demotiles.maplibre.org/terrain-tiles/tiles.json";
-      if (!map.getSource("sv-terrain")) {
-        map.addSource("sv-terrain", {
-          type: "raster-dem",
-          url: terrainUrl,
-          tileSize: 256,
-        });
-      }
-      map.setTerrain({
-        source: "sv-terrain",
-        exaggeration: (scene.basemap && scene.basemap.terrain_exaggeration) || 1.1,
-      });
-      if (!map.getLayer("sv-sky")) {
-        map.addLayer({
-          id: "sv-sky",
-          type: "sky",
-          paint: {
-            "sky-type": "atmosphere",
-            "sky-atmosphere-sun": [0.0, 90.0],
-            "sky-atmosphere-sun-intensity": 8,
-          },
+      const basemap = scene.basemap || {};
+      const terrainUrl = basemap.terrain_source;
+      const wantTerrain = !!basemap.terrain_enabled && terrainUrl &&
+        !/demotiles\.maplibre\.org/i.test(terrainUrl);
+      if (wantTerrain) {
+        if (!map.getSource("sv-terrain")) {
+          map.addSource("sv-terrain", {
+            type: "raster-dem",
+            url: terrainUrl,
+            tileSize: 256,
+          });
+        }
+        map.setTerrain({
+          source: "sv-terrain",
+          exaggeration: basemap.terrain_exaggeration || 1.1,
         });
       }
     } catch (err) {
@@ -254,8 +276,8 @@
         "fill-extrusion-color": "#c4c9d1",
         "fill-extrusion-height": [
           "coalesce",
-          ["get", "extrusion_m"],
-          ["get", "height_roof"],
+          ["to-number", ["get", "extrusion_m"]],
+          ["to-number", ["get", "height_roof"]],
           12,
         ],
         "fill-extrusion-base": 0,
@@ -363,15 +385,34 @@
       STATE.hotspotId = hotspot.id;
       STATE.hotspot = hotspot;
       setChrome(hotspot);
+
+      // Resize before style load so MapLibre gets a non-zero container.
+      requestAnimationFrame(() => {
+        const el = $("sv3dMap");
+        if (el) {
+          el.style.minHeight = "240px";
+        }
+      });
+
       await ensureMap(hotspot);
 
       if (hotspot.buildings && hotspot.depth_polygon) {
         await loadHotspotLayers(hotspot);
       }
 
-      // Resize after panel becomes visible.
+      // Resize after panel becomes visible + layers attached.
       requestAnimationFrame(() => {
-        if (STATE.map) STATE.map.resize();
+        if (STATE.map) {
+          STATE.map.resize();
+          const cam = hotspot.camera || {};
+          STATE.map.easeTo({
+            center: cam.center || [hotspot.lon, hotspot.lat],
+            zoom: cam.zoom || 17.2,
+            pitch: cam.pitch || 60,
+            bearing: cam.bearing || 0,
+            duration: 0,
+          });
+        }
       });
 
       syncToLead(currentLeadHours());
@@ -393,7 +434,8 @@
   function closeStreetView3d() {
     setPanelOpen(false);
     STATE.hotspotId = null;
-    // Keep map instance warm for next open (faster).
+    STATE.hotspot = null;
+    // Keep map instance warm for next open (faster) unless style was bad.
   }
 
   function maybeOfferButton(id) {
@@ -418,6 +460,7 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && STATE.open) {
         e.stopPropagation();
+        e.preventDefault();
         closeStreetView3d();
       }
     });

@@ -53,7 +53,7 @@ def _haversine_m(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
 
 
 def _buildings_near(
-    buildings: dict, lon: float, lat: float, radius_m: float = 380, max_n: int = 90
+    buildings: dict, lon: float, lat: float, radius_m: float = 900, max_n: int = 90
 ) -> list[dict]:
     hits: list[tuple[float, dict]] = []
     for f in buildings.get("features") or []:
@@ -274,10 +274,14 @@ def main() -> Path:
         "decision_grade": False,
         "photogrammetry": False,
         "basemap": {
-            "style": "https://demotiles.maplibre.org/style.json",
-            "terrain_source": "https://demotiles.maplibre.org/terrain-tiles/tiles.json",
-            "terrain_exaggeration": 1.15,
-            "note": "Open demotiles + optional terrain; buildings from product_assets GeoJSON.",
+            "style": "https://tiles.openfreemap.org/styles/liberty",
+            "terrain_enabled": False,
+            "terrain_source": None,
+            "terrain_exaggeration": 1.0,
+            "note": (
+                "OpenFreeMap liberty streets + product GeoJSON building/depth extrusions. "
+                "demotiles is a countries demo (not streets) and its terrain 404s over NYC."
+            ),
         },
         "timeline": {
             "source": "ida_mrms_hand_cumulative_leads",

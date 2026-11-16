@@ -430,13 +430,15 @@ body.has-selection .timeline-hud {{
 .sel-street3d-btn:hover {{ background:rgba(194,65,12,.14); }}
 .sel-street3d-btn[hidden] {{ display:none !important; }}
 .street-view-3d {{
-  position:absolute; inset:0; z-index:40; display:flex; flex-direction:column;
-  background:rgba(18,20,24,.94); color:#eef0f2;
+  /* Above inspector-dock (1050) / map chrome so 3D is actually visible + closable */
+  position:absolute; inset:0; z-index:1200; display:flex; flex-direction:column;
+  background:#121418; color:#eef0f2;
 }}
 .street-view-3d[hidden] {{ display:none !important; }}
 .street-view-3d .sv-head {{
   flex:0 0 auto; display:flex; align-items:flex-start; justify-content:space-between;
   gap:12px; padding:12px 14px 10px; border-bottom:1px solid rgba(238,240,242,.12);
+  position:relative; z-index:2;
 }}
 .street-view-3d .sv-kicker {{
   font:600 .56rem var(--sans); letter-spacing:.1em; text-transform:uppercase;
@@ -454,17 +456,23 @@ body.has-selection .timeline-hud {{
 .street-view-3d .sv-stats {{
   flex:0 0 auto; display:flex; flex-wrap:wrap; gap:10px 16px; padding:8px 14px;
   border-bottom:1px solid rgba(238,240,242,.08); font:600 .68rem var(--mono);
+  position:relative; z-index:2;
 }}
 .street-view-3d .sv-stats span {{ color:rgba(238,240,242,.55); font-weight:500; margin-right:4px; }}
-.street-view-3d .sv-map {{ flex:1 1 auto; min-height:0; position:relative; }}
+.street-view-3d .sv-map {{ flex:1 1 auto; min-height:0; position:relative; background:#1a1d22; }}
 .street-view-3d .sv-map .maplibregl-map {{ position:absolute; inset:0; }}
 .street-view-3d .sv-foot {{
   flex:0 0 auto; padding:8px 14px 12px; font:500 .66rem/1.4 var(--sans);
   color:rgba(238,240,242,.7); border-top:1px solid rgba(238,240,242,.08);
+  position:relative; z-index:2;
 }}
 .street-view-3d .sv-status {{ margin-top:2px; color:rgba(238,240,242,.55); font-size:.62rem; }}
-body.street-view-open .timeline-hud {{ z-index:45; }}
-body.street-view-open .kbd-hint {{ display:none; }}
+/* Timeline stays above 3D so lead scrub still drives HAND extrusion */
+body.street-view-open .timeline-hud {{ z-index:1300; }}
+body.street-view-open .kbd-hint,
+body.street-view-open .pane-label,
+body.street-view-open .map-key-float,
+body.street-view-open .sfincs-peer-banner {{ display:none !important; }}
 .sel-access-line {{ font:600 .74rem var(--sans); color:var(--ink-soft); }}
 .briefing-card .access-pill {{
   font:600 .56rem var(--mono); padding:1px 4px; border-radius:2px;
