@@ -10,23 +10,21 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from flood_risk.risk.demo_shortlist import demo_shortlist_ids, load_demo_shortlist
 from nyc_flash_flood_case_study.config import FIGURES_DIR
 from nyc_flash_flood_case_study.extents import DEFAULT_MAP_EXTENT, EVENTS, EXTENTS
 
-# Curated named NYC click targets — all ≥8 cm deep ponding on current desk.
-DEMO_SHORTLIST_IDS = (
-    "stations:gtfs:F22",  # Smith-9 Sts — iconic Ida station (MTA 39hk-dx4f)
-    "road:25430129",  # Van Wyck Expressway
-    "facilities:uid:a464e8e63eb8b2c92ab1995735cfd284",  # Brooklyn Hospital Downtown (Facilities DB + BES)
-    "road:37394898",  # Myrtle Avenue
-)
+# Backward-compatible alias — canonical source is config/demo_shortlist.yaml
+DEMO_SHORTLIST_IDS = tuple(demo_shortlist_ids())
 
 
 def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
     precip = manifest.get("precip", {})
     frames = precip.get("frames", [])
     n = max(len(frames), 1)
-    demo_ids_json = json.dumps(list(DEMO_SHORTLIST_IDS))
+    shortlist_meta = load_demo_shortlist()
+    demo_ids_json = json.dumps(list(shortlist_meta["ids"]))
+    shortlist_path_json = json.dumps(shortlist_meta["path"])
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -59,6 +57,10 @@ body {{ display:grid; grid-template-columns:minmax(300px,360px) 1fr; min-height:
 @media (max-width:980px) {{
   body {{ grid-template-columns:1fr; grid-template-rows:auto minmax(52vh,1fr); }}
   aside {{ max-height:48vh; border-right:0 !important; border-bottom:1px solid var(--line); }}
+  .asset-row {{ padding:12px 12px 12px 14px; min-height:52px; }}
+  .asset-list {{ max-height:min(58vh,520px); }}
+  .drawer:not(.keep-open-mobile) {{ /* mobile: drawers stay closed via missing open attr */ }}
+  #floodnetPeaksPanel .drawer-note.collapsed-metric {{ display:block; }}
 }}
 aside {{
   position:relative; overflow:auto; padding:0 0 20px;
@@ -99,10 +101,28 @@ aside {{
   border-bottom:1px solid var(--warn-line); color:var(--warn);
   font:600 .72rem/1.35 Figtree,sans-serif; backdrop-filter:blur(8px);
 }}
+.magnitude-chip {{
+  margin:8px 14px 0; padding:8px 11px; border-radius:10px;
+  background:rgba(255,255,255,.72); border:1px solid var(--warn-line);
+  color:var(--warn); font:600 .72rem/1.4 Figtree,sans-serif;
+}}
+.magnitude-chip b {{ font:650 .72rem "IBM Plex Mono",monospace; color:var(--accent-deep); }}
+.access-fixture-badge {{
+  margin:6px 14px 0; padding:6px 10px; border-radius:8px; display:none;
+  background:rgba(13,143,156,.08); border:1px solid rgba(13,143,156,.22);
+  color:var(--accent-deep); font:600 .68rem/1.35 Figtree,sans-serif;
+}}
 #assetBanner {{
   margin:8px 14px 0; padding:9px 11px; border-radius:10px; display:none;
   background:#3b0d0d; border:1px solid #7f1d1d; color:#fecaca; font-size:.74rem;
 }}
+.sfincs-peer-banner {{
+  position:absolute; left:14px; right:14px; top:48px; z-index:650;
+  display:none; padding:8px 12px; border-radius:10px;
+  background:rgba(59,13,13,.92); border:1px solid #7f1d1d; color:#fecaca;
+  font:650 .72rem/1.35 Figtree,sans-serif; pointer-events:none;
+}}
+.hand-dimmed .leaflet-image-layer {{ filter:saturate(.35) opacity(.45); }}
 .section {{ padding:14px 16px 6px; animation:riseIn .45s var(--ease) both; }}
 .section + .section {{ border-top:1px solid var(--line-soft); }}
 .section h2 {{
@@ -388,9 +408,13 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     <div class="brand-tag">Ranked wet roads &amp; stations — click to inspect.</div>
   </div>
   <p class="honesty-line">Research only · NOT NWS · cm-scale HAND ranking, not street-truth depths.</p>
+  <div class="magnitude-chip" id="magnitudeChip" role="status">
+    HAND screening <b>~cm</b> · FloodNet street peaks up to <b>~0.9 m</b> (n=5) — not the same scale.
+  </div>
+  <div class="access-fixture-badge" id="accessFixtureBadge" role="status"></div>
   <div id="assetBanner"></div>
 
-  <section class="section">
+  <section class="section" id="assetsSection">
     <h2>Affected assets <span class="hint">click → fly</span></h2>
     <div id="deskSummary" class="metric"><span>Loading…</span><b>—</b></div>
     <div class="chip-row" id="listModeChips" role="group" aria-label="List mode">
@@ -427,51 +451,24 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     <div class="marker-key" id="markerKey">
       <b>Map layers</b>
       <div class="map-dot-toggles" role="group" aria-label="Map dot toggles">
-        <label class="layer-btn"><input id="lyWet" type="checkbox" checked>Wet assets</label>
+        <label class="layer-btn"><input id="lyWet" type="checkbox" checked>Wet assets (top-N)</label>
         <label class="layer-btn"><input id="lyTopHits" type="checkbox" checked>Top hits</label>
-        <label class="layer-btn"><input id="lyFloodNet" type="checkbox" checked>FloodNet</label>
-        <label class="layer-btn"><input id="lyAccess" type="checkbox" checked>DOT / access</label>
+        <label class="layer-btn"><input id="lyFloodNet" type="checkbox">FloodNet</label>
+        <label class="layer-btn"><input id="lyAccess" type="checkbox">DOT / access</label>
       </div>
-      <div class="map-legend-rows" aria-label="Teal selection key">
-        <div class="map-legend-row">
-          <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="6.5" fill="rgba(27,192,205,.15)" stroke="#0d8f9c" stroke-width="1.6" stroke-dasharray="3.2 2.4"/></svg></span>
-          <span><b style="color:var(--ink-soft)">Dashed teal</b> — top shortlist hit</span>
-        </div>
-        <div class="map-legend-row">
-          <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="5.5" fill="#1bc0cd" stroke="#042227" stroke-width="2"/></svg></span>
-          <span><b style="color:var(--ink-soft)">Filled teal</b> — selected asset</span>
-        </div>
-        <div class="map-legend-row">
-          <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><line x1="2" y1="9" x2="16" y2="9" stroke="#045963" stroke-width="3.5" stroke-linecap="round"/><line x1="3" y1="3" x2="15" y2="15" stroke="#0d8f9c" stroke-width="1.4" opacity=".85"/></svg></span>
-          <span><b style="color:var(--ink-soft)">Teal line-through</b> — selected road</span>
-        </div>
-      </div>
-      <div class="access-legend">
-        <div class="cap">DOT / access overlay</div>
-        <div class="map-legend-row">
-          <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><rect x="3" y="3" width="12" height="12" rx="2" fill="#b45309" stroke="#7c2d12" stroke-width="1.4" stroke-dasharray="2.5 2"/><text x="9" y="12" text-anchor="middle" fill="#fff" font-size="5.5" font-family="Syne,sans-serif" font-weight="700">DOT</text></svg></span>
-          <span>Square — NYC DOT speed (watch / limited)</span>
-        </div>
-        <div class="map-legend-row">
-          <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M9 2.5 L15.5 14.5 H2.5 Z" fill="#9f1239" stroke="#7f1d1d" stroke-width="1"/><text x="9" y="13" text-anchor="middle" fill="#fff" font-size="4.2" font-family="Syne,sans-serif" font-weight="700">511</text></svg></span>
-          <span>Triangle — 511-style closure / event</span>
-        </div>
-        <div class="map-legend-row">
-          <span class="leg-sw" aria-hidden="true"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" fill="#0d8f9c" stroke="#045963" stroke-width="1.5"/><text x="9" y="11.2" text-anchor="middle" fill="#fff" font-size="4.5" font-family="Syne,sans-serif" font-weight="700">MTA</text></svg></span>
-          <span>Circle — MTA alert on wet station</span>
-        </div>
-      </div>
-      <p class="drawer-note" style="margin-top:8px">Amber/red wet dots = depth band (≥3 / ≥8 / ≥15). Inventory Stations/Facilities stay under Advanced.</p>
+      <label class="layer-btn" style="margin-top:6px"><input id="lyIncludeSchools" type="checkbox">All-mode: include schools / full inventory</label>
+      <p class="drawer-note" style="margin-top:8px">Legend lives on the map key. Default map paints shortlist + top decision-class hits — not all wet dots.</p>
     </div>
   </section>
 
   <section class="section" id="floodnetPeaksPanel">
-    <details class="drawer" open>
+    <div class="metric" id="floodnetCollapsedMetric"><span>FloodNet OOM</span><b>5 posts · expand</b></div>
+    <details class="drawer" id="floodnetDrawer">
       <summary>FloodNet peaks · all 5 Ida posts</summary>
       <p class="drawer-note">Post-level Ida OOM check — does not rescale citywide HAND. All five 2021 posts listed.</p>
       <div id="floodnetSummary" class="metric"><span>Loading…</span><b>—</b></div>
       <div id="floodnetMeta" class="metric" style="display:none"><span>Primary HAND @ posts</span><b>—</b></div>
-      <p class="drawer-note">Map toggle lives under <b>Map layers</b> above (FloodNet).</p>
+      <p class="drawer-note">Map toggle lives under <b>Map layers</b> above (FloodNet · off by default).</p>
       <div class="floodnet-list" id="floodnetList" aria-label="FloodNet Ida peak comparison"><div class="empty">Loading sensor peaks…</div></div>
       <details class="drawer" id="floodnetLaterDrawer">
         <summary>Later FloodNet events</summary>
@@ -513,13 +510,14 @@ details.drawer[open] > summary::after {{ content:"–"; }}
   <section class="section">
     <details class="drawer">
       <summary>Advanced · research only</summary>
-      <p class="drawer-note">Collapsed by design — demo stays shortlist + FloodNet + scrubber.</p>
+      <p class="drawer-note">Research lab — not for 60s demo. Default stays shortlist + scrubber.</p>
       <details class="drawer">
         <summary>Event / path</summary>
         <div class="filters" style="grid-template-columns:1fr 1fr">
           <div><label class="caption" for="extentSelect">Extent</label><select id="extentSelect"></select></div>
-          <div><label class="caption" for="eventSelect">Event</label><select id="eventSelect"></select></div>
+          <div><label class="caption" for="eventSelect">Event</label><select id="eventSelect" disabled title="Henri parity incomplete — Ida only in default demo"></select></div>
         </div>
+        <p class="drawer-note" id="eventPickerNote">Event picker hidden until Henri radar + inventory parity. Ida only.</p>
         <label class="caption" for="stormPathSelect" style="margin-top:6px">Scenario path</label>
         <select id="stormPathSelect" aria-label="Scenario path"></select>
       </details>
@@ -534,7 +532,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
       </details>
       <details class="drawer">
         <summary>Access feeds</summary>
-        <p class="drawer-note">DOT / 511 / MTA overlay defaults <b>on</b> — use <b>Map layers → DOT / access</b> to hide.</p>
+        <p class="drawer-note">DOT / 511 / MTA overlay defaults <b>off</b> — enable under Map layers. Replay fixture joins are labeled synthetic.</p>
         <label class="layer-btn"><input id="lyAccessLive" type="checkbox">Prefer live DOT / 511 / MTA feeds</label>
         <div id="accessFeedStatus" class="drawer-note" style="margin-top:4px">Fixture default · Ida replay</div>
       </details>
@@ -584,6 +582,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
 
 <div class="map-stage" id="mapStage">
   <div class="pane-label" id="leftLabel">Decision Desk · Ida</div>
+  <div class="sfincs-peer-banner" id="sfincsPeerBanner">SFINCS on — non-peer metres vs HAND cm. HAND auto-dimmed. No SWMM.</div>
   <div id="mapLeft" class="map-el"></div>
   <div class="selected-card" id="selectedCard">
     <button type="button" class="sel-close" id="selClose" aria-label="Close">×</button>
@@ -627,6 +626,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     <button type="button" class="play" id="hudPlay" aria-label="Play or pause storm loop">▶</button>
     <div>
       <div class="clock" id="hudClock">—</div>
+      <!-- timing honesty injected into hudSub -->
       <div class="sub" id="hudSub">MRMS soft metro · +0…+36h · not NEXRAD</div>
     </div>
     <div class="legend">
@@ -673,17 +673,26 @@ L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 }}).addTo(mapLeft);
 
 const DEMO_SHORTLIST = {demo_ids_json};
+const DEMO_SHORTLIST_PATH = {shortlist_path_json};
+const MAP_PAINT_TOP_N = 40;
+const DECISION_FACILITY_TYPES = new Set(["hospital", "fire", "police"]);
+const DECISION_HIGHWAYS = new Set(["motorway", "trunk", "primary", "secondary", "motorway_link", "trunk_link"]);
 const AUTO_HIGHLIGHT_N = (manifest.asset_decision_desk && manifest.asset_decision_desk.auto_highlight_top_n) || 3;
 const secondStorm = manifest.second_storm || {{}};
-if (secondStorm.available && EVENTS["henri-2021"]) EVENTS["henri-2021"].available = true;
+// Henri desk JSON may exist, but radar + inventory parity is incomplete — keep picker Ida-only.
+if (EVENTS["henri-2021"]) {{
+  EVENTS["henri-2021"].available = false;
+  EVENTS["henri-2021"].label = "Henri (hidden until parity)";
+}}
 const eventSel = document.getElementById("eventSelect");
 Object.values(EVENTS).forEach(ev => {{
-  if (!ev.available) return; // hide placeholders during demos
+  if (ev.id !== "ida-2021") return; // honest hide until dual-event ready
   const opt = document.createElement("option");
   opt.value = ev.id; opt.textContent = ev.label;
   eventSel.appendChild(opt);
 }});
 eventSel.value = "ida-2021";
+eventSel.disabled = true;
 const extentSel = document.getElementById("extentSelect");
 Object.values(EXTENTS).forEach(ex => {{
   const opt = document.createElement("option"); opt.value = ex.id; opt.textContent = ex.label; extentSel.appendChild(opt);
@@ -932,7 +941,7 @@ function setLead(i) {{
   const depthBit = depthLead != null ? (" · depth +" + depthLead + "h") : "";
   const suscBit = wantSusc ? " · screening on" : "";
   document.getElementById("hudSub").textContent =
-    "+" + f.lead_hours + "h · " + (f.temporal_blend ? "blend" : "native") + depthBit + suscBit + " · dense awareness";
+    "+" + f.lead_hours + "h · 3h cum screening frames · " + (f.temporal_blend ? "blend" : "native") + depthBit + suscBit;
   document.getElementById("leftLabel").textContent = "Decision Desk · " + (activePath.label || "Ida");
   syncSparklineToScrubber();
 }}
@@ -969,6 +978,29 @@ function accessChipLabel(status) {{
   if (status === "watch") return "access: watch (research)";
   return "access: open (research)";
 }}
+function isUnnamedAsset(a) {{
+  const name = String(a.name || "").trim().toLowerCase();
+  return name.startsWith("unnamed ") || !name;
+}}
+function isDecisionClassAsset(a) {{
+  if (!a || isUnnamedAsset(a)) return false;
+  if (a.decision_class === true) return true;
+  if (a.decision_class === false) return false;
+  if (a.asset_type === "station") return true;
+  if (a.asset_type === "facility") return DECISION_FACILITY_TYPES.has(String(a.facility_type || "").toLowerCase());
+  if (a.asset_type === "road") {{
+    const hwy = String(a.highway || "").toLowerCase();
+    const name = String(a.name || "").toLowerCase();
+    if (DECISION_HIGHWAYS.has(hwy)) return true;
+    if (a.near_lion_tunnel) return true;
+    return ["tunnel", "expressway", "parkway", "boulevard", "bridge"].some(k => name.includes(k));
+  }}
+  return false;
+}}
+function includeSchools() {{
+  const el = document.getElementById("lyIncludeSchools");
+  return !!(el && el.checked);
+}}
 function filteredAssets() {{
   if (!desk || !desk.assets) return [];
   const q = (document.getElementById("assetSearch").value || "").trim().toLowerCase();
@@ -985,14 +1017,30 @@ function filteredAssets() {{
     // Shortlist ignores band filter so demo rows always appear; numbers still honest.
     if (curated.length) return curated;
   }}
-  // All mode already uses demoted ranks from desk JSON (NJ Turnpike pushed down).
+  if (listMode === "all" && !includeSchools() && !q) {{
+    rows = rows.filter(isDecisionClassAsset);
+  }}
   return rows;
+}}
+function mapPaintAssets() {{
+  const byId = Object.fromEntries((desk.assets || []).map(a => [a.id, a]));
+  const shortlist = DEMO_SHORTLIST.map(id => byId[id]).filter(Boolean);
+  const tops = (desk.assets || []).filter(isDecisionClassAsset).slice(0, MAP_PAINT_TOP_N);
+  const seen = new Set();
+  const out = [];
+  [...shortlist, ...tops].forEach(a => {{
+    if (!a || seen.has(a.id)) return;
+    seen.add(a.id);
+    out.push(a);
+  }});
+  if (selectedId && byId[selectedId] && !seen.has(selectedId)) out.push(byId[selectedId]);
+  return out;
 }}
 function renderAssetList() {{
   const list = document.getElementById("assetList");
   const rows = filteredAssets().slice(0, listMode === "shortlist" ? 12 : 120);
   if (!rows.length) {{
-    list.innerHTML = '<div class="empty">No wet assets match these filters.</div>';
+    list.innerHTML = '<div class="empty">No wet assets match. Clear band filter, switch to Shortlist, or enable schools / full inventory.</div>';
     return;
   }}
   list.innerHTML = rows.map(a => {{
@@ -1122,6 +1170,12 @@ function selectAsset(id) {{
   }}
   const card = document.getElementById("selectedCard");
   const acc = accessStatus(a);
+  // Opt-in access overlay when the selected asset has a non-open research chip.
+  const lyAcc = document.getElementById("lyAccess");
+  if (lyAcc && (acc === "limited" || acc === "watch") && !lyAcc.checked) {{
+    lyAcc.checked = true;
+    rebuildAccessOverlay();
+  }}
   document.getElementById("selKicker").textContent = typeLabel(a.asset_type) + " · #" + a.rank;
   document.getElementById("selName").textContent = a.name;
   document.getElementById("selBody").innerHTML =
@@ -1297,14 +1351,28 @@ function loadDecisionDesk() {{
     desk = json;
     const c = json.counts || {{}};
     const label = activeEventId === "henri-2021" ? "Wet · Henri HAND" : "Wet · metro HAND";
+    const modeNote = listMode === "all" && !includeSchools() ? " · decision classes" : "";
     document.getElementById("deskSummary").innerHTML =
-      `<span>${{label}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
+      `<span>${{label}}${{modeNote}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
     const leftLabel = document.getElementById("leftLabel");
     if (leftLabel) leftLabel.textContent = activeEventId === "henri-2021"
       ? "Decision Desk · Henri" : "Decision Desk · Ida";
+    const accMeta = json.access_signals || {{}};
+    const badge = document.getElementById("accessFixtureBadge");
+    if (badge) {{
+      const nJoin = accMeta.joined_assets != null ? accMeta.joined_assets : "—";
+      badge.style.display = "block";
+      badge.textContent = "Replay fixture (synthetic joins labeled) · joined " + nJoin +
+        (accMeta.fixture_pack ? (" · " + accMeta.fixture_pack) : "");
+    }}
     renderAssetList();
     if (geo && geo.features) {{
-      wetLayer = L.geoJSON(geo, {{
+      const paintIds = new Set(mapPaintAssets().map(a => a.id));
+      const filteredGeo = {{
+        type: "FeatureCollection",
+        features: (geo.features || []).filter(f => paintIds.has((f.properties || {{}}).id))
+      }};
+      wetLayer = L.geoJSON(filteredGeo, {{
         pane: "vectorPane",
         style: f => {{
           const band = f.properties && f.properties.band;
@@ -1313,7 +1381,9 @@ function loadDecisionDesk() {{
         }},
         pointToLayer: (f, ll) => {{
           const band = f.properties && f.properties.band;
-          const color = band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
+          const ft = (f.properties && f.properties.facility_type) || "";
+          const color = (ft === "school") ? "#94a3b8"
+            : band === "hazard" ? "#b91c1c" : band === "deep_ponding" ? "#c2410c" : "#a16207";
           return L.circleMarker(ll, {{ radius:5, color:"#fff", weight:1, fillColor:color, fillOpacity:0.9, pane:"pointPane" }});
         }},
         onEachFeature: (f, layer) => {{
@@ -1871,6 +1941,15 @@ document.getElementById("listModeChips").addEventListener("click", e => {{
   const btn = e.target.closest(".chip");
   if (!btn) return;
   listMode = btn.dataset.mode || "shortlist";
+  // toast-ish: decision-class default for All
+  if (listMode === "all" && !includeSchools()) {{
+    const summary = document.getElementById("deskSummary");
+    if (summary && desk) {{
+      const c = desk.counts || {{}};
+      summary.innerHTML =
+        `<span>Wet · metro HAND · decision classes</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
+    }}
+  }}
   document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c === btn));
   renderAssetList();
 }});
@@ -1970,38 +2049,53 @@ document.getElementById("lyDepthTot").onchange = () => {{
   activeDepth = null;
   if (document.getElementById("lyDepthTot").checked) setLead(leadIndex);
 }};
+function syncSfincsPeerMode() {{
+  const nestedOn = !!(document.getElementById("lySfincsNested") && document.getElementById("lySfincsNested").checked && sfincsNestedLayer);
+  const queensOn = !!(document.getElementById("lySfincs") && document.getElementById("lySfincs").checked && sfincsLayer);
+  const on = nestedOn || queensOn;
+  const banner = document.getElementById("sfincsPeerBanner");
+  const stage = document.getElementById("mapStage");
+  if (banner) banner.style.display = on ? "block" : "none";
+  if (stage) stage.classList.toggle("hand-dimmed", on);
+  const b = document.getElementById("assetBanner");
+  if (on && b) {{
+    b.style.display = "block";
+    b.innerHTML = nestedOn
+      ? "<b>Metro nested SFINCS</b> — non-peer metres vs HAND cm (auto-dimmed). No SWMM. Research only."
+      : "<b>SFINCS Queens nest</b> — non-peer metres vs HAND cm (auto-dimmed). No SWMM. Research only.";
+  }} else if (b && !on) {{
+    b.style.display = "none";
+    b.textContent = "";
+  }}
+  // Dim HAND depth overlay while SFINCS is authoritative-looking.
+  if (on) {{
+    if (activeDepth) activeDepth.setOpacity(Math.min(effectiveDepthOpacity(), 0.28));
+    else if (depthTotal) depthTotal.setOpacity(0.28);
+  }} else {{
+    setLead(leadIndex);
+  }}
+}}
 document.getElementById("lySfincsNested").onchange = () => {{
   if (!sfincsNestedLayer) return;
-  if (document.getElementById("lySfincsNested").checked) {{
-    sfincsNestedLayer.addTo(mapLeft);
-    const b = document.getElementById("assetBanner");
-    if (b) {{
-      b.style.display = "block";
-      b.innerHTML = "<b>Metro nested SFINCS</b> — Advanced research hydro (spatial MRMS + drainage sink). HAND stays primary. No SWMM.";
-    }}
-  }} else {{
-    mapLeft.removeLayer(sfincsNestedLayer);
-  }}
+  if (document.getElementById("lySfincsNested").checked) sfincsNestedLayer.addTo(mapLeft);
+  else mapLeft.removeLayer(sfincsNestedLayer);
+  syncSfincsPeerMode();
 }};
 document.getElementById("lySfincs").onchange = () => {{
   if (!sfincsLayer) return;
-  if (document.getElementById("lySfincs").checked) {{
-    sfincsLayer.addTo(mapLeft);
-    const b = document.getElementById("assetBanner");
-    if (b) {{
-      b.style.display = "block";
-      b.innerHTML = "<b>SFINCS Queens nest</b> — Advanced research hydro nest only; magnitudes not comparable to primary HAND. No SWMM.";
-    }}
-  }} else {{
-    mapLeft.removeLayer(sfincsLayer);
-  }}
+  if (document.getElementById("lySfincs").checked) sfincsLayer.addTo(mapLeft);
+  else mapLeft.removeLayer(sfincsLayer);
+  syncSfincsPeerMode();
 }};
 document.getElementById("lyE2Tot").onchange = () => {{
   if (!e2Total) return;
   if (document.getElementById("lyE2Tot").checked) {{ e2Total.setOpacity(precipOpacity()); e2Total.addTo(mapLeft); }}
   else mapLeft.removeLayer(e2Total);
 }};
-document.getElementById("lyAccess").onchange = () => rebuildAccessOverlay();
+document.getElementById("lyAccess").onchange = () => {{
+  rebuildAccessOverlay();
+  // Auto-enable access overlay when selecting limited/watch assets is handled in selectAsset.
+}};
 document.getElementById("lyWet").onchange = () => syncWetLayerVisibility();
 document.getElementById("lyTopHits").onchange = () => {{
   if (!highlightLayer) return;
@@ -2010,6 +2104,15 @@ document.getElementById("lyTopHits").onchange = () => {{
   }} else if (mapLeft.hasLayer(highlightLayer)) {{
     mapLeft.removeLayer(highlightLayer);
   }}
+}};
+const lySchools = document.getElementById("lyIncludeSchools");
+if (lySchools) lySchools.onchange = () => {{
+  const c = (desk && desk.counts) || {{}};
+  const modeNote = listMode === "all" && !includeSchools() ? " · decision classes" : "";
+  const summary = document.getElementById("deskSummary");
+  if (summary) summary.innerHTML =
+    `<span>Wet · metro HAND${{modeNote}}</span><b>${{c.wet_total||0}} · R${{c.roads||0}} S${{c.stations||0}} F${{c.facilities||0}}</b>`;
+  renderAssetList();
 }};
 document.getElementById("lyAccessLive").onchange = () => {{
   loadAccessSignals();

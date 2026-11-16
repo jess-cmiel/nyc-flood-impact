@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rainwise | Urban Flood Scenario Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="product_demo.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Rainwise scenario studio">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span>rainwise</span>
+    </a>
+    <div class="top-divider"></div>
+    <div class="workspace-name"><span class="overline">SCENARIO STUDIO</span><strong>South Queens / Jamaica Bay</strong></div>
+    <div class="topbar-right">
+      <span class="demo-status"><b></b> SYNTHETIC POC</span>
+      <button class="export-button" id="exportButton" type="button"><span aria-hidden="true">&#8595;</span> Export brief</button>
+      <button class="avatar" type="button" aria-label="Workspace profile">RW</button>
+    </div>
+  </header>
+
+  <main class="app-grid">
+    <aside class="control-rail">
+      <div class="rail-heading">
+        <p class="eyebrow">EVENT WORKSPACE <span class="live-dot"></span></p>
+        <h1>Ida event<br>replay</h1>
+        <p class="subhead">September 1, 2021 <span class="middot">/</span> Queens, NY</p>
+      </div>
+
+      <section class="rail-section">
+        <div class="section-heading"><h2>Rainfall scenario</h2><span class="section-number">01</span></div>
+        <div class="scenario-switch" role="group" aria-label="Choose synthetic rainfall scenario">
+          <button type="button" data-scenario="moderate"><span class="scenario-color moderate"></span><span>Moderate</span><small>35 mm/h</small></button>
+          <button type="button" data-scenario="severe" class="selected"><span class="scenario-color severe"></span><span>Severe</span><small>65 mm/h</small></button>
+          <button type="button" data-scenario="extreme"><span class="scenario-color extreme"></span><span>Extreme</span><small>95 mm/h</small></button>
+        </div>
+        <div class="synthetic-note"><span class="note-mark">S</span><p>Scenario rainfall and depth are synthetic demonstration data, not an Ida reconstruction or forecast.</p></div>
+      </section>
+
+      <section class="rail-section timeline-control">
+        <div class="section-heading"><h2>Scenario timeline</h2><span class="time-readout" id="timeReadout">+00h</span></div>
+        <input id="timeSlider" type="range" min="0" max="6" value="4" step="1" aria-label="Scenario hour">
+        <div class="range-labels"><span>START 00:00</span><span>+6 HOURS</span></div>
+        <div class="rain-readout"><span>Rainfall intensity</span><strong id="rainfallReadout">65 mm/h</strong></div>
+        <canvas id="rainChart" width="260" height="70" aria-label="Synthetic hourly rainfall profile"></canvas>
+      </section>
+
+      <section class="rail-section layer-control">
+        <div class="section-heading"><h2>Map layers</h2><span class="section-number">02</span></div>
+        <label class="layer-row"><span class="layer-swatch swatch-depth"></span><span><b>Synthetic surface-depth proxy</b><small>Illustrative only</small></span><input id="depthToggle" type="checkbox" checked><i class="toggle"></i></label>
+        <label class="layer-row"><span class="layer-swatch swatch-terrain"></span><span><b>Terrain screening</b><small>USGS elevation, approx. 10 m</small></span><input id="terrainToggle" type="checkbox"><i class="toggle"></i></label>
+        <label class="layer-row"><span class="layer-swatch swatch-reports"></span><span><b>311 flood-related reports</b><small>Observed complaints, not verified depths</small></span><input id="reportsToggle" type="checkbox" checked><i class="toggle"></i></label>
+      </section>
+
+      <div class="rail-footer"><span class="source-icon">i</span><p>Real terrain and complaint locations. Synthetic storm scenarios and water-depth proxy.</p></div>
+    </aside>
+
+    <section class="map-workspace" aria-label="Scenario map">
+      <div class="map-toolbar">
+        <div><p class="eyebrow">LAND-ONLY SCENARIO VIEW</p><h2>Urban exposure map</h2></div>
+        <div class="map-toolbar-right"><span class="resolution-chip"><span></span> TERRAIN ~10 M</span><button id="zoomStudy" class="icon-button" type="button" aria-label="Zoom to study area" title="Zoom to study area">&#8982;</button></div>
+      </div>
+      <div class="map-frame"><div id="map" aria-label="Map of South Queens and Jamaica Bay"></div>
+        <div class="map-disclaimer"><span class="disclaimer-tag">POC</span><span>Synthetic scenario layer</span><span class="legend-divider"></span><span class="legend-dot observed-dot"></span><span>311 reports</span></div>
+        <div class="coordinate-readout" id="coordinateReadout">40.6500, -73.9200</div>
+      </div>
+      <div class="map-caption"><span>Base map: OpenStreetMap</span><span>Depth colors: &lt;5 cm <i class="depth-key key-low"></i> 5-15 cm <i class="depth-key key-mid"></i> &gt;15 cm <i class="depth-key key-high"></i></span></div>
+    </section>
+
+    <aside class="insight-rail">
+      <div class="insight-head"><div><p class="eyebrow">SCENARIO OUTPUT <span class="synthetic-label">SYNTHETIC</span></p><h2>Impact snapshot</h2></div><button class="more-button" type="button" title="Data notes" aria-label="Data notes">&#8942;</button></div>
+
+      <div class="metric-block primary-metric"><div class="metric-label">Peak proxy depth</div><div class="metric-value"><strong id="depthMetric">22</strong><span>cm</span></div><div class="metric-foot"><span class="metric-indicator"></span><span>Terrain-derived demo estimate</span></div></div>
+      <div class="metric-pair">
+        <div class="metric-block"><div class="metric-label">Land area above 5 cm</div><div class="metric-value"><strong id="areaMetric">0.0</strong><span>km<sup>2</sup></span></div><div class="metric-foot">Synthetic footprint</div></div>
+        <div class="metric-block"><div class="metric-label">311 reports in proxy zone</div><div class="metric-value"><strong id="reportMetric">--</strong><span>pts</span></div><div class="metric-foot">Not a skill score</div></div>
+      </div>
+
+      <section class="priority-section">
+        <div class="section-heading"><h3>Decision context</h3><span class="context-mark">LIVE</span></div>
+        <div class="context-row"><span class="context-index">A</span><div><b>Check low-lying corridors</b><small>Compare terrain screening with local drainage assets.</small></div><span class="context-arrow">&#8599;</span></div>
+        <div class="context-row"><span class="context-index">B</span><div><b>Review reported impacts</b><small>Clustered complaints provide event context, not ground truth.</small></div><span class="context-arrow">&#8599;</span></div>
+      </section>
+
+      <section class="provenance-section">
+        <div class="section-heading"><h3>Data provenance</h3><span class="section-number">03</span></div>
+        <div class="provenance-row"><span class="provenance-status real"></span><span>USGS 3DEP terrain</span><b>~10 m</b></div>
+        <div class="provenance-row"><span class="provenance-status real"></span><span>NYC 311 reports</span><b>Observed</b></div>
+        <div class="provenance-row"><span class="provenance-status demo"></span><span>Rainfall scenarios</span><b>Synthetic</b></div>
+        <div class="provenance-row"><span class="provenance-status demo"></span><span>Depth proxy</span><b>Uncalibrated</b></div>
+      </section>
+
+      <div class="validation-callout"><strong>Not a flood forecast</strong><p>Hydraulic routing, calibrated drainage, and validated precipitation are not included in this demo.</p></div>
+      <div class="insight-footer">RAINSW / CONCEPT VALIDATION <span>v0.1</span></div>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="product_demo.js"></script>
+</body>
+</html>

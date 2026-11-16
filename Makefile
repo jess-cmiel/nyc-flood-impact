@@ -3,17 +3,48 @@ VENV ?= .venv
 ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 
-.PHONY: help setup install map validation live-ida live clean
+.PHONY: help setup install map validation live-ida live clean desk html access-pack relativize test ci-guard
 
 help:
-	@echo "Targets: setup install map validation live-ida live clean"
+	@echo "Decision Desk targets: desk html access-pack relativize test map"
+	@echo "Legacy: validation live-ida live clean"
 	@echo "Earth2Studio is a dependency — use E2S_PYTHON for GPU forecasts."
 
 setup:
 	$(PYTHON) -m venv $(VENV)
 
 install:
-	$(ACTIVATE) && python -m pip install -U pip && python -m pip install -e .
+	$(ACTIVATE) && python -m pip install -U pip && python -m pip install -e ".[test]"
+
+# Rebuild ranked desk + access demotion (needs depth TIF + exposure GPKG)
+desk:
+	$(ACTIVATE) && python scripts/build_decision_desk_assets.py
+	$(ACTIVATE) && python scripts/expand_ida_access_replay_pack.py
+	$(ACTIVATE) && python scripts/apply_desk_demo_curation.py
+
+# Expand labeled synthetic Ida access pack + re-join
+access-pack:
+	$(ACTIVATE) && python scripts/expand_ida_access_replay_pack.py
+
+# Regenerate product_map.html from current manifest
+html:
+	$(ACTIVATE) && python -c "import json,sys; from pathlib import Path; \
+sys.path.insert(0,'scripts'); from product_map_html import write_product_html; \
+from nyc_flash_flood_case_study.config import FIGURES_DIR; \
+A=FIGURES_DIR/'product_assets'; \
+m=json.loads((A/'product_manifest.json').read_text()); \
+p=json.loads((A/'pluvial_meta.json').read_text()) if (A/'pluvial_meta.json').exists() else {}; \
+v=json.loads((A/'validation_product.json').read_text()) if (A/'validation_product.json').exists() else {}; \
+print(write_product_html(m,p,v))"
+
+relativize:
+	$(ACTIVATE) && python scripts/relativize_product_paths.py
+
+test:
+	$(ACTIVATE) && python -m pytest tests/ -q --tb=short
+
+ci-guard: test
+	$(ACTIVATE) && python scripts/relativize_product_paths.py
 
 # Track 3/5 product map from existing Ida assets
 map:

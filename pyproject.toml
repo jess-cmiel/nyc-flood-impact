@@ -29,6 +29,7 @@ dependencies = [
   "Pillow>=10.0",
   "pysheds>=0.4",
   "hydromt-sfincs>=1.2",
+  "PyYAML>=6.0",
 ]
 
 [project.optional-dependencies]
@@ -40,7 +41,7 @@ inundation = ["pysheds>=0.4"]
 test = ["pytest>=8"]
 
 [project.urls]
-Repository = "https://github.com/jess-cmiel/nyc-flood-impact"
+Repository = "https://github.com/jesscmiel/nyc-flood-impact"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

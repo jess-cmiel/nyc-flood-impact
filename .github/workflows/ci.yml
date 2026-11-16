@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  push:
+    branches: [main, "cursor/**"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install package + test deps
+        run: |
+          python -m pip install -U pip
+          python -m pip install -e ".[test]"
+          python -m pip install pyyaml
+      - name: Pytest (unit + shortlist golden + access pack)
+        run: python -m pytest tests/ -q --tb=short
+      - name: Empty-layer guard
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          assets = Path("figures/product_assets")
+          bad = []
+          for p in assets.glob("*.geojson"):
+              if p.name.startswith("."):
+                  continue
+              if "quarantine" in str(p):
+                  continue
+              try:
+                  g = json.loads(p.read_text())
+              except Exception as e:
+                  bad.append(f"{p.name}: unreadable {e}")
+                  continue
+              feats = g.get("features")
+              if isinstance(feats, list) and len(feats) == 0:
+                  bad.append(f"{p.name}: empty FeatureCollection (quarantine or delete)")
+          # catch_basins specifically must not live empty in product_assets root
+          live = assets / "catch_basins.geojson"
+          if live.exists():
+              g = json.loads(live.read_text())
+              if not g.get("features"):
+                  bad.append("catch_basins.geojson empty in live tree")
+          if bad:
+              raise SystemExit("Empty-layer guard failed:\\n- " + "\\n- ".join(bad))
+          print("empty-layer guard ok")
+          PY
