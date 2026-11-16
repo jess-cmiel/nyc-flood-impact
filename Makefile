@@ -4,11 +4,11 @@ ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 DEMO_TAG ?= demo-ida-v1
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains nest-exchange live-mrms relativize vendor test ci-guard demo-tag
+.PHONY: help setup install map validation validation-legacy live-ida live clean desk html access-pack disagreement henri-parity corridor denser-drains nest-exchange live-mrms relativize vendor test ci-guard demo-tag
 
 help:
-	@echo "Decision Desk: desk html henri-parity corridor denser-drains nest-exchange live-mrms vendor test demo-tag"
-	@echo "Legacy: validation live-ida live clean"
+	@echo "Decision Desk: desk html validation henri-parity corridor denser-drains nest-exchange live-mrms vendor test demo-tag"
+	@echo "Legacy: validation-legacy live-ida live clean"
 	@echo "Earth2Studio is a dependency — use E2S_PYTHON for GPU forecasts."
 
 setup:
@@ -79,8 +79,13 @@ demo-tag:
 map:
 	$(ACTIVATE) && python scripts/build_product_map.py
 
-# Track 5 only
+# Scientific factor validation pipeline (observed/modeled/synthetic tagged)
+# Regenerates figures/product_assets/science_validation_*.json + validation_diags/
 validation:
+	$(ACTIVATE) && python scripts/run_validation_pipeline.py
+
+# Legacy Earth2-vs-311 exploratory card
+validation-legacy:
 	$(ACTIVATE) && python scripts/run_validation_report.py
 
 # Track 4: rebuild map from existing Ida clipped forecast (no new GPU run)

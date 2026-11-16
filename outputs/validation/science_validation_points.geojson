@@ -1,0 +1,5968 @@
+{
+  "type": "FeatureCollection",
+  "name": "science_validation_points",
+  "provenance": "modeled",
+  "source": "flood_risk.validation.exports",
+  "honesty": "Collocated validation samples. FloodNet points are observed; grid samples carry modeled factor fields. NOT NWS verification.",
+  "assumptions": [],
+  "official_nws": false,
+  "decision_grade": false,
+  "certified_skill": false,
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.831736,
+          40.654254
+        ]
+      },
+      "properties": {
+        "sample_kind": "floodnet_station",
+        "sample_provenance": "observed",
+        "sensor_id": "Q-russell-st-2-07zt40",
+        "obs_peak_m": 0.072898,
+        "precip_storm_mm": 91.51759338378906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.08118234574794769,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.3340930938720703,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.21046164631843567,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "observed"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.995396,
+          40.673654
+        ]
+      },
+      "properties": {
+        "sample_kind": "floodnet_station",
+        "sample_provenance": "observed",
+        "sensor_id": "BK-9th-st-smith-st-0etvg0",
+        "obs_peak_m": 0.7051040000000001,
+        "precip_storm_mm": 167.08226013183594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.0215028524398804,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.9996668100357056,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.8804527521133423,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5469289422035217,
+        "susceptibility_provenance": "modeled",
+        "provenance": "observed"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.984089,
+          40.676281
+        ]
+      },
+      "properties": {
+        "sample_kind": "floodnet_station",
+        "sample_provenance": "observed",
+        "sensor_id": "BK-carroll-st-4th-av-0ery00",
+        "obs_peak_m": 0.9039860000000001,
+        "precip_storm_mm": 165.68345642089844,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 7.842804908752441,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.9578744769096375,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.02623489499092102,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5397236347198486,
+        "susceptibility_provenance": "modeled",
+        "provenance": "observed"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.831566,
+          40.654312
+        ]
+      },
+      "properties": {
+        "sample_kind": "floodnet_station",
+        "sample_provenance": "observed",
+        "sensor_id": "Q-russell-st-1-07zqc0",
+        "obs_peak_m": 0.038099999999999995,
+        "precip_storm_mm": 91.51759338378906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.10070507973432541,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.24623242020606995,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.21046164631843567,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "observed"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.994591,
+          40.676672
+        ]
+      },
+      "properties": {
+        "sample_kind": "floodnet_station",
+        "sample_provenance": "observed",
+        "sensor_id": "BK-hoyt-st-5th-st-007sk0",
+        "obs_peak_m": 0.26288999999999996,
+        "precip_storm_mm": 167.6841583251953,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 5.329327583312988,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.9762527942657471,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.3379591703414917,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4786023795604706,
+        "susceptibility_provenance": "modeled",
+        "provenance": "observed"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.41
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 128.23562622070312,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 27.894540786743164,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04690491780638695,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.41
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 131.0168914794922,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 10.284860610961914,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.4157936573028564,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.41
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 58.47175216674805,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 15.213469505310059,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011012439616024494,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.41
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 51.450374603271484,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.02183859422802925,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.41
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 42.252315521240234,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011500217951834202,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.426153846153845
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 150.0449981689453,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 28.94591522216797,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.022829344496130943,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.426153846153845
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 131.2239227294922,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 28.574172973632812,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011162152513861656,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.426153846153845
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 62.149417877197266,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.222364604473114,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.023771511390805244,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.426153846153845
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 51.302886962890625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.019534792751073837,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.426153846153845
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 39.850074768066406,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01012338325381279,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.442307692307686
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 166.68048095703125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 9.728474617004395,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.41901808977127075,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.442307692307686
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 140.40704345703125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 13.663969993591309,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011057415045797825,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.442307692307686
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 70.70333099365234,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.0540754571557045,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.442307692307686
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 48.12724304199219,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01588943414390087,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.442307692307686
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 41.21660614013672,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01016165316104889,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.458461538461535
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 183.38601684570312,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 22.553482055664062,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01948954351246357,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.458461538461535
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 148.37399291992188,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 9.361842155456543,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01105383038520813,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.458461538461535
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 84.91524505615234,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.06231551989912987,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.458461538461535
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 45.544010162353516,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01564526930451393,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.458461538461535
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 40.96406173706055,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01021075714379549,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.47461538461538
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 185.6982879638672,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 36.91979217529297,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011165652424097061,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.47461538461538
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 151.89712524414062,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0011128151090815663,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.20692192018032074,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.47461538461538
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 93.49649047851562,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.07373419404029846,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.47461538461538
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 46.025108337402344,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01632794365286827,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.47461538461538
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 40.18722915649414,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.010161470621824265,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.490769230769224
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 195.71458435058594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 5.182067394256592,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04315252974629402,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.490769230769224
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 160.04876708984375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.328695684671402,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.24217598140239716,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.490769230769224
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 104.48329162597656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.08380058407783508,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.490769230769224
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 47.399871826171875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.017696648836135864,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.490769230769224
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 39.536102294921875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": null,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.50692307692307
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 210.21920776367188,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 17.947843551635742,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.020205218344926834,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.50692307692307
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 172.51014709472656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 15.30499267578125,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.006071938667446375,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.021932227537035942,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.371155321598053,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.50692307692307
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 112.2421646118164,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.38679957389831543,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.09225144237279892,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.50692307692307
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 49.41536331176758,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.020081736147403717,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.50692307692307
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 38.003150939941406,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": null,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.52307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 215.0311737060547,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 36.17380905151367,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011298284865915775,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.52307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 187.8995361328125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -0.6656798720359802,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.49745312333106995,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.0372081995010376,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.52307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 120.18013763427734,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.1017175242304802,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.52307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 51.34952926635742,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.02190365083515644,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.52307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 42.175392150878906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01602128893136978,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.53923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 216.28065490722656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 24.066165924072266,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.035893846303224564,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.53923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 195.8151092529297,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -0.8004004955291748,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.10376668721437454,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.5297752618789673,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.53923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 122.5177993774414,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.11837191134691238,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.53923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 52.8777961730957,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.022179944440722466,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.53923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 49.461612701416016,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.02186223678290844,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.55538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 219.42498779296875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 25.75204849243164,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.044727325439453125,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.032211922109127045,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.55538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 201.9138641357422,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.81345796585083,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011135783977806568,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.55538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 126.41735076904297,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.14669619500637054,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.55538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 52.84480667114258,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.025305690243840218,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.55538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 55.23524475097656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.027942989021539688,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.57153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 211.10580444335938,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 24.452512741088867,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011039343662559986,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.57153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 201.15538024902344,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 4.94325065612793,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.5007030367851257,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.029675006866455078,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.020688891410827637,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5547845959663391,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.57153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 134.83157348632812,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.17480725049972534,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.57153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 57.669090270996094,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 3.38537859916687,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.010981821455061436,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.32877618074417114,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.57153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 61.4412841796875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.030043084174394608,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.58769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 205.71839904785156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 21.493928909301758,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.013646085746586323,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.58769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 192.81405639648438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 7.470014572143555,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.22256535291671753,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.021822741255164146,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5011465549468994,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.58769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 142.37503051757812,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -1.6200000047683716,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.8048853874206543,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.58769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 64.47223663330078,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 4.337794962339103e-06,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04759731888771057,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.58769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 66.46346282958984,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.439286470413208,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011178625747561455,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.60384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 206.88836669921875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 25.787643432617188,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.03337934985756874,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.60384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 179.19207763671875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.611173391342163,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.12570010125637054,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.28992918133735657,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3842552602291107,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.60384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 149.54736328125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 31.353729248046875,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.15163683891296387,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.22347915172576904,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.60384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 77.45864868164062,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.09861591458320618,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04036528989672661,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.60384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 67.43927764892578,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.5833218693733215,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01102541759610176,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.62
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 201.1896209716797,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 20.504470825195312,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.1982089728116989,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.62
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 175.04934692382812,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 6.487423896789551,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.00828782469034195,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.031258001923561096,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.45636478066444397,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.62
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 157.82421875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -1.6200000047683716,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.799400806427002,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.840877652168274,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.62
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 89.43696594238281,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.5892102718353271,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011057891882956028,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.62
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 66.68416595458984,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.6835940480232239,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011005477048456669,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.636153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 196.36288452148438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 136.49398803710938,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011123225092887878,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.636153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 178.67568969726562,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 8.96761703491211,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0012582334456965327,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011612370610237122,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.44220173358917236,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.636153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 162.07411193847656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -1.6200000047683716,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.7186990976333618,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.8409700393676758,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.636153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 98.55245971679688,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.11979865282773972,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.636153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 66.4052734375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.0433061122894287,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.025292128324508667,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.0890689417719841,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.65230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 193.51307678222656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 154.83253479003906,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01104163657873869,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.65230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 188.4894561767578,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 11.736420631408691,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0002578634303063154,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.03649689257144928,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.46017131209373474,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.65230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 159.8949432373047,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -1.6200000047683716,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.17815527319908142,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.8417208194732666,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.65230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 105.84789276123047,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.5618447065353394,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04848301783204079,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3105088174343109,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.65230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 68.22830963134766,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 6.014659404754639,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011118004098534584,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.668461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 191.81785583496094,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 101.45439910888672,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011503181420266628,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.668461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 193.10638427734375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 19.76447105407715,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.16036896407604218,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04239197075366974,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.45495349168777466,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.668461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 155.19142150878906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -0.6809772849082947,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.9348278641700745,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.9030976295471191,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.668461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 113.90006256103516,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 3.8874833583831787,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 1.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.04100833088159561,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5139069557189941,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.668461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 76.06708526611328,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 8.270659446716309,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011035913601517677,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.684615384615384
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 186.2289276123047,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 70.09607696533203,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011684807948768139,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.684615384615384
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 196.4950408935547,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 25.037578582763672,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.011420748196542263,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01133941300213337,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3947373032569885,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.684615384615384
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 142.11016845703125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -0.6790567636489868,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.9001606106758118,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.684615384615384
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 120.7996826171875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 9.271256446838379,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.8955196142196655,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.10247714072465897,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5364864468574524,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.684615384615384
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 85.76948547363281,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 11.538898468017578,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011226849630475044,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.700769230769225
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 175.74217224121094,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 94.50607299804688,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011458562687039375,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.700769230769225
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 199.36753845214844,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 13.722243309020996,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.12435364723205566,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.6790782809257507,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4178020656108856,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.700769230769225
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 135.39942932128906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.237614154815674,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.6396895051002502,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.08079134672880173,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.135392427444458,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4835797846317291,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.700769230769225
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 124.71696472167969,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 33.64984893798828,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.7782832980155945,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.013084430247545242,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4071939289569855,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.700769230769225
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 91.064453125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 18.645118713378906,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011420645751059055,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.716923076923074
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 163.8469696044922,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 71.9603271484375,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.24088329076766968,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.716923076923074
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 190.23948669433594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 44.20738983154297,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.1667075902223587,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.03294820711016655,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.37927037477493286,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.716923076923074
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 129.302734375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.514545202255249,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.9582445025444031,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.08008786290884018,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.033331457525491714,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5760841369628906,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.716923076923074
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 134.97219848632812,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 24.364452362060547,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.8885337114334106,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.0408068522810936,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.40619343519210815,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.716923076923074
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 93.75602722167969,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 24.00028419494629,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.07010382413864136,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.73307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 153.12818908691406,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 73.52095794677734,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.02070675976574421,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.73307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 183.33135986328125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 74.14823150634766,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.031022045761346817,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.24565303325653076,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.73307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 134.32598876953125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 29.141149520874023,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.7916615009307861,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011057032272219658,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4489516019821167,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.73307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 145.7720947265625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 15.212139129638672,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.8330796957015991,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011040931567549706,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3931572735309601,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.73307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 98.3349609375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 28.897432327270508,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.03369924798607826,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.74923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 146.7969207763672,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 76.88806915283203,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.023035623133182526,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.74923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 177.79835510253906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 74.30764770507812,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011304203420877457,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.25375697016716003,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.74923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 148.12411499023438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 29.583877563476562,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011587698943912983,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2415129840373993,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.74923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 157.4559326171875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 19.156755447387695,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.7173453569412231,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011124995537102222,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.40058884024620056,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.74923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 104.66828918457031,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 31.59868621826172,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.013399524614214897,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.76538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 143.46499633789062,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 87.95906829833984,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.032815102487802505,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.76538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 169.16441345214844,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 51.87605667114258,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.10715410858392715,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.05109064653515816,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2964787483215332,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.76538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 156.58761596679688,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.9002366065979004,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.06581027060747147,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3491247296333313,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.76538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 162.19923400878906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 19.1759090423584,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.7992668747901917,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011194932274520397,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4087567627429962,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.76538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 119.57073974609375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 56.70234680175781,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011058623902499676,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.78153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 133.87069702148438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 110.65147399902344,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.07293780148029327,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.06467742472887039,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.78153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 162.21231079101562,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 110.15027618408203,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.09027175605297089,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.015112793073058128,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.16461846232414246,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.78153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 148.76651000976562,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 17.421133041381836,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011191006749868393,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2879320979118347,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.78153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 159.6313018798828,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.8103687763214111,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.33902567625045776,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.78153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 128.6646728515625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 72.07720947265625,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011505973525345325,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.79769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 122.69935607910156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 108.21730041503906,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011174574494361877,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.79769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 146.48658752441406,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 192.91859436035156,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011212103068828583,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.17659206688404083,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.79769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 157.57638549804688,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 11.578495025634766,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.6274283528327942,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011175977997481823,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.4379214942455292,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.79769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 161.30372619628906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.6558483839035034,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.3223011791706085,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.79769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 134.14219665527344,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 53.5319709777832,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01688227429986,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.81384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 116.56859588623047,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 90.31940460205078,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011144591495394707,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.81384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 138.54551696777344,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 134.6128692626953,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.05668561905622482,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011768307536840439,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.1816573292016983,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.81384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 164.8677520751953,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 2.329965114593506,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.9519729614257812,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.09612662345170975,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.5025075674057007,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.81384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 165.21119689941406,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 7.450984954833984,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.706107497215271,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011054888367652893,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.33130818605422974,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.81384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 144.22718811035156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 48.8308219909668,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011294979602098465,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.83
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 119.9823989868164,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 84.089111328125,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011151066049933434,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.83
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 142.35891723632812,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 126.91889953613281,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011254259385168552,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.13868720829486847,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.83
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 163.0388946533203,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 3.0158255100250244,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.7391915917396545,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01110730692744255,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.46537914872169495,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.83
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 165.29945373535156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 4.508601665496826,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.32207247614860535,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.07470842450857162,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011280806735157967,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.35521674156188965,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.83
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 149.37777709960938,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 60.23062515258789,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011308543384075165,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.84615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 113.12301635742188,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 84.67777252197266,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011087503284215927,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.84615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 149.2336883544922,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 204.70248413085938,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011028612032532692,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.13502955436706543,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.84615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 159.9165496826172,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.436625361442566,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.8061397075653076,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.24182134866714478,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.42803481221199036,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.84615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 168.4081268310547,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 14.628345489501953,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.5969833135604858,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011414913460612297,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3761456608772278,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.84615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 155.71861267089844,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 49.97257995605469,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01111005898565054,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.86230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 105.52520751953125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 104.26209259033203,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011008433066308498,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.86230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 147.62806701660156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 149.964111328125,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0004539972869679332,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01201320718973875,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.12460482865571976,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.86230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 156.46246337890625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.504281997680664,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0024703152012079954,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.08978620171546936,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.07099886238574982,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.3393929600715637,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.86230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 174.41905212402344,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 33.35072708129883,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.2132759988307953,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011230853386223316,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2971024513244629,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.86230769230769
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 166.88121032714844,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 1.1754943508222875e-38,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.20387375354766846,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.878461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 105.52409362792969,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 113.2448959350586,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.021335206925868988,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.878461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 142.8828125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 105.78575134277344,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01163844671100378,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.11510248482227325,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.878461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 148.28553771972656,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 27.91398048400879,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.04942348971962929,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011315800249576569,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2196914553642273,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.878461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 172.32675170898438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 24.134618759155273,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.8100868463516235,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01387509610503912,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.379600465297699,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.878461538461536
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 169.64329528808594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.1785387545824051,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.894615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 100.1041030883789,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 175.2993621826172,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011263110674917698,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.894615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 128.9706268310547,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 54.90857696533203,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01116365846246481,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.20785464346408844,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.894615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 151.84072875976562,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 13.837383270263672,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.806504487991333,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2800418436527252,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.894615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 168.45724487304688,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 51.26099395751953,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.19430364668369293,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 1.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011110040359199047,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2181033492088318,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.894615384615385
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 171.7644805908203,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.17545509338378906,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.910769230769226
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 92.87451171875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 207.76206970214844,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011282128281891346,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.910769230769226
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 116.53759002685547,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 54.16196823120117,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.012506363913416862,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.23303580284118652,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.910769230769226
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 156.4479217529297,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 23.13316535949707,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.14014875888824463,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011752191931009293,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.26827964186668396,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.910769230769226
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 160.9380645751953,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 88.70939636230469,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.12594084441661835,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.09486597031354904,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.02134670503437519,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2433294802904129,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.910769230769226
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 176.44253540039062,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.17168399691581726,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.926923076923075
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 88.79550170898438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 150.18722534179688,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.04114363342523575,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.37896981835365295,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.926923076923075
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 104.74274444580078,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 108.43355560302734,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011156508699059486,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.09860384464263916,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.926923076923075
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 154.443603515625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 17.4008846282959,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.00920173805207014,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011128440499305725,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.2476431131362915,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.926923076923075
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 153.68463134765625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 86.97618865966797,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0011277899611741304,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011373710818588734,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": 0.11075719445943832,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.926923076923075
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 173.37962341308594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 0.0,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.16782315075397491,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.94307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 86.43070983886719,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 168.85833740234375,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.09592175483703613,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.94307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 92.13236999511719,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 73.58948516845703,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.012570556253194809,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.94307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 160.41943359375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 48.741397857666016,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011039423756301403,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.94307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 152.10946655273438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 91.5112075805664,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011015471071004868,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.94307692307692
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 173.59300231933594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -1.584988785907626e-05,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.20598243176937103,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.95923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 82.68828582763672,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 225.0587158203125,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.014000074937939644,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.95923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 87.1224365234375,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 122.20227813720703,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011062047444283962,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.95923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 155.68621826171875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 25.347070693969727,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011059178039431572,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.95923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 150.32911682128906,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 50.11704635620117,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011489944532513618,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.95923076923077
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 160.94149780273438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": -1.5061947107315063,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.09353060275316238,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.6644670963287354,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.97538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 82.14263153076172,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 255.25018310546875,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.03650187700986862,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.20093950629234314,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.97538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 86.18049621582031,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 117.08827209472656,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.039211589843034744,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.12420763075351715,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.97538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 139.21617126464844,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 17.82539176940918,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.3769403100013733,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.97538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 149.45074462890625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 34.69129943847656,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.012558406218886375,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.97538461538461
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 144.11074829101562,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 15.434830665588379,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.020819084718823433,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          40.99153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 78.46200561523438,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 255.42063903808594,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.033949870616197586,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.14539551734924316,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          40.99153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 88.3254165649414,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 154.27850341796875,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011579891666769981,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          40.99153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 127.06103515625,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 19.739757537841797,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.06810145825147629,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.8185186386108398,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          40.99153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 147.236328125,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 101.12386322021484,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011008004657924175,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          40.99153846153846
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 144.02508544921875,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 21.041948318481445,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.012260674498975277,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          41.00769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 77.02196502685547,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 269.7284240722656,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01161915436387062,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          41.00769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 94.60365295410156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 117.6959228515625,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011266680434346199,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          41.00769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 122.99848175048828,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 36.07599639892578,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011187824420630932,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          41.00769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 142.81346130371094,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 100.74422454833984,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.01158738974481821,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          41.00769230769231
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 145.41342163085938,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 44.82276916503906,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011307166889309883,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          41.02384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 76.74662017822266,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 251.588623046875,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.012442339211702347,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          41.02384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 97.69349670410156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 70.49092864990234,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.012975937686860561,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          41.02384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 123.80455780029297,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 62.08443832397461,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.014611756429076195,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          41.02384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 136.61985778808594,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 50.63531494140625,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.014758268371224403,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          41.02384615384615
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 150.94740295410156,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 38.919281005859375,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.08572647720575333,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 1.209579348564148,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.44,
+          41.04
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 75.81364440917969,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 227.57643127441406,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": 0.03182239457964897,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.0707007572054863,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.24923076923076,
+          41.04
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 94.82742309570312,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 169.1887969970703,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011336191557347775,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.05846153846154,
+          41.04
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 121.1957778930664,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 96.85569763183594,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.1507129818201065,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86769230769231,
+          41.04
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 135.26187133789062,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 39.906044006347656,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011534481309354305,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.67692307692307,
+          41.04
+        ]
+      },
+      "properties": {
+        "sample_kind": "grid",
+        "sample_provenance": "modeled",
+        "precip_storm_mm": 156.58885192871094,
+        "precip_storm_mm_provenance": "observed",
+        "elevation_m": 87.66779327392578,
+        "elevation_m_provenance": "observed",
+        "impervious_frac": 0.0,
+        "impervious_frac_provenance": "modeled",
+        "drain_density": 0.0,
+        "drain_density_provenance": "modeled",
+        "hand_depth_m": null,
+        "hand_depth_m_provenance": "modeled",
+        "sfincs_depth_m": 0.011360669508576393,
+        "sfincs_depth_m_provenance": "modeled",
+        "susceptibility": null,
+        "susceptibility_provenance": "modeled",
+        "provenance": "modeled"
+      }
+    }
+  ]
+}

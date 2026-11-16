@@ -1,0 +1,737 @@
+{
+  "product": "flood_risk_research_prototype",
+  "pipeline": "flood_risk.validation.pipeline",
+  "event": "ida-2021",
+  "official_nws": false,
+  "decision_grade": false,
+  "certified_skill": false,
+  "enterprise": false,
+  "hens": false,
+  "not_swmm": true,
+  "hand_primary": true,
+  "sfincs_role": "advanced_research_hydro_non_peer",
+  "updated_utc": "2026-11-16T17:18:01Z",
+  "honesty": "Scientific factor validation for the Decision Desk. Every factor is tagged observed / modeled / synthetic. NOT NWS verification \u00b7 NOT decision-grade \u00b7 HAND stays primary \u00b7 SFINCS is Advanced non-peer reference.",
+  "factors": {
+    "precip_intensity_duration": {
+      "id": "precip_intensity_duration",
+      "label": "Precipitation intensity / duration (MRMS QPE)",
+      "status": "ok",
+      "provenance": "observed",
+      "source": "data/processed/earth2_precip/mrms_qpe_ida_precip_storm_total.tif",
+      "honesty": "Observed MRMS Multi-Sensor QPE \u2014 research visualization / forcing. NOT NEXRAD reflectivity tiles; NOT an official NWS product.",
+      "assumptions": [
+        "Ida window uses metro hourly MRMS 0\u201336 h when available."
+      ],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "storm_total_mm": {
+          "exists": true,
+          "path": "data/processed/earth2_precip/mrms_qpe_ida_precip_storm_total.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            720,
+            800
+          ],
+          "n": 80000,
+          "min": 32.9688606262207,
+          "max": 227.9883575439453,
+          "mean": 124.48116395301818,
+          "std": 48.10918295971592,
+          "p10": 48.20298728942871,
+          "p50": 134.7409210205078,
+          "p90": 180.92115478515626,
+          "p99": 216.38093994140624
+        },
+        "n_hourly_frames": 37,
+        "peak_1h_mm": 84.51276397705078,
+        "hourly_max_mm_series_p50": 1.6863954067230225,
+        "hourly_max_mm_series_p90": 48.41840972900388
+      },
+      "earth2_scenario": {
+        "provenance": "modeled",
+        "source": "data/processed/earth2_precip/precip_storm_total.tif",
+        "honesty": "Earth2 AI storm total is a modeled scenario track \u2014 separate from hydro calc modules.",
+        "assumptions": [],
+        "official_nws": false,
+        "decision_grade": false,
+        "certified_skill": false,
+        "stats": {
+          "exists": true,
+          "path": "data/processed/earth2_precip/precip_storm_total.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            360,
+            480
+          ],
+          "n": 80000,
+          "min": 28.49460792541504,
+          "max": 44.68461990356445,
+          "mean": 36.87017253644466,
+          "std": 4.279580646140387,
+          "p10": 29.867431640625,
+          "p50": 35.97926712036133,
+          "p90": 42.2829704284668,
+          "p99": 44.68461990356445
+        }
+      }
+    },
+    "antecedent_rainfall": {
+      "id": "antecedent_rainfall",
+      "label": "Antecedent rainfall (early-window MRMS sum)",
+      "status": "ok",
+      "provenance": "observed",
+      "source": "data/processed/mrms_qpe_metro",
+      "honesty": "Observed early-window MRMS QPE sum (leads 0\u20135 h) as antecedent wetness proxy. Not soil-moisture assimilation; research only.",
+      "assumptions": [
+        "Antecedent \u2248 first 6 hourly MRMS accumulations in the Ida product clock.",
+        "Does not use the synthetic data/processed/antecedent_wetness.tif stub."
+      ],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "exists": true,
+        "method": "sum_mrms_1h_leads_0_to_5",
+        "n_frames": 6,
+        "n": 6399440,
+        "min": 0.0,
+        "max": 14.389809608459473,
+        "mean": 3.73441441271427,
+        "p50": 3.0017122328281403,
+        "p90": 6.444334077835085,
+        "shape": [
+          2395,
+          2672
+        ],
+        "crs": "EPSG:4326",
+        "nodata_ref": -9999.0
+      },
+      "synthetic_stub_avoided": {
+        "provenance": "synthetic",
+        "source": "data/processed/antecedent_wetness.tif",
+        "honesty": "Tiny stub antecedent wetness \u2014 synthetic prototype placeholder.",
+        "assumptions": [],
+        "official_nws": false,
+        "decision_grade": false,
+        "certified_skill": false
+      }
+    },
+    "elevation": {
+      "id": "elevation",
+      "label": "Elevation (USGS 3DEP metro DEM)",
+      "status": "ok",
+      "provenance": "observed",
+      "source": "data/raw/terrain/dem_usgs_metro_work30m.tif",
+      "honesty": "Observed USGS 3DEP elevation \u2014 terrain input for HAND / screening.",
+      "assumptions": [],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "exists": true,
+        "path": "data/raw/terrain/dem_usgs_metro_work30m.tif",
+        "crs": "EPSG:4326",
+        "shape": [
+          2395,
+          2672
+        ],
+        "n": 80000,
+        "min": -1.6200000047683716,
+        "max": 359.2059020996094,
+        "mean": 31.36507322096517,
+        "std": 47.621920897094476,
+        "p10": 0.0,
+        "p50": 11.9515962600708,
+        "p90": 88.21078720092774,
+        "p99": 236.47234802246035
+      }
+    },
+    "slope": {
+      "id": "slope",
+      "label": "Slope (degrees from USGS DEM gradient)",
+      "status": "ok",
+      "provenance": "observed",
+      "source": "data/raw/terrain/dem_usgs_metro_work30m.tif",
+      "honesty": "Observed terrain slope derived from USGS DEM gradient (degrees). Legacy data/processed/slope.tif is a SYNTHETIC stub with unrealistic maxima \u2014 not used here.",
+      "assumptions": [
+        "Slope from local finite differences; not a lidar bare-earth product."
+      ],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "exists": true,
+        "path": "data/raw/terrain/dem_usgs_metro_work30m.tif",
+        "method": "numpy_gradient_from_dem",
+        "n": 60000,
+        "min": 0.0,
+        "max": 59.67757089320337,
+        "mean": 1.7816459852761686,
+        "p50": 0.6707698760164047,
+        "p90": 4.881036024144799,
+        "p99": 14.323185677609215
+      },
+      "synthetic_stub": {
+        "provenance": "synthetic",
+        "source": "data/processed/slope.tif",
+        "honesty": "Tiny stub slope raster \u2014 synthetic prototype; max values are physically unrealistic.",
+        "assumptions": [],
+        "official_nws": false,
+        "decision_grade": false,
+        "certified_skill": false,
+        "stats": {
+          "exists": true,
+          "path": "data/processed/slope.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            18,
+            40
+          ],
+          "n": 720,
+          "min": 0.009999999776482582,
+          "max": 10014.2197265625,
+          "mean": 813.7072096017345,
+          "std": 2475.4741686797056,
+          "p10": 0.06081558018922806,
+          "p50": 0.0608370378613472,
+          "p90": 5007.08935546875,
+          "p99": 10014.2197265625
+        }
+      }
+    },
+    "impervious_surface": {
+      "id": "impervious_surface",
+      "label": "Impervious surface (NLCD 2021)",
+      "status": "ok",
+      "provenance": "observed",
+      "source": "data/raw/landcover/nlcd_2021_impervious_citywide.tif",
+      "honesty": "Observed NLCD 2021 percent impervious; metro fraction is a modeled warp of NLCD.",
+      "assumptions": [],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "nlcd_percent": {
+          "exists": true,
+          "path": "data/raw/landcover/nlcd_2021_impervious_citywide.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            1670,
+            1688
+          ],
+          "n": 80000,
+          "min": 0.0,
+          "max": 100.0,
+          "mean": 32.1733875,
+          "std": 35.23286994093504,
+          "p10": 0.0,
+          "p50": 16.0,
+          "p90": 88.0,
+          "p99": 100.0
+        },
+        "metro_fraction": {
+          "provenance": "modeled",
+          "source": "data/processed/drainage_capacity/impervious_fraction_metro.tif",
+          "honesty": "NLCD warped to metro DEM grid as fraction [0,1].",
+          "assumptions": [],
+          "official_nws": false,
+          "decision_grade": false,
+          "certified_skill": false,
+          "exists": true,
+          "path": "data/processed/drainage_capacity/impervious_fraction_metro.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            2395,
+            2672
+          ],
+          "n": 80000,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.1269314605382431,
+          "std": 0.2664427300395706,
+          "p10": 0.0,
+          "p50": 0.0,
+          "p90": 0.6296710491180421,
+          "p99": 0.966424429416656
+        }
+      }
+    },
+    "drainage_blockage_indicators": {
+      "id": "drainage_blockage_indicators",
+      "label": "Drainage / blockage indicators (open proxy)",
+      "status": "ok",
+      "provenance": "modeled",
+      "source": "data/processed/drainage_capacity/drainage_capacity_mm_hr.tif",
+      "honesty": "Modeled research drainage-capacity proxy from open drain density \u2014 NOT SWMM, NOT DEP sewer capacity, NOT blockage sensor network.",
+      "assumptions": [
+        "Low drain density \u2192 higher blockage / capacity-deficit proxy.",
+        "No fake SWMM continuous simulation."
+      ],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "drain_density_norm": {
+          "exists": true,
+          "path": "data/processed/drainage_capacity/drain_density_norm_metro.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            2395,
+            2672
+          ],
+          "n": 80000,
+          "min": 0.0,
+          "max": 1.0,
+          "mean": 0.1185375,
+          "std": 0.3232435012397774,
+          "p10": 0.0,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p99": 1.0
+        },
+        "drainage_capacity_mm_hr": {
+          "exists": true,
+          "path": "data/processed/drainage_capacity/drainage_capacity_mm_hr.tif",
+          "crs": "EPSG:4326",
+          "shape": [
+            2395,
+            2672
+          ],
+          "n": 80000,
+          "min": 6.5,
+          "max": 22.0,
+          "mean": 10.760972816801072,
+          "std": 3.1364189095139183,
+          "p10": 8.853311538696289,
+          "p50": 10.0,
+          "p90": 15.210419559478765,
+          "p99": 22.0
+        },
+        "capacity_meta_keys": [
+          "decision_grade",
+          "drain_buffer_deg",
+          "drain_buffer_deg_legacy",
+          "drain_points",
+          "engine",
+          "extent",
+          "honesty",
+          "not_dep_sewer",
+          "not_swmm",
+          "official_nws",
+          "p25_denser_inventory",
+          "product",
+          "product_sample",
+          "shape",
+          "stats_on_land",
+          "updated_at_utc"
+        ],
+        "demo_nodes": {
+          "provenance": "synthetic",
+          "source": "figures/product_assets/drainage_nodes.geojson",
+          "honesty": "Demo drainage nodes \u2014 synthetic / open-derived, not DEP sewer graph.",
+          "assumptions": [],
+          "official_nws": false,
+          "decision_grade": false,
+          "certified_skill": false,
+          "exists": true
+        }
+      }
+    },
+    "flood_susceptibility": {
+      "id": "flood_susceptibility",
+      "label": "Flood susceptibility screening index",
+      "status": "ok",
+      "provenance": "modeled",
+      "source": "data/processed/susceptibility/mrms_qpe_ida_susc_lead_12h.tif",
+      "honesty": "Multi-factor susceptibility frame (screening index, not probability). Screening only \u2014 not inundation depth or calibrated probability.",
+      "assumptions": [
+        "S = clip(0.35*weather + 0.40*landscape + 0.15*infra + 0.10*weather*landscape, 0, 1); landscape = 0.55*terrain_lowflat + 0.45*impervious; infra = 0.70*built_road_proxy + 0.30*(1 - drain_density_norm)"
+      ],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "exists": true,
+        "path": "data/processed/susceptibility/mrms_qpe_ida_susc_lead_12h.tif",
+        "crs": "EPSG:4326",
+        "shape": [
+          720,
+          800
+        ],
+        "n": 80000,
+        "min": 0.08294129371643066,
+        "max": 0.6771141290664673,
+        "mean": 0.35753876083502545,
+        "std": 0.11208508733552164,
+        "p10": 0.20680878758430482,
+        "p50": 0.3533676266670227,
+        "p90": 0.5027369618415832,
+        "p99": 0.5932562935352323
+      },
+      "factors_meta_formula": "S = clip(0.35*weather + 0.40*landscape + 0.15*infra + 0.10*weather*landscape, 0, 1); landscape = 0.55*terrain_lowflat + 0.45*impervious; infra = 0.70*built_road_proxy + 0.30*(1 - drain_density_norm)",
+      "weights": {
+        "weather": 0.35,
+        "landscape": 0.4,
+        "infra": 0.15,
+        "interaction_weather_landscape": 0.1,
+        "landscape_terrain": 0.55,
+        "landscape_impervious": 0.45,
+        "infra_built": 0.7,
+        "infra_drain_deficit": 0.3
+      }
+    },
+    "hand_primary_depth": {
+      "id": "hand_primary_depth",
+      "label": "HAND bathtub depth (product primary)",
+      "status": "ok",
+      "provenance": "modeled",
+      "source": "data/processed/inundation/depth_metro_mrms_qpe_ida_storm_total_m.tif",
+      "honesty": "Modeled pysheds HAND \u00d7 MRMS excess after drainage-capacity proxy \u2014 product primary depth. NOT rescaled to FloodNet; cm-scale screening.",
+      "assumptions": [],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "exists": true,
+        "path": "data/processed/inundation/depth_metro_mrms_qpe_ida_storm_total_m.tif",
+        "crs": "EPSG:4326",
+        "shape": [
+          2395,
+          2672
+        ],
+        "n": 80000,
+        "min": 0.0050005302764475346,
+        "max": 0.15600846707820892,
+        "mean": 0.07072051552976481,
+        "std": 0.03209112663127822,
+        "p10": 0.02636323440819979,
+        "p50": 0.07231321185827255,
+        "p90": 0.11209363266825677,
+        "p99": 0.13939089640974991
+      }
+    },
+    "sfincs_physics_reference": {
+      "id": "sfincs_physics_reference",
+      "label": "SFINCS depth (Advanced physics reference)",
+      "status": "ok",
+      "provenance": "modeled",
+      "source": "data/processed/inundation/depth_sfincs_metro_ida_m.tif",
+      "honesty": "SFINCS Advanced research hydro \u2014 physics-based reference only. NOT peer-authoritative with HAND; HAND remains product primary.",
+      "assumptions": [
+        "Non-peer comparison with HAND; magnitude disagreement expected.",
+        "No SWMM; Docker SFINCS run when available."
+      ],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "exists": true,
+        "path": "data/processed/inundation/depth_sfincs_metro_ida_m.tif",
+        "crs": "EPSG:4326",
+        "shape": [
+          650,
+          950
+        ],
+        "n": 80000,
+        "min": 0.010009071789681911,
+        "max": 5.139614105224609,
+        "mean": 0.13620016429614043,
+        "std": 0.3164040041945482,
+        "p10": 0.011085164453834295,
+        "p50": 0.019722959958016872,
+        "p90": 0.3308205902576453,
+        "p99": 1.7018893337249736
+      },
+      "role": "advanced_research_hydro_non_peer",
+      "hand_sfincs_pearson_r": 0.2765214741827476,
+      "overlap_summary": {
+        "wet_dry": {
+          "sfincs_wet": 8511,
+          "hand_wet": 8511,
+          "both_wet": 8511,
+          "sfincs_only": 0,
+          "hand_only": 0,
+          "agreement_fraction_on_union": 1.0
+        },
+        "magnitude_on_both_wet": {
+          "sfincs_mean_m": 0.12468543648719788,
+          "hand_mean_m": 0.06455429643392563,
+          "sfincs_over_hand_mean_ratio": 1.9888017177581787,
+          "note": "Non-peer magnitudes \u2014 report ratio, do not blend."
+        },
+        "honesty": "SFINCS Queens remains Advanced/alt. Overlap is wet/dry + residual gap \u2014 never a peer depth toggle with metro HAND."
+      }
+    },
+    "floodnet_observations": {
+      "id": "floodnet_observations",
+      "label": "FloodNet street-sensor peaks (Ida)",
+      "status": "ok",
+      "provenance": "observed",
+      "source": "figures/product_assets/floodnet_ida_hotspot_stations.geojson",
+      "honesty": "Observed FloodNet street flooding peaks \u2014 sparse 2021 network. Primary comparison target for magnitude honesty vs HAND.",
+      "assumptions": [],
+      "official_nws": false,
+      "decision_grade": false,
+      "certified_skill": false,
+      "stats": {
+        "n_stations_geojson": 5,
+        "peak_rmse_m": 0.5273024216739385,
+        "peak_bias_mean_m": -0.39659560000000005,
+        "obs_peak_mean_m": 0.39659560000000005,
+        "obs_peak_max_m": 0.9039860000000001,
+        "model_peak_mean_m": 0.0,
+        "n_model_dry_at_sensor": 5
+      },
+      "card": "floodnet_validation.json"
+    }
+  },
+  "correlations": {
+    "precip_vs_hand_pearson_r": 0.8861372432053416,
+    "hand_vs_sfincs_pearson_r": 0.2765214741827476
+  },
+  "synthetic_sanity": {
+    "provenance": "synthetic",
+    "source": "flood_risk.validation.synthetic_checks",
+    "honesty": "Synthetic/stub realism audit. Failures document known placeholder defects (e.g. slope.tif) \u2014 they are not product skill scores.",
+    "assumptions": [
+      "NYC metro slopes from DEM are typically \u226a 60\u00b0.",
+      "HAND primary depth remains cm-scale and is never rescaled to FloodNet.",
+      "No fake SWMM; drainage indicators are open-data proxies only."
+    ],
+    "official_nws": false,
+    "decision_grade": false,
+    "certified_skill": false,
+    "n_rules": 9,
+    "n_pass": 8,
+    "n_fail": 1,
+    "n_skip": 0,
+    "rules": [
+      {
+        "rule_id": "slope_degrees_plausible",
+        "description": "Slope values must be in degrees with max \u2264 60.0\u00b0 for NYC DEM context.",
+        "path": "data/processed/slope.tif",
+        "status": "fail",
+        "passed": false,
+        "detail": "max_slope_deg=10014.2 exceeds plausible 60.0 (likely unscaled rise/run stub)",
+        "n": 720,
+        "min": 0.009999999776482582,
+        "max": 10014.2197265625,
+        "mean": 813.7072096017345
+      },
+      {
+        "rule_id": "impervious_unit_interval",
+        "description": "Impervious must be fraction [0,1] or percent [0,100].",
+        "path": "data/raw/landcover/nlcd_2021_impervious_citywide.tif",
+        "status": "pass",
+        "passed": true,
+        "detail": "percent_range=[0.0,100.0]",
+        "n": 2563377,
+        "min": 0.0,
+        "max": 100.0,
+        "mean": 32.187607597321815
+      },
+      {
+        "rule_id": "precip_nonnegative_bounded",
+        "description": "Precip \u2265 0 and storm total \u2264 500.0 mm.",
+        "path": "data/processed/earth2_precip/mrms_qpe_ida_precip_storm_total.tif",
+        "status": "pass",
+        "passed": true,
+        "detail": "range_mm=[32.76,228.21]",
+        "n": 576000,
+        "min": 32.76426315307617,
+        "max": 228.2076416015625,
+        "mean": 124.60714774115218
+      },
+      {
+        "rule_id": "depth_nonnegative_bounded",
+        "description": "Flood depth \u2265 0 and \u2264 2.0 m.",
+        "path": "data/processed/inundation/depth_metro_mrms_qpe_ida_storm_total_m.tif",
+        "status": "pass",
+        "passed": true,
+        "detail": "range_m=[0.0050,0.1560]",
+        "n": 561629,
+        "min": 0.0050000473856925964,
+        "max": 0.15601472556591034,
+        "mean": 0.07063656144953204
+      },
+      {
+        "rule_id": "depth_nonnegative_bounded",
+        "description": "Flood depth \u2265 0 and \u2264 15.0 m.",
+        "path": "data/processed/inundation/depth_sfincs_metro_ida_m.tif",
+        "status": "pass",
+        "passed": true,
+        "detail": "range_m=[0.0100,5.5267]",
+        "n": 603296,
+        "min": 0.0100032277405262,
+        "max": 5.526747703552246,
+        "mean": 0.13563336669967124
+      },
+      {
+        "rule_id": "susceptibility_unit_interval",
+        "description": "Susceptibility screening index must lie in [0, 1].",
+        "path": "data/processed/susceptibility/mrms_qpe_ida_susc_lead_12h.tif",
+        "status": "pass",
+        "passed": true,
+        "detail": "range=[0.0829,0.6779]",
+        "n": 164954,
+        "min": 0.08294129371643066,
+        "max": 0.677945613861084,
+        "mean": 0.357801906883795
+      },
+      {
+        "rule_id": "hand_not_rescaled_to_floodnet",
+        "description": "HAND must remain cm-scale screening; never rescale to FloodNet metres.",
+        "status": "pass",
+        "passed": true,
+        "detail": {
+          "hand_max_m": 0.15600846707820892,
+          "floodnet_peak_mean_m": 0.39659560000000005,
+          "policy": "no_hand_rescale_to_floodnet",
+          "hand_over_floodnet_mean": 0.3933691323812188
+        }
+      },
+      {
+        "rule_id": "precip_depth_not_strongly_negative",
+        "description": "Precip vs depth correlation should not be strongly negative under pluvial forcing.",
+        "status": "pass",
+        "passed": true,
+        "detail": {
+          "pearson_r": 0.8861372432053416,
+          "min_allowed": -0.15
+        }
+      },
+      {
+        "rule_id": "antecedent_stub_labeled_synthetic",
+        "description": "Legacy antecedent_wetness.tif is a tiny stub and must stay labeled synthetic.",
+        "path": "data/processed/antecedent_wetness.tif",
+        "status": "pass",
+        "passed": true,
+        "detail": {
+          "provenance": "synthetic",
+          "source": "data/processed/antecedent_wetness.tif",
+          "honesty": "Tiny stub antecedent wetness \u2014 synthetic prototype placeholder.",
+          "assumptions": [],
+          "official_nws": false,
+          "decision_grade": false,
+          "certified_skill": false
+        }
+      }
+    ],
+    "failing_cases": [
+      {
+        "rule_id": "slope_degrees_plausible",
+        "description": "Slope values must be in degrees with max \u2264 60.0\u00b0 for NYC DEM context.",
+        "path": "data/processed/slope.tif",
+        "status": "fail",
+        "passed": false,
+        "detail": "max_slope_deg=10014.2 exceeds plausible 60.0 (likely unscaled rise/run stub)",
+        "n": 720,
+        "min": 0.009999999776482582,
+        "max": 10014.2197265625,
+        "mean": 813.7072096017345
+      }
+    ],
+    "documented_known_failures": [
+      {
+        "asset": "data/processed/slope.tif",
+        "reason": "18\u00d740 stub with max \u226b 60\u00b0 \u2014 fails slope_degrees_plausible; use DEM-derived slope instead."
+      },
+      {
+        "asset": "data/processed/antecedent_wetness.tif",
+        "reason": "18\u00d740 stub placeholder; prefer early-window MRMS antecedent proxy."
+      }
+    ]
+  },
+  "provenance_mix": {
+    "observed": [
+      "precip_intensity_duration",
+      "antecedent_rainfall",
+      "elevation",
+      "slope",
+      "impervious_surface",
+      "floodnet_observations"
+    ],
+    "modeled": [
+      "drainage_blockage_indicators",
+      "flood_susceptibility",
+      "hand_primary_depth",
+      "sfincs_physics_reference"
+    ],
+    "synthetic": [],
+    "missing": []
+  },
+  "module_boundaries": {
+    "weather_modules": [
+      "nyc_flash_flood_case_study.forecast",
+      "scripts/run_earth2_forecast.py",
+      "scripts/run_live_pipeline.py",
+      "scripts/build_earth2_radar_stack.py"
+    ],
+    "hydrologic_flood_impact_modules": [
+      "flood_risk.inundation",
+      "flood_risk.risk",
+      "flood_risk.validate",
+      "flood_risk.validation",
+      "flood_risk.exposure",
+      "flood_risk.hazard"
+    ],
+    "forbidden_earth2_imports_in_hydro": [
+      "earth2studio",
+      "physicsnemo"
+    ],
+    "product_primary_depth": "pysheds_hand_bathtub + drainage_capacity_proxy",
+    "sfincs_role": "advanced_research_hydro_non_peer",
+    "honesty": "Earth-2 / weather forcing is separated from hydrologic flood-impact calculations. SFINCS is Advanced-only; HAND stays product primary."
+  },
+  "sample_point_count": 205,
+  "exports": {
+    "summary_json": "science_validation_summary.json",
+    "points_geojson": "science_validation_points.geojson",
+    "diags_dir": "validation_diags",
+    "plot_artifacts": [
+      {
+        "file": "diag_distributions.png",
+        "kind": "distributions",
+        "provenance": "mixed",
+        "honesty": "Histogram panels include observed DEM/MRMS and modeled HAND/SFINCS/susceptibility."
+      },
+      {
+        "file": "diag_correlations.png",
+        "kind": "correlations",
+        "provenance": "modeled",
+        "honesty": "Scatter uses collocated observed precip/elev with modeled depth/drainage."
+      },
+      {
+        "file": "diag_spatial_patterns.png",
+        "kind": "spatial_patterns",
+        "provenance": "mixed",
+        "honesty": "Observed MRMS + modeled HAND/SFINCS/impervious warp."
+      },
+      {
+        "file": "diag_rainfall_response.png",
+        "kind": "rainfall_response",
+        "provenance": "mixed",
+        "honesty": "Observed precip forcing vs modeled HAND (primary) and SFINCS (Advanced)."
+      },
+      {
+        "file": "diag_flood_severity.png",
+        "kind": "flood_severity",
+        "provenance": "mixed",
+        "honesty": "Observed FloodNet peaks vs modeled HAND/SFINCS \u2014 non-peer engines."
+      }
+    ],
+    "product_assets_dir": "figures/product_assets"
+  },
+  "limitations": [
+    "FloodNet Ida network is sparse (\u22485 posts) \u2014 magnitude honesty, not citywide skill.",
+    "HAND is cm-scale screening and is intentionally not rescaled to FloodNet.",
+    "SFINCS is Advanced / non-peer; disagreement with HAND is expected.",
+    "Legacy stub rasters (slope.tif, antecedent_wetness.tif) remain labeled synthetic.",
+    "Drainage indicators are open-data proxies \u2014 not SWMM / not DEP.",
+    "Earth-2 weather inputs are validated separately from hydrologic modules."
+  ],
+  "schema_errors": []
+}

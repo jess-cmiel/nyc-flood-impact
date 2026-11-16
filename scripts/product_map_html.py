@@ -2258,6 +2258,33 @@ function loadFloodNetLaterEvents() {{
   }});
 }}
 
+function loadScienceValidation() {{
+  // Additive data contract — no UI redesign. Optional Advanced-panel footnote.
+  const cfg = manifest.science_validation || {{}};
+  const name = cfg.summary
+    || (manifest.validation_dashboard && manifest.validation_dashboard.science_validation)
+    || "science_validation_summary.json";
+  fetch(assets + name, {{ cache:"no-cache" }}).then(r => r.ok ? r.json() : null).catch(() => null).then(sv => {{
+    const el = document.getElementById("validationPanel");
+    if (!el || !sv) return;
+    const mix = sv.provenance_mix || {{}};
+    const nObs = (mix.observed || []).length;
+    const nMod = (mix.modeled || []).length;
+    const nSyn = (mix.synthetic || []).length;
+    const nFail = (sv.synthetic_sanity && sv.synthetic_sanity.n_fail != null) ? sv.synthetic_sanity.n_fail : "—";
+    const line = `Science factors · obs ${{nObs}} / modeled ${{nMod}} / synthetic ${{nSyn}} · stub sanity fails ${{nFail}} · HAND primary · SFINCS Advanced.`;
+    if (el.dataset.floodnetWired === "1") {{
+      if (!el.dataset.scienceWired) {{
+        el.innerHTML = (el.innerHTML || "") + `<div style="margin-top:6px;opacity:.9">${{line}}</div>`;
+        el.dataset.scienceWired = "1";
+      }}
+    }} else if (!el.dataset.scienceWired) {{
+      el.innerHTML = line;
+      el.dataset.scienceWired = "1";
+    }}
+  }});
+}}
+
 function loadFloodNetProduct() {{
   const fnName = (manifest.validation_dashboard && manifest.validation_dashboard.floodnet)
     || (manifest.validation_floodnet && manifest.validation_floodnet.scores)
@@ -2916,6 +2943,7 @@ loadCompareStrip();
 loadDecisionDesk();
 loadAccessSignals();
 loadFloodNetProduct();
+loadScienceValidation();
 loadOptionalLayers();
 loadOfficialInventoryOverlays();
 loadCorridorImpassability();

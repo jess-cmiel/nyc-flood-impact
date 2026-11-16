@@ -4473,7 +4473,9 @@
     "lead_metric": "floodnet_hotspot_rmse_bias_residual",
     "bury_311_hit_rate": true,
     "ida_reproduction": "ida_floodnet_reproduction.json",
-    "floodnet_magnitude_deepen": "floodnet_magnitude_deepen.json"
+    "floodnet_magnitude_deepen": "floodnet_magnitude_deepen.json",
+    "science_validation": "science_validation_summary.json",
+    "science_validation_points": "science_validation_points.geojson"
   },
   "inundation_sfincs": {
     "png": "depth_sfincs_queens_ida_m.png",
@@ -5112,5 +5114,24 @@
     "qpe_product": "MultiSensor_QPE_01H_Pass1_00.00",
     "default_ux": "ida_fixture_replay",
     "honesty": "Live MRMS QPE probe vs labeled Ida/Henri fixture loops \u2014 research latency path only. NOT NWS QPF watch/warning / NOT decision-grade ops."
+  },
+  "science_validation": {
+    "summary": "science_validation_summary.json",
+    "points_geojson": "science_validation_points.geojson",
+    "diags": "validation_diags",
+    "plot_artifacts": [
+      "diag_distributions.png",
+      "diag_correlations.png",
+      "diag_spatial_patterns.png",
+      "diag_rainfall_response.png",
+      "diag_flood_severity.png"
+    ],
+    "official": false,
+    "certified_skill": false,
+    "decision_grade": false,
+    "hand_primary": true,
+    "sfincs_role": "advanced_research_hydro_non_peer",
+    "honesty": "Additive science validation contract \u2014 observed/modeled/synthetic tagged. Does not redesign UI; Advanced panel may optionally summarize.",
+    "updated_utc": "2026-11-16T17:18:01Z"
   }
 }

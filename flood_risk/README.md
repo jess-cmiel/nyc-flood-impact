@@ -13,6 +13,7 @@ Open-stack **flood risk** product direction. NYC / Ida is a **case study** only.
 | `exposure/` | Roads, stations, buildings, critical facilities |
 | `risk/` | Scenario + return-period metrics, disruption scores |
 | `validate/` | Obs overlays (311, gauges, NFHL) — skill, not certification |
+| `validation/` | Scientific factor pipeline (observed/modeled/synthetic tags + diags) |
 
 See the store doc `flood-risk-product-reset.md` for architecture and prioritized MVP steps.
 

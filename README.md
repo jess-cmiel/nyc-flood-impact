@@ -25,7 +25,7 @@ Worker tip: point Cursor `--worker-dir` at `/home/jesscmiel/projects/nyc-flood-i
 | **2 Real hydrology** | Partial | Pluvial screening = USGS ~10&nbsp;m terrain + **NLCD 2021 ~30&nbsp;m impervious**. FEMA SFHA + NWM/AHPS context overlays (static/context labels). StormCast/CorrDiff **blocked on `natten`**. SWMM still needs NYC INP. See `docs/hydrology-resolution-options.md`. |
 | **3 Product UI** | Done (MVP) | Event picker (Ida + placeholder), South Queens / citywide extent, clock valid times, `#` URL state, mobile stack layout, sticky disclaimers → `figures/product_map.html`. |
 | **4 Ops path** | Done (MVP) | `scripts/run_live_pipeline.py` + `make live-ida` / `make live`. Freshness notes; exposure scores only — never flood warnings. Auth/hosting deferred. |
-| **5 Validation** | Done (MVP) | `scripts/run_validation_report.py` → `outputs/validation_product.json` + map panel (Earth2 vs MRMS vs 311). |
+| **5 Validation** | Done (MVP+) | `make validation` → `flood_risk/validation` science pipeline (`science_validation_summary.json` + diags). Legacy Earth2 vs 311: `make validation-legacy`. |
 
 See also `figures/PRODUCT_README.md` and Project store `docs/product-upgrades-plan.md`.
 
@@ -64,7 +64,7 @@ python scripts/run_earth2_forecast.py --init-time 2021-09-01T12:00:00 --steps 4 
 
 ```bash
 make map          # build product_map.html
-make validation   # refresh validation JSON
+make validation   # science factor pipeline (observed/modeled/synthetic tags + diags)
 make live-ida     # rebuild from existing Ida clipped forecast + MRMS QA assets
 make live INIT=2021-09-01T12:00:00   # GPU forecast via E2S_PYTHON then map
 ```
