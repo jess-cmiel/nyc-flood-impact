@@ -4,10 +4,10 @@ ACTIVATE = . $(VENV)/bin/activate
 E2S_PYTHON ?= /home/jesscmiel/projects/earth2studio/.venv/bin/python
 DEMO_TAG ?= demo-ida-v1
 
-.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement relativize vendor test ci-guard demo-tag
+.PHONY: help setup install map validation live-ida live clean desk html access-pack disagreement henri-parity relativize vendor test ci-guard demo-tag
 
 help:
-	@echo "Decision Desk: desk html access-pack disagreement vendor relativize test demo-tag"
+	@echo "Decision Desk: desk html access-pack disagreement henri-parity vendor relativize test demo-tag"
 	@echo "Legacy: validation live-ida live clean"
 	@echo "Earth2Studio is a dependency — use E2S_PYTHON for GPU forecasts."
 
@@ -30,6 +30,10 @@ access-pack:
 # HAND vs SFINCS non-peer disagreement chips (shortlist + top-100)
 disagreement:
 	$(ACTIVATE) && python scripts/build_engine_disagreement.py
+
+# Full Henri Event parity (radar + official inventory desk + shortlist + compare)
+henri-parity:
+	$(ACTIVATE) && python scripts/build_henri_parity.py
 
 # Vendor Leaflet + fonts for offline serve
 vendor:

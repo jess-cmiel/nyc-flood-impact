@@ -422,6 +422,16 @@ details.drawer[open] > summary::after {{ content:"–"; }}
 .access-marker.mta {{ border-radius:50%; background:rgba(13,143,156,.94); border-color:#045963; border-style:solid; }}
 .access-marker.mta.limited {{ background:rgba(159,18,57,.94); border-color:#7f1d1d; border-style:dashed; }}
 .access-marker.mta.watch {{ border-style:dashed; border-color:#b45309; background:rgba(180,83,9,.9); }}
+.compare-strip {{
+  margin:8px 0 4px; padding:8px 10px; border-radius:8px;
+  background:rgba(8,40,52,.06); border:1px solid rgba(8,40,52,.1);
+  font:500 .72rem/1.35 Figtree,sans-serif; color:var(--ink-muted);
+}}
+.compare-strip b {{ color:var(--ink); font-weight:700; }}
+.compare-strip .compare-kicker {{
+  font:700 .62rem Syne,sans-serif; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--accent-deep); margin-bottom:4px;
+}}
 </style>
 </head>
 <body>
@@ -543,7 +553,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
         <summary>Event / path</summary>
         <div class="filters" style="grid-template-columns:1fr 1fr">
           <div><label class="caption" for="extentSelect">Extent</label><select id="extentSelect"></select></div>
-          <div><label class="caption" for="eventSelect">Event</label><select id="eventSelect" disabled title="Henri parity incomplete — Ida only in default demo"></select></div>
+          <div><label class="caption" for="eventSelect">Event</label><select id="eventSelect" title="Ida primary · Henri research second storm when parity is built"></select></div>
         </div>
         <p class="drawer-note" id="eventPickerNote">Event picker hidden until Henri radar + inventory parity. Ida only.</p>
         <label class="caption" for="stormPathSelect" style="margin-top:6px">Scenario path</label>
@@ -618,6 +628,7 @@ details.drawer[open] > summary::after {{ content:"–"; }}
     <h3 id="selName">—</h3>
     <p id="selBody">—</p>
     <div class="sel-chips" id="selChips"></div>
+    <div class="compare-strip" id="selCompareStrip" hidden role="status"></div>
     <div class="sparkline-wrap" id="selSparkWrap" hidden>
       <div class="spark-cap">Depth vs lead (HAND cm)</div>
       <svg id="selSpark" viewBox="0 0 220 44" role="img" aria-label="Asset depth sparkline synced to scrubber"></svg>
@@ -739,20 +750,28 @@ const DECISION_FACILITY_TYPES = new Set(["hospital", "fire", "police"]);
 const DECISION_HIGHWAYS = new Set(["motorway", "trunk", "primary", "secondary", "motorway_link", "trunk_link"]);
 const AUTO_HIGHLIGHT_N = (manifest.asset_decision_desk && manifest.asset_decision_desk.auto_highlight_top_n) || 3;
 const secondStorm = manifest.second_storm || {{}};
-// Henri desk JSON may exist, but radar + inventory parity is incomplete — keep picker Ida-only.
+const henriParity = !!(secondStorm.parity || (manifest.asset_decision_desk && manifest.asset_decision_desk.henri_parity));
 if (EVENTS["henri-2021"]) {{
-  EVENTS["henri-2021"].available = false;
-  EVENTS["henri-2021"].label = "Henri (hidden until parity)";
+  if (henriParity && secondStorm.available) {{
+    EVENTS["henri-2021"].available = true;
+    EVENTS["henri-2021"].label = "Henri remnants (2021-08-21) · research";
+  }} else {{
+    EVENTS["henri-2021"].available = false;
+    EVENTS["henri-2021"].label = "Henri (hidden until parity)";
+  }}
 }}
 const eventSel = document.getElementById("eventSelect");
 Object.values(EVENTS).forEach(ev => {{
-  if (ev.id !== "ida-2021") return; // honest hide until dual-event ready
+  if (!ev.available && ev.id !== "ida-2021") return;
   const opt = document.createElement("option");
   opt.value = ev.id; opt.textContent = ev.label;
   eventSel.appendChild(opt);
 }});
 eventSel.value = "ida-2021";
-eventSel.disabled = true;
+eventSel.disabled = !(henriParity && secondStorm.available);
+if (!eventSel.disabled) {{
+  eventSel.title = "Switch Ida ↔ Henri research replay (radar + desk + shortlist)";
+}}
 const extentSel = document.getElementById("extentSelect");
 Object.values(EXTENTS).forEach(ex => {{
   const opt = document.createElement("option"); opt.value = ex.id; opt.textContent = ex.label; extentSel.appendChild(opt);
@@ -766,12 +785,14 @@ const stormPaths = manifest.storm_paths || [{{
 const pathSel = document.getElementById("stormPathSelect");
 stormPaths.forEach(p => {{
   const opt = document.createElement("option");
-  const isMrms = p.id === "mrms_qpe_ida" || p.ida_primary_viz;
+  const isIdaMrms = p.id === "mrms_qpe_ida" || p.ida_primary_viz;
+  const isHenri = p.id === "mrms_qpe_henri" || p.henri_event_viz;
   opt.value = p.id;
-  opt.textContent = p.label + (isMrms ? " · locked primary" : " · AI scenario");
+  opt.textContent = p.label + (isIdaMrms ? " · Ida primary" : (isHenri ? " · Henri research" : " · AI scenario"));
+  if (isHenri) opt.hidden = true; // selected via Event switch, not Advanced path menu
   pathSel.appendChild(opt);
 }});
-// Demo-locked default: MRMS; Earth2 only via Advanced scenario path
+// Demo-locked default: Ida MRMS; Earth2 only via Advanced scenario path
 pathSel.value = "mrms_qpe_ida";
 
 function currentBounds() {{
@@ -813,6 +834,7 @@ let decisionLog = [];
 let residualMode = false;
 let listMode = "shortlist";
 let activeEventId = "ida-2021";
+let compareStrip = null;
 const PLAY_MS = 380;
 const FADE_MS = 220;
 
@@ -913,9 +935,18 @@ function rebuildPathLayers() {{
       opacity: Math.min(depthOpacity(), 0.55), interactive:false, pane:"depthPane"
     }});
   }}
-  document.getElementById("pathHonesty").textContent = activePath.primary || activePath.ida_primary_viz
-    ? "Primary Ida awareness: soft-edge metro MRMS MultiSensor QPE (~1 km), native hourly 0–36h — not NEXRAD tiles."
-    : (activePath.honesty || "Labeled AI / alternate scenario — coarse cells; not the decision surface.");
+  const pathHonestyEl = document.getElementById("pathHonesty");
+  if (pathHonestyEl) {{
+    if (activePath.primary || activePath.ida_primary_viz) {{
+      pathHonestyEl.textContent = "Primary Ida awareness: soft-edge metro MRMS MultiSensor QPE (~1 km), native hourly 0–36h — not NEXRAD tiles.";
+    }} else if (activePath.henri_event_viz || activePath.id === "mrms_qpe_henri") {{
+      pathHonestyEl.textContent = activePath.honesty
+        || "Henri MRMS MultiSensor QPE research replay (~1 km), native hourly 0–24h — not NEXRAD / not NWS.";
+      pathHonestyEl.hidden = false;
+    }} else {{
+      pathHonestyEl.textContent = activePath.honesty || "Labeled AI / alternate scenario — coarse cells; not the decision surface.";
+    }}
+  }}
   const note = document.getElementById("depthTimelineNote");
   if (note) {{
     note.textContent = depthCumFrames.length
@@ -925,7 +956,12 @@ function rebuildPathLayers() {{
   }}
   syncTimeWindowLabel();
   // Prefer bilinear-ish for MRMS awareness; keep Earth2 pixelated if selected
-  const nearest = !(activePath.ida_primary_viz || activePath.id === "mrms_qpe_ida");
+  const nearest = !(
+    activePath.ida_primary_viz
+    || activePath.henri_event_viz
+    || activePath.id === "mrms_qpe_ida"
+    || activePath.id === "mrms_qpe_henri"
+  );
   document.querySelectorAll(".leaflet-image-layer").forEach(el => {{
     el.style.imageRendering = nearest ? "pixelated" : "auto";
   }});
@@ -1115,8 +1151,8 @@ function renderAssetList() {{
     return `
     <button type="button" class="asset-row${{selectedId === a.id ? " selected" : ""}}${{topHit}}" data-id="${{a.id}}">
       <div class="top">
-        <span class="name">#${{a.rank}} · ${{a.name}}</span>
-        <span class="depth">${{a.max_depth_cm.toFixed(1)}} cm</span>
+        <span class="name">#${{a.rank != null ? a.rank : "—"}} · ${{a.name}}</span>
+        <span class="depth">${{Number(a.max_depth_cm || 0).toFixed(1)}} cm</span>
       </div>
       <div class="meta">
         <span class="type-pill">${{typeLabel(a.asset_type)}}</span>
@@ -1240,10 +1276,10 @@ function selectAsset(id) {{
     lyAcc.checked = true;
     rebuildAccessOverlay();
   }}
-  document.getElementById("selKicker").textContent = typeLabel(a.asset_type) + " · #" + a.rank;
+  document.getElementById("selKicker").textContent = typeLabel(a.asset_type) + " · #" + (a.rank != null ? a.rank : "—");
   document.getElementById("selName").textContent = a.name;
   document.getElementById("selBody").innerHTML =
-    "<b>" + a.max_depth_cm.toFixed(1) + " cm</b> · " + a.band_label + " · " + leadLabel(a);
+    "<b>" + Number(a.max_depth_cm || 0).toFixed(1) + " cm</b> · " + (a.band_label || a.band || "—") + " · " + leadLabel(a);
   const extraChips = [];
   if (a.structure) extraChips.push(`<span class="sel-chip">Structure · ${{a.structure}}</span>`);
   if (a.stormwater_chip) extraChips.push(`<span class="sel-chip">${{a.stormwater_chip}}</span>`);
@@ -1266,6 +1302,7 @@ function selectAsset(id) {{
     : "Open DOT/MTA signals + research depth — not official closures.";
   renderSparkline(a);
   renderConsequenceTimeline(a);
+  renderCompareStrip(a);
   appendDecisionLog(a, "select");
   card.classList.remove("on");
   void card.offsetWidth;
@@ -1307,6 +1344,8 @@ function clearSelection() {{
   document.getElementById("selectedCard").classList.remove("on");
   const wrap = document.getElementById("selSparkWrap");
   if (wrap) wrap.hidden = true;
+  const cmp = document.getElementById("selCompareStrip");
+  if (cmp) {{ cmp.hidden = true; cmp.innerHTML = ""; }}
   renderAssetList();
 }}
 
@@ -1379,12 +1418,42 @@ function deskPathsForEvent(eventId, mode) {{
   const deskCfg = manifest.asset_decision_desk || {{}};
   const events = deskCfg.events || {{}};
   const want = mode || "shortlist";
-  if (eventId && events[eventId]) return events[eventId];
-  if (eventId === "henri-2021" && secondStorm && secondStorm.desk) {{
+  const ev = (eventId && events[eventId]) ? events[eventId] : null;
+  if (ev) {{
+    if (want === "shortlist") {{
+      return {{
+        assets_json: ev.shortlist_json || ev.assets_json,
+        assets_geojson: ev.shortlist_geojson || ev.assets_geojson,
+        mode: "shortlist",
+        full_json: ev.assets_json,
+        full_geojson: ev.assets_geojson,
+        storm_path_id: ev.storm_path_id,
+      }};
+    }}
     return {{
-      assets_json: secondStorm.desk.assets_json || "decision_desk_assets_henri.json",
-      assets_geojson: secondStorm.desk.assets_geojson || "decision_desk_assets_henri.geojson",
+      assets_json: ev.assets_json,
+      assets_geojson: ev.assets_geojson,
       mode: "full",
+      storm_path_id: ev.storm_path_id,
+    }};
+  }}
+  if (eventId === "henri-2021" && secondStorm && secondStorm.desk) {{
+    const d = secondStorm.desk;
+    if (want === "shortlist") {{
+      return {{
+        assets_json: d.shortlist_json || "decision_desk_shortlist_henri.json",
+        assets_geojson: d.shortlist_geojson || "decision_desk_shortlist_henri.geojson",
+        mode: "shortlist",
+        full_json: d.assets_json || "decision_desk_assets_henri.json",
+        full_geojson: d.assets_geojson || "decision_desk_assets_henri.geojson",
+        storm_path_id: secondStorm.storm_path_id || "mrms_qpe_henri",
+      }};
+    }}
+    return {{
+      assets_json: d.assets_json || "decision_desk_assets_henri.json",
+      assets_geojson: d.assets_geojson || "decision_desk_assets_henri.geojson",
+      mode: "full",
+      storm_path_id: secondStorm.storm_path_id || "mrms_qpe_henri",
     }};
   }}
   if (want === "shortlist") {{
@@ -1394,13 +1463,65 @@ function deskPathsForEvent(eventId, mode) {{
       mode: "shortlist",
       full_json: deskCfg.assets_json || "decision_desk_assets.json",
       full_geojson: deskCfg.assets_geojson || "decision_desk_assets.geojson",
+      storm_path_id: "mrms_qpe_ida",
     }};
   }}
   return {{
     assets_json: deskCfg.assets_json || "decision_desk_assets.json",
     assets_geojson: deskCfg.assets_geojson || "decision_desk_assets.geojson",
     mode: "full",
+    storm_path_id: "mrms_qpe_ida",
   }};
+}}
+function stormPathIdForEvent(eventId) {{
+  const paths = deskPathsForEvent(eventId, "shortlist");
+  return paths.storm_path_id || (eventId === "henri-2021" ? "mrms_qpe_henri" : "mrms_qpe_ida");
+}}
+function applyStormPathForEvent(eventId) {{
+  const want = stormPathIdForEvent(eventId);
+  const next = stormPaths.find(p => p.id === want) || stormPaths.find(p => p.primary) || stormPaths[0];
+  activePath = next;
+  // Keep Advanced path select in sync for Ida/Earth2; Henri path stays hidden there.
+  if (pathSel && next && (next.id === "mrms_qpe_ida" || String(next.id || "").startsWith("earth2"))) {{
+    pathSel.value = next.id;
+  }}
+  rebuildPathLayers();
+  setLead(0);
+}}
+async function loadCompareStrip() {{
+  const name = (manifest.ida_henri_compare && manifest.ida_henri_compare.json)
+    || (manifest.asset_decision_desk && manifest.asset_decision_desk.compare_strip_json)
+    || "ida_henri_compare_strip.json";
+  try {{
+    const r = await fetch(assets + name, {{ cache: "no-cache" }});
+    compareStrip = r.ok ? await r.json() : null;
+  }} catch (e) {{
+    compareStrip = null;
+  }}
+}}
+function renderCompareStrip(a) {{
+  const el = document.getElementById("selCompareStrip");
+  if (!el) return;
+  if (!a || !compareStrip || !compareStrip.shortlist) {{
+    el.hidden = true;
+    el.innerHTML = "";
+    return;
+  }}
+  const row = (compareStrip.shortlist || []).find(r => r.id === a.id)
+    || (compareStrip.shared_wet_sample || []).find(r => r.id === a.id);
+  if (!row || row.present_in === "neither") {{
+    el.hidden = true;
+    el.innerHTML = "";
+    return;
+  }}
+  const idaBit = (row.ida_cm != null && row.ida_cm !== "")
+    ? ("<b>" + row.ida_cm + " cm</b> Ida") : "Ida dry / n/a";
+  const henriBit = (row.henri_cm != null && row.henri_cm !== "")
+    ? ("<b>" + row.henri_cm + " cm</b> Henri") : "Henri dry / n/a";
+  el.hidden = false;
+  el.innerHTML = "<div class=\\"compare-kicker\\">Ida ↔ Henri compare</div>"
+    + idaBit + " · " + henriBit
+    + "<div style=\\"margin-top:4px;opacity:.85\\">Same official ID · research HAND — not peer-calibrated · not NWS.</div>";
 }}
 function needsFullDesk() {{
   const q = (document.getElementById("assetSearch").value || "").trim();
@@ -2200,15 +2321,20 @@ document.getElementById("eventSelect").onchange = () => {{
     return;
   }}
   activeEventId = ev.id;
-  // Henri desk swaps asset JSON; Ida keeps MRMS awareness loop (Henri radar frames not wired yet).
-  if (activeEventId === "henri-2021") {{
-    listMode = "all";
-    document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "all"));
-    const band = document.getElementById("bandFilter");
-    if (band) band.value = "all";
-  }} else {{
-    listMode = "shortlist";
-    document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "shortlist"));
+  listMode = "shortlist";
+  document.querySelectorAll("#listModeChips .chip").forEach(c => c.classList.toggle("active", c.dataset.mode === "shortlist"));
+  const band = document.getElementById("bandFilter");
+  if (band) band.value = "all";
+  clearSelection();
+  deskLoadedMode = "none";
+  desk = null;
+  fullDeskPromise = null;
+  applyStormPathForEvent(activeEventId);
+  const brandKicker = document.querySelector(".brand-kicker");
+  if (brandKicker) {{
+    brandKicker.textContent = activeEventId === "henri-2021"
+      ? "Henri research replay"
+      : "Ida research replay";
   }}
   loadDecisionDesk();
 }};
@@ -2403,6 +2529,7 @@ if (btnPrint) btnPrint.onclick = () => printShortlistSnapshot();
 rebuildPathLayers();
 fitMapFrame();
 setLead(0);
+loadCompareStrip();
 loadDecisionDesk();
 loadAccessSignals();
 loadFloodNetProduct();
