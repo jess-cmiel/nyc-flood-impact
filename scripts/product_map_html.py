@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Asset Decision Desk — Ida research replay map HTML.
+"""Flood Susceptibility Decision Desk — Ida research replay map HTML.
 
 Demo-locked defaults: assets first, MRMS awareness locked, screening collapsed.
 Storm (MRMS) is background awareness. NOT NWS / NOT decision-grade.
@@ -30,8 +30,8 @@ def write_product_html(manifest: dict, pluvial: dict, validation: dict) -> Path:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Asset Decision Desk · Ida research replay</title>
-<meta name="description" content="Research Asset Decision Desk for Hurricane Ida. Ranked wet assets from metro pysheds × MRMS. NOT official NWS. NOT decision-grade.">
+<title>Flood Susceptibility · Decision Desk · Ida</title>
+<meta name="description" content="Research flood susceptibility Decision Desk for Hurricane Ida. Ranked wet assets from metro HAND × MRMS. NOT official NWS. NOT decision-grade.">
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <link rel="stylesheet" href="vendor/leaflet/1.9.4/leaflet.css">
 <link rel="stylesheet" href="vendor/maplibre/3.6.2/maplibre-gl.css">
@@ -835,20 +835,20 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
 <body>
 <aside class="command-rail" aria-label="Decision Desk command rail">
   <div class="brand">
-    <div class="brand-kicker">Ida research replay</div>
-    <div class="brand-mark">Asset Decision Desk</div>
-    <div class="brand-tag">Select a briefing card → inspect on the map.</div>
+    <div class="brand-kicker">Decision Desk · Ida</div>
+    <div class="brand-mark">Flood Susceptibility</div>
+    <div class="brand-tag">Briefing card → map inspect.</div>
   </div>
   <div class="rail-scroll">
-  <p class="honesty-line">Research only · NOT NWS · cm-scale HAND ranking, not street-truth depths.</p>
+  <p class="honesty-line">Research · NOT NWS · HAND cm ranking ≠ street-truth.</p>
   <div class="magnitude-chip" id="magnitudeChip" role="status">
-    HAND screening <b>~cm</b> · FloodNet street peaks up to <b>~0.9 m</b> (n=5) — not the same scale.
+    HAND <b>~cm</b> · FloodNet peaks ≤ <b>~0.9 m</b> (n=5) — different scales.
   </div>
-  <div class="risk-ramp-card" aria-label="Research depth severity ramp">
-    <div class="cap">Risk ramp · HAND cm bands</div>
+  <div class="risk-ramp-card" aria-label="Flood susceptibility bands">
+    <div class="cap">Susceptibility · HAND cm</div>
     <div class="risk-ramp-track" title="Research severity gradient"></div>
     <div class="risk-ramp-labels"><span>&lt;3</span><span>≥3</span><span>≥8</span><span>≥15</span></div>
-    <p class="risk-ramp-note">Screening severity — not First Street / FEMA scores · not street-truth depths.</p>
+    <p class="risk-ramp-note">Screening bands — not FEMA / First Street scores.</p>
   </div>
   <div class="access-fixture-badge" id="accessFixtureBadge" role="status"></div>
   <div id="assetBanner"></div>
@@ -1030,7 +1030,7 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
     </details>
   </section>
   <div class="print-snapshot" id="printSnapshot" aria-hidden="true">
-    <h1>Asset Decision Desk · shortlist snapshot</h1>
+    <h1>Flood Susceptibility · shortlist snapshot</h1>
     <pre id="printSnapshotBody"></pre>
   </div>
   </div>
@@ -1138,8 +1138,8 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
   </div>
   <div class="coach-overlay" id="coachOverlay" hidden>
     <div class="coach-card" role="dialog" aria-label="Decision Desk quick start">
-      <strong>15s start</strong>
-      Briefing card → inspector. <b>Compare</b> drag-line for lead hours. Risk ramp ≥3/≥8/≥15 cm. HAND cm ≠ FloodNet metres.
+      <strong>Quick start</strong>
+      Briefing → inspect · Compare leads · Susceptibility ≥3/≥8/≥15 cm · HAND ≠ FloodNet.
       <button type="button" id="coachDismiss">Got it</button>
     </div>
   </div>
@@ -1157,7 +1157,7 @@ body.compare-on .compare-controls {{ display:flex; flex-wrap:wrap; }}
     </div>
     <div class="map-key-float-body">
       <div class="key-risk-ramp" aria-label="Depth severity ramp">
-        <div class="map-legend-row"><span>HAND risk ramp</span></div>
+        <div class="map-legend-row"><span>HAND susceptibility</span></div>
         <div class="key-risk-track"></div>
         <div class="key-risk-labels"><span>&lt;3</span><span>≥3</span><span>≥8</span><span>≥15 cm</span></div>
       </div>
@@ -2214,7 +2214,7 @@ function buildShortlistSnapshotText() {{
   const clock = (f.valid_time || "").replace("T", " ") || "—";
   const sel = selectedId && desk ? (desk.assets || []).find(x => x.id === selectedId) : null;
   const lines = [
-    "Asset Decision Desk · research decision log",
+    "Flood Susceptibility · research decision log",
     "Research only · NOT NWS · NOT decision-grade · fixture ida_v1",
     "Event: " + activeEventId + " · scrubber +" + lead + "h · " + clock + " UTC",
     "Band filter: " + (document.getElementById("bandFilter").value || "—") +

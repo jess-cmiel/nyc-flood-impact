@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ops Command Center · Asset Decision Desk</title>
-<meta name="description" content="Research ops overview for Ida flood Decision Desk. NOT NWS. NOT decision-grade.">
+<title>Ops Command Center · Flood Susceptibility</title>
+<meta name="description" content="Research ops overview for NYC flood susceptibility (Ida replay). NOT NWS. NOT decision-grade.">
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <style>
 :root {
@@ -26,11 +26,11 @@ body {
 }
 a { color:inherit; }
 .cc {
-  max-width:1120px; margin:0 auto; padding:28px 22px 48px;
+  max-width:1080px; margin:0 auto; padding:32px 24px 56px;
 }
 .cc-top {
   display:flex; flex-wrap:wrap; gap:18px 28px; align-items:flex-end; justify-content:space-between;
-  margin-bottom:28px;
+  margin-bottom:24px;
 }
 .brand-kicker {
   font:600 .68rem var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--accent-deep);
@@ -128,11 +128,11 @@ h1 {
   <main class="cc">
     <header class="cc-top">
       <div>
-        <div class="brand-kicker">NYC flood research · Ida replay</div>
+        <div class="brand-kicker">Flood susceptibility · Ida replay</div>
         <h1>Ops Command Center</h1>
-        <p class="lede">Current conditions, next-hour priorities, and system pulse before you open the Decision Desk map.</p>
-        <p class="honesty">Research prototype · NOT NWS · NOT decision-grade · HAND cm screening ≠ FloodNet metres.</p>
-        <a class="cta" href="product_map.html">Open Decision Desk map →</a>
+        <p class="lede">Pulse, next-hour priorities, then open the Decision Desk map.</p>
+        <p class="honesty">Research · NOT NWS · HAND cm ≠ FloodNet m</p>
+        <a class="cta" href="product_map.html">Open Decision Desk →</a>
       </div>
       <aside class="clock-card" aria-label="Current time and storm context">
         <div class="lab">Local clock</div>
@@ -143,7 +143,7 @@ h1 {
 
     <section class="grid" aria-label="Ops overview">
       <div class="panel">
-        <h2>System pulse · research proxies</h2>
+        <h2>System pulse</h2>
         <div class="pulse">
           <div class="pulse-item" id="pulseRoads">
             <div class="k">Roads</div>
@@ -164,39 +164,33 @@ h1 {
             <div class="meter"><i style="width:74%"></i></div>
           </div>
         </div>
-        <p class="footer" style="margin-top:12px">Pulse figures are research proxies derived from HAND wet-edge coverage — labeled, not live SCADA / not NWS.</p>
+        <p class="footer" style="margin-top:12px">Research proxies · not SCADA / not NWS.</p>
       </div>
 
       <div class="panel">
-        <h2>Next 60 minutes · priority</h2>
+        <h2>Next 60 minutes</h2>
         <div class="stat-line"><span>Peak HAND lead in window</span><b id="ccPeakLead">+12–18h</b></div>
         <div class="stat-line"><span>Watch band assets</span><b id="ccWatchN">—</b></div>
         <div class="stat-line"><span>Street-flood segments</span><b id="ccStreetN">—</b></div>
         <div class="stat-line"><span>Primary action</span><b style="font-family:var(--sans);font-weight:600">Inspect ≥8 cm shortlist</b></div>
-        <p style="margin:12px 0 0;font:500 .72rem/1.4 var(--sans);color:var(--muted)">
-          Scrub the desk timeline through buildup → peak → recession. Compare leads before treating any single frame as truth.
-        </p>
       </div>
     </section>
 
     <section class="next60">
       <div class="panel">
-        <h2>Priority locations / infrastructure</h2>
+        <h2>Priority assets</h2>
         <ul class="prio" id="ccPriority">
-          <li><span class="rank">…</span><div><div class="name">Loading shortlist…</div><div class="meta">HAND research ranking</div></div><span class="depth">—</span></li>
+          <li><span class="rank">…</span><div><div class="name">Loading shortlist…</div><div class="meta">HAND ranking</div></div><span class="depth">—</span></li>
         </ul>
       </div>
       <div class="panel">
-        <h2>Storm conditions · Ida MRMS context</h2>
+        <h2>Storm context</h2>
         <div class="stat-line"><span>Path</span><b style="font-family:var(--sans)">MRMS QPE Ida (~1 km)</b></div>
         <div class="stat-line"><span>Mode</span><b style="font-family:var(--sans)">Fixture replay</b></div>
         <div class="stat-line"><span>Depth engine</span><b style="font-family:var(--sans)">HAND screening cm</b></div>
         <div class="stat-line"><span>Street flood</span><span class="chip">citywide curb/road</span></div>
         <div class="stat-line"><span>Underlay</span><span class="chip">Reveal drainage</span></div>
-        <p class="footer">
-          Enter the map for street flood, 311 reports, Underlay Reveal, and hotspot diagnostics.
-          Synthetic layers are labeled in-product.
-        </p>
+        <p class="footer">Map: street flood · 311 · Underlay Reveal · hotspot diagnostic. Synthetic layers labeled.</p>
       </div>
     </section>
   </main>
@@ -216,7 +210,7 @@ h1 {
 
   const storm = document.getElementById("ccStorm");
   if (storm) {
-    storm.textContent = "Ida remnants research replay · MRMS QPE awareness · HAND depth screening (not NWS).";
+    storm.textContent = "Ida remnants · MRMS QPE · HAND screening · research (not NWS)";
   }
 
   fetch("product_assets/decision_desk_shortlist.json", { cache: "no-cache" })

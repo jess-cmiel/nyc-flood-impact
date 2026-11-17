@@ -1,5 +1,5 @@
 /**
- * Decision Desk UX extensions (command-center pass):
+ * Flood Susceptibility Decision Desk UX extensions:
  * - Citywide curb/street flood layer (depth tint + lead opacity)
  * - ImageOverlay zoom georef reassert
  * - Multi-frame preload / progressive loop reveal
@@ -64,7 +64,7 @@
       return "Curb/gutter ponding builds as antecedent wetness and constrained outlets slow drawdown.";
     }
     if (access === "limited") {
-      return "Access pinch points coincide with wet edges — corridor continuity is the primary risk.";
+      return "Access pinch points coincide with wet edges — corridor continuity is the primary concern.";
     }
     if (type === "station" || String(a && a.id || "").indexOf("stations:") === 0) {
       return "Station approaches sit in a local HAND depression where street flow collects first.";
