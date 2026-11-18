@@ -1,1 +1,8 @@
-{"quarantined":"catch_basins.geojson","reason":"empty FeatureCollection"}
+{
+  "quarantined": [
+    "catch_basins.geojson",
+    "infra_lead_24h.geojson",
+    "earth2_ens1_infra_lead_24h.geojson"
+  ],
+  "reason": "empty FeatureCollection \u2014 Earth2 lead-24h precip below infra-highlight precip floor; empty FC expected"
+}

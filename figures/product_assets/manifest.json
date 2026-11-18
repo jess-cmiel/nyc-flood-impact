@@ -2210,12 +2210,6 @@
             "lead_hours": 22.0,
             "geojson": "infra_lead_22h_blend.geojson",
             "n_features": 1078
-          },
-          {
-            "index": 9,
-            "lead_hours": 24.0,
-            "geojson": "infra_lead_24h.geojson",
-            "n_features": 0
           }
         ]
       },
@@ -2620,12 +2614,6 @@
             "lead_hours": 22.0,
             "geojson": "earth2_ens1_infra_lead_22h_blend.geojson",
             "n_features": 1089
-          },
-          {
-            "index": 9,
-            "lead_hours": 24.0,
-            "geojson": "earth2_ens1_infra_lead_24h.geojson",
-            "n_features": 0
           }
         ]
       }
