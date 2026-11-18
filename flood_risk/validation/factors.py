@@ -162,7 +162,7 @@ def validate_antecedent_rainfall() -> dict[str, Any]:
         provenance=ProvenanceTag.SYNTHETIC,
         source=str(stub.path),
         honesty="SYNTHETIC prototype stub — hourly MRMS missing; do not treat as observations.",
-        status="synthetic_fallback" if stub.exists() else "missing",
+        status="synthetic_fallback" if stub.exists else "missing",
         stats=domain_stats(stub.path),
         assumptions=["Stub only; regenerate with MRMS hourly when available."],
     )

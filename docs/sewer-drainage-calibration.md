@@ -52,6 +52,17 @@ depth          = HAND/bathtub(excess_mm)               # primary product
 - Coverage fraction of land cells with inlet credit is recorded in `drainage_capacity_meta.json` (transparent NLCD-base elsewhere)
 - Synthetic demo `drainage_nodes` / SODA error payloads **excluded** (no fake network credit)
 
+**Screening / capacity proxy — not a hydraulic sewer model.** Drain-point density
+modulates a literature-anchored mm/hr sink before HAND/bathtub excess precip. This
+is **not** SWMM, **not** a DEP pipe network, and **not** calibrated sewer ops.
+
+**Default CI vs full scientific replay.** PR CI asserts density/honesty contracts from
+tracked fixtures (`figures/product_assets/dep_catch_basins_dense_sample.geojson`,
+`denser_drain_inventory_meta.json`, `data/raw/infrastructure/osm_drains_metro_fetch_meta.json`).
+The full regenerable `osm_drains_metro.geojson` (~40 MB) is gitignored and optional for
+local integration checks; regenerating it is part of full scientific replay, not
+software CI.
+
 ---
 
 ## Loose calibration vs Ida / 311

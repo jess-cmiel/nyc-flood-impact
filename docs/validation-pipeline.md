@@ -27,7 +27,7 @@ Tests: `pytest tests/test_validation_pipeline.py`
 | Factor | Provenance | Source used |
 | --- | --- | --- |
 | Precip intensity / duration | **observed** | Metro/hourly MRMS QPE + storm total |
-| Antecedent rainfall | **observed** | Sum of MRMS 1h leads 0–5 (early window) |
+| Antecedent rainfall | **observed** *(preferred)* / **synthetic_fallback** | Sum of MRMS 1h leads 0–5 when present; else labeled stub |
 | Elevation | **observed** | USGS 3DEP metro DEM |
 | Slope | **observed** | Degrees from DEM gradient (not stub) |
 | Impervious surface | **observed** (+ modeled warp) | NLCD 2021 → metro fraction |
@@ -42,9 +42,23 @@ Tests: `pytest tests/test_validation_pipeline.py`
 | Asset | Note |
 | --- | --- |
 | `data/processed/slope.tif` | 18×40 stub; **fails** `slope_degrees_plausible` (max ≫ 60°) |
-| `data/processed/antecedent_wetness.tif` | Stub; pipeline prefers MRMS early-window sum |
+| `data/processed/antecedent_wetness.tif` | Stub; pipeline prefers MRMS early-window sum. When hourly MRMS leads are absent (typical default CI), antecedent status is explicitly `synthetic_fallback` — **not** observational validation. |
 | `data/processed/flash_flood_susceptibility.tif` | Stub fallback only if real susc frame missing |
 | Demo drainage nodes GeoJSON | Synthetic / open-derived demo network |
+
+## Default CI vs full scientific replay
+
+**Default CI / software reproducibility** (`pytest tests/` on a clean checkout) exercises
+schema, provenance tags, tracked product fixtures, and validation smoke paths that
+do **not** require regenerable external datasets. Hourly MRMS GeoTIFFs and the full
+metro drain inventory (`osm_drains_metro.geojson`) are gitignored; CI therefore does
+**not** claim a bit-identical scientific replay of Ida forcing or catchment density.
+
+**Full scientific replay** additionally needs external / regenerable inputs (MRMS
+hourly frames, USGS DEM, NLCD, NYC Open Data catch-basin fetch via
+`scripts/fetch_osm_drains_metro.py` / `make denser-drains`, etc.). Observed antecedent
+validation requires those early-window MRMS hourlies; without them the pipeline
+honestly reports `synthetic_fallback` rather than pretending the stub is observed.
 
 ## Exports (HTML contract)
 
